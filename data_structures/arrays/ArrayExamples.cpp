@@ -2,7 +2,6 @@
 
 using namespace std;
 
-// O(n)
 void printArray(const int* values, int size) {
     for (int i = 0; i < size; i++) {
         cout << values[i] << " ";
@@ -11,7 +10,6 @@ void printArray(const int* values, int size) {
     cout << endl;
 }
 
-// O(n). Returns the index of target or -1 if it is not present
 int linearSearch(const int* values, int size, int target) {
     for (int i = 0; i < size; i++) {
         if (values[i] == target) {
@@ -22,7 +20,6 @@ int linearSearch(const int* values, int size, int target) {
     return -1;
 }
 
-// O(log n). Requires values sorted in ascending order
 int binarySearch(const int* values, int size, int target) {
     int low = 0;
     int high = size - 1;
@@ -44,7 +41,6 @@ int binarySearch(const int* values, int size, int target) {
     return -1;
 }
 
-// O(n). Shifts elements right; fails when the array is full or index is invalid
 bool insertAt(int* values, int& size, int capacity, int index, int value) {
     if (size >= capacity || index < 0 || index > size) {
         return false;
@@ -59,7 +55,6 @@ bool insertAt(int* values, int& size, int capacity, int index, int value) {
     return true;
 }
 
-// O(n). Shifts elements left
 bool removeAt(int* values, int& size, int index) {
     if (index < 0 || index >= size) {
         return false;
@@ -73,7 +68,6 @@ bool removeAt(int* values, int& size, int index) {
     return true;
 }
 
-// O(n). Allocates a larger block, copies the elements and frees the old one
 int* resize(int* values, int size, int newCapacity) {
     int* resized = new int[newCapacity];
 
@@ -86,16 +80,14 @@ int* resize(int* values, int size, int newCapacity) {
 }
 
 int main() {
-    // Static array: fixed size, O(1) access by index
     int values[5] = {10, 20, 30, 40, 50};
 
-    printArray(values, 5); // 10 20 30 40 50
+    printArray(values, 5);
 
-    cout << "linearSearch(30): " << linearSearch(values, 5, 30) << endl; // 2
-    cout << "binarySearch(40): " << binarySearch(values, 5, 40) << endl; // 3
-    cout << "binarySearch(35): " << binarySearch(values, 5, 35) << endl; // -1
+    cout << "linearSearch(30): " << linearSearch(values, 5, 30) << endl;
+    cout << "binarySearch(40): " << binarySearch(values, 5, 40) << endl;
+    cout << "binarySearch(35): " << binarySearch(values, 5, 35) << endl;
 
-    // Dynamic array: memory reserved at runtime and released manually
     int capacity = 3;
     int size = 0;
     int* dynamicValues = new int[capacity];
@@ -104,19 +96,18 @@ int main() {
         insertAt(dynamicValues, size, capacity, size, (i + 1) * 10);
     }
 
-    printArray(dynamicValues, size); // 10 20 30
+    printArray(dynamicValues, size);
 
-    // Full: grow before inserting again
     if (!insertAt(dynamicValues, size, capacity, 1, 15)) {
         capacity *= 2;
         dynamicValues = resize(dynamicValues, size, capacity);
         insertAt(dynamicValues, size, capacity, 1, 15);
     }
 
-    printArray(dynamicValues, size); // 10 15 20 30
+    printArray(dynamicValues, size);
 
     removeAt(dynamicValues, size, 0);
-    printArray(dynamicValues, size); // 15 20 30
+    printArray(dynamicValues, size);
 
     delete[] dynamicValues;
 

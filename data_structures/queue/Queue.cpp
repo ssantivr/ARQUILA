@@ -2,8 +2,6 @@
 
 using namespace std;
 
-// Circular queue: slots freed by dequeue are reused, so the queue only
-// reports full when it really holds CAPACITY elements.
 class Queue {
 private:
     static const int CAPACITY = 100;
@@ -15,22 +13,18 @@ private:
 public:
     Queue() : front(0), count(0) {}
 
-    // O(1)
     bool isEmpty() const {
         return count == 0;
     }
 
-    // O(1)
     bool isFull() const {
         return count == CAPACITY;
     }
 
-    // O(1)
     int size() const {
         return count;
     }
 
-    // O(1). Returns false on overflow
     bool enqueue(int value) {
         if (isFull()) {
             return false;
@@ -41,7 +35,6 @@ public:
         return true;
     }
 
-    // O(1). Returns false on underflow, so any int can be stored safely
     bool dequeue(int& removedValue) {
         if (isEmpty()) {
             return false;
@@ -53,7 +46,6 @@ public:
         return true;
     }
 
-    // O(1)
     bool peek(int& frontValue) const {
         if (isEmpty()) {
             return false;
@@ -63,7 +55,6 @@ public:
         return true;
     }
 
-    // O(1)
     void clear() {
         front = 0;
         count = 0;
@@ -80,14 +71,13 @@ int main() {
     int value;
 
     if (queue.peek(value)) {
-        cout << "peek: " << value << endl;    // 10
+        cout << "peek: " << value << endl;
     }
 
     while (queue.dequeue(value)) {
-        cout << "dequeue: " << value << endl; // 10, 20, 30 (FIFO)
+        cout << "dequeue: " << value << endl;
     }
 
-    // Wrap-around: more enqueues than CAPACITY in total, never more than 2 stored
     for (int i = 0; i < 250; i++) {
         queue.enqueue(i);
         queue.enqueue(i + 1);
@@ -95,8 +85,8 @@ int main() {
         queue.dequeue(value);
     }
 
-    cout << "size after wrap-around: " << queue.size() << endl; // 0
-    cout << "last dequeued: " << value << endl;                 // 250
+    cout << "size after wrap-around: " << queue.size() << endl;
+    cout << "last dequeued: " << value << endl;
 
     return 0;
 }

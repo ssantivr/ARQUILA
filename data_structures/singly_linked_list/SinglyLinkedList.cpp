@@ -26,17 +26,14 @@ public:
         clear();
     }
 
-    // O(1)
     bool isEmpty() const {
         return head == nullptr;
     }
 
-    // O(1)
     size_t size() const {
         return count;
     }
 
-    // O(1)
     void pushFront(int value) {
         Node* newNode = new Node(value);
         newNode->next = head;
@@ -49,7 +46,6 @@ public:
         count++;
     }
 
-    // O(1) thanks to the tail pointer
     void pushBack(int value) {
         Node* newNode = new Node(value);
 
@@ -63,7 +59,6 @@ public:
         count++;
     }
 
-    // O(n). Valid positions: 0..size()
     bool insertAt(size_t index, int value) {
         if (index > count) {
             return false;
@@ -93,7 +88,6 @@ public:
         return true;
     }
 
-    // O(1)
     bool popFront(int& removedValue) {
         if (head == nullptr) {
             return false;
@@ -113,7 +107,6 @@ public:
         return true;
     }
 
-    // O(n). Removes the first occurrence of value
     bool remove(int value) {
         if (head == nullptr) {
             return false;
@@ -146,7 +139,6 @@ public:
         return false;
     }
 
-    // O(n)
     bool contains(int value) const {
         Node* current = head;
 
@@ -161,7 +153,6 @@ public:
         return false;
     }
 
-    // O(n) time, O(1) extra space
     void reverse() {
         Node* previous = nullptr;
         Node* current = head;
@@ -177,7 +168,6 @@ public:
         head = previous;
     }
 
-    // O(n)
     void print() const {
         Node* current = head;
 
@@ -189,7 +179,6 @@ public:
         cout << endl;
     }
 
-    // O(n)
     void clear() {
         while (head != nullptr) {
             Node* current = head;
@@ -209,26 +198,26 @@ int main() {
     list.pushBack(20);
     list.pushFront(5);
     list.insertAt(1, 7);
-    list.print(); // 5 7 10 20
+    list.print();
 
     list.remove(20);
     list.pushBack(30);
-    list.print(); // 5 7 10 30
+    list.print();
 
     list.reverse();
-    list.print(); // 30 10 7 5
+    list.print();
 
-    cout << "size: " << list.size() << endl;                   // 4
-    cout << "contains 10: " << list.contains(10) << endl;      // 1
-    cout << "contains 20: " << list.contains(20) << endl;      // 0
+    cout << "size: " << list.size() << endl;
+    cout << "contains 10: " << list.contains(10) << endl;
+    cout << "contains 20: " << list.contains(20) << endl;
 
     int removedValue;
 
     if (list.popFront(removedValue)) {
-        cout << "popFront: " << removedValue << endl;          // 30
+        cout << "popFront: " << removedValue << endl;
     }
 
-    list.print(); // 10 7 5
+    list.print();
 
     return 0;
 }

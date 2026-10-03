@@ -12,22 +12,18 @@ private:
 public:
     Stack() : top(-1) {}
 
-    // O(1)
     bool isEmpty() const {
         return top == -1;
     }
 
-    // O(1)
     bool isFull() const {
         return top == CAPACITY - 1;
     }
 
-    // O(1)
     int size() const {
         return top + 1;
     }
 
-    // O(1). Returns false on overflow
     bool push(int value) {
         if (isFull()) {
             return false;
@@ -37,7 +33,6 @@ public:
         return true;
     }
 
-    // O(1). Returns false on underflow, so any int can be stored safely
     bool pop(int& removedValue) {
         if (isEmpty()) {
             return false;
@@ -47,7 +42,6 @@ public:
         return true;
     }
 
-    // O(1)
     bool peek(int& topValue) const {
         if (isEmpty()) {
             return false;
@@ -57,7 +51,6 @@ public:
         return true;
     }
 
-    // O(1)
     void clear() {
         top = -1;
     }
@@ -73,15 +66,15 @@ int main() {
     int value;
 
     if (stack.peek(value)) {
-        cout << "peek: " << value << endl; // 30
+        cout << "peek: " << value << endl;
     }
 
     while (stack.pop(value)) {
-        cout << "pop: " << value << endl;  // 30, 20, 10 (LIFO)
+        cout << "pop: " << value << endl;
     }
 
-    cout << "empty: " << stack.isEmpty() << endl;            // 1
-    cout << "pop on empty: " << stack.pop(value) << endl;    // 0
+    cout << "empty: " << stack.isEmpty() << endl;
+    cout << "pop on empty: " << stack.pop(value) << endl;
 
     return 0;
 }
