@@ -537,7 +537,7 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 |---|---|---|
 | 2 — Sistema visual | Paleta de colores aplicada en el frontend. | El resto del sistema visual; hay dos paletas distintas en los documentos y hay que elegir una. |
 | 3 — Arquitectura UI | Páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. | Sidebar y los demás componentes listados. |
-| 4 — Terrenos y visualización | Registro de terrenos (área, pendiente, suelo, coordenadas). | Todas las visualizaciones (3D, vistas, perfil, capas). |
+| 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Esquemas de vista superior y perfil de pendiente. | Vista 3D, vistas frontal, lateral e isométrica, mapa de análisis, capas y forma del lote distinta de un rectángulo. |
 | 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). | Plano de implantación y visor. |
 | 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas. | Probar el asistente con una clave real. |
 | 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Ejecutarla contra PostgreSQL real: las pruebas usan SQLite en memoria. No hay migraciones. |

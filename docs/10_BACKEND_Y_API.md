@@ -67,6 +67,15 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 - Si la IA falla no se guarda nada, para que el historial no quede con preguntas sin respuesta.
 - La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado.
 
+## Esquemas del terreno
+
+La pestaña Terreno dibuja dos esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx`), sin librerías adicionales:
+
+- **Vista superior**: un rectángulo con el ancho y el largo, a escala entre sí.
+- **Perfil**: una línea con la pendiente real. El desnivel se calcula como `largo × pendiente / 100`.
+
+Son simplificaciones: el lote se trata como un rectángulo y se asume que la pendiente va en el sentido del largo. El ancho y el largo son opcionales; si faltan, el esquema muestra qué dato falta. El área se guarda aparte porque un lote real puede no ser rectangular; el formulario la propone como ancho por largo si se deja vacía.
+
 ## Datos numéricos
 
 La API recibe y devuelve áreas, cantidades y costos como números JSON. En la base de datos son `NUMERIC`.
