@@ -80,6 +80,8 @@ El botón «Deshacer» del proyecto usa una lista doblemente enlazada (`backend/
 
 Una pila no alcanzaría, porque no permite quitar el elemento más antiguo.
 
+El límite de intentos de inicio de sesión usa una cola (`backend/app/services/login_limiter.py`). Cada intento fallido se encola con su hora; los que tienen más de un minuto se retiran por el frente, porque el más antiguo es siempre el primero en caducar (FIFO). Si la cola está llena, hay 5 fallos recientes y el inicio de sesión se bloquea.
+
 ## 12. Cómo se validó el backend
 
 Con pruebas automatizadas en `backend/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.

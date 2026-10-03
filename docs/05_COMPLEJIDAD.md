@@ -84,4 +84,14 @@ El historial para deshacer eliminaciones (`backend/app/services/undo_history.py`
 
 Una pila sola no serviría, porque no permite descartar el elemento más antiguo.
 
+El límite de intentos de inicio de sesión (`backend/app/services/login_limiter.py`) usa una cola por correo que guarda la hora de cada intento fallido. La capacidad de la cola es el máximo de intentos permitidos.
+
+| Acción | Operación de la cola |
+|---|---|
+| Registrar un intento fallido | Enqueue |
+| Descartar los intentos que ya salieron de la ventana de un minuto | Peek y dequeue mientras el más antiguo haya caducado |
+| Saber si el correo está bloqueado | Comprobar si la cola está llena |
+
+La cola sirve porque los intentos caducan en el mismo orden en que ocurrieron: el más antiguo siempre está al frente (FIFO). Cada operación es O(1); descartar caducados cuesta como máximo tantos pasos como la capacidad, que es fija.
+
 La complejidad depende de la operación y de la implementación utilizada.

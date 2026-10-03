@@ -21,6 +21,7 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 | 413 | El archivo supera el tamaño máximo. |
 | 415 | Tipo de archivo no admitido. |
 | 422 | Los datos enviados no son válidos. |
+| 429 | Demasiados intentos fallidos de inicio de sesión. |
 | 503 | El asistente de IA no está disponible. |
 
 ## Autenticación
@@ -32,7 +33,10 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 - La sesión dura 7 días y se elimina del servidor al cerrar sesión.
 - En producción hay que definir `COOKIE_SECURE=1` para que la cookie solo viaje por HTTPS.
 
-Pendiente: límite de intentos de inicio de sesión y recuperación de contraseña.
+- Tras 5 intentos fallidos con el mismo correo en un minuto, el inicio de sesión responde 429 hasta que los intentos salen de esa ventana de tiempo. Un inicio de sesión correcto borra la cuenta de fallos. El control usa la cola de `app/data_structures` (ver `05_COMPLEJIDAD.md`) y vive en memoria, igual que el historial de deshacer.
+- El límite se cuenta por correo, no por dirección IP: alguien que conozca un correo puede bloquear su inicio de sesión durante un minuto escribiendo contraseñas falsas.
+
+Pendiente: recuperación de contraseña.
 
 ## Permisos
 
