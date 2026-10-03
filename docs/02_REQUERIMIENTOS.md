@@ -1,21 +1,39 @@
 # REQUERIMIENTOS
 
-## Requerimientos funcionales
+El proyecto tiene dos partes: un núcleo académico, que es lo que evalúa la asignatura, y una aplicación que usa ese núcleo en un caso real.
 
-- Permitir demostrar el comportamiento de un array.
-- Permitir demostrar un array dinámico.
-- Permitir ejecutar operaciones básicas de Stack.
-- Permitir ejecutar operaciones básicas de Queue.
-- Permitir insertar, eliminar y recorrer una lista simple.
-- Permitir insertar, eliminar y recorrer una lista doble.
-- Exponer un endpoint básico de salud del backend.
-- Mantener el frontend separado del backend.
+## Núcleo académico
+
+| Requerimiento | Dónde se cumple |
+|---|---|
+| Demostrar el comportamiento de un array. | `data_structures/arrays/ArrayExamples.cpp` |
+| Demostrar un array dinámico. | `ArrayExamples.cpp` (función `resize`) y `backend/app/data_structures/arrays.py` |
+| Ejecutar operaciones básicas de Stack. | `data_structures/stack/Stack.cpp` y `backend/app/data_structures/stack.py` |
+| Ejecutar operaciones básicas de Queue. | `data_structures/queue/Queue.cpp` y `backend/app/data_structures/queue.py` |
+| Insertar, eliminar y recorrer una lista simple. | `data_structures/singly_linked_list/` y `singly_linked_list.py` |
+| Insertar, eliminar y recorrer una lista doble. | `data_structures/doubly_linked_list/` y `doubly_linked_list.py` |
+| Exponer un endpoint básico de salud del backend. | `GET /health` |
+| Mantener el frontend separado del backend. | Carpetas `frontend/` y `backend/`, que solo se comunican por HTTP |
+
+## Aplicación
+
+| Código | Requerimiento | Dónde se cumple |
+|---|---|---|
+| RF-01 | Gestionar las entidades principales del proyecto. | API y pantallas de proyectos, terrenos, planos, elevaciones, materiales, archivos y recomendaciones |
+| RF-02 | Validar los datos recibidos por la API. | `backend/app/schemas.py` |
+| RF-03 | Consultar información mediante búsquedas. | Búsqueda de proyectos por nombre y filtros por estado, categoría y orientación |
+| RF-04 | Usar estructuras de datos apropiadas. | Lista doble en «Deshacer» y cola en el límite de intentos (ver `05_COMPLEJIDAD.md`) |
+| RF-05 | Persistir la información en la base de datos. | PostgreSQL mediante SQLAlchemy (ver `07_BASE_DATOS.md`) |
+| RF-06 | Exponer endpoints documentados para el frontend. | FastAPI genera la documentación en `/docs` |
+| RF-07 | Incluir pruebas automatizadas. | `backend/tests/` y `frontend/src/utils/*.test.ts` (ver `06_PRUEBAS.md`) |
 
 ## Requerimientos no funcionales
 
-- Código académico legible.
+- Código académico legible, sin comentarios ni documentación interna.
 - Identificadores de código en inglés.
 - Documentación externa al código en español.
-- Separación clara entre frontend, backend y estructuras de datos.
-- Pruebas básicas para validar el funcionamiento.
+- Backend en Python y frontend en TypeScript.
+- Separación clara entre presentación, lógica, persistencia y estructuras de datos.
+- La complejidad de las operaciones críticas está documentada en `05_COMPLEJIDAD.md`.
+- Las credenciales y secretos no se guardan en el repositorio.
 - Uso de control de versiones mediante Git.

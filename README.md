@@ -101,6 +101,18 @@ npm run build
 
 ## Documentación
 
-- `docs/05_COMPLEJIDAD.md`: complejidad de cada operación de las estructuras.
-- `docs/10_BACKEND_Y_API.md`: decisiones del backend, autenticación, archivos e IA.
-- `06_EVOLUCION_POR_SEMANAS.md`: evolución del proyecto y estado real de implementación.
+| Documento | Contenido |
+|---|---|
+| `docs/01_PLANTEAMIENTO_PROBLEMA.md` | Qué problema resuelve el proyecto. |
+| `docs/02_REQUERIMIENTOS.md` | Requerimientos y dónde se cumple cada uno. |
+| `docs/03_ARQUITECTURA.md` | Partes del sistema y cómo se comunican. |
+| `docs/04_ESTRUCTURAS_DATOS.md` | Las estructuras estudiadas y dónde están implementadas. |
+| `docs/05_COMPLEJIDAD.md` | Complejidad de cada operación y uso de las estructuras en la aplicación. |
+| `docs/06_PRUEBAS.md` | Qué cubren las pruebas y cómo ejecutarlas. |
+| `docs/07_BASE_DATOS.md` | Base de datos, migraciones y datos de ejemplo. |
+| `docs/07_GIT_Y_TRABAJO_EN_EQUIPO.md` | Flujo de trabajo con Git. |
+| `docs/08_GUIA_DEFENSA.md` | Preguntas de la defensa con sus respuestas. |
+| `docs/09_CONCLUSIONES.md` | Conclusiones. |
+| `docs/09_PLAN_TRABAJO.md` | Fases del trabajo y su estado. |
+| `docs/10_BACKEND_Y_API.md` | Decisiones del backend: autenticación, archivos, terreno e IA. |
+| `06_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
