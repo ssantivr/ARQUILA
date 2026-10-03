@@ -529,6 +529,22 @@ Usar esta sección para que Claude Code marque el progreso real.
 
 **No marcar una semana como terminada si realmente no fue implementada.**
 
+## Estado real
+
+Ninguna semana está marcada porque ninguna está completa. Lo que existe de cada una:
+
+| Semana | Hecho | Falta |
+|---|---|---|
+| 2 — Sistema visual | Paleta de colores aplicada en el frontend. | El resto del sistema visual; hay dos paletas distintas en los documentos y hay que elegir una. |
+| 3 — Arquitectura UI | Páginas de inicio de sesión, proyectos y detalle de proyecto con paneles. | Sidebar, header de proyecto, tabs y los demás componentes listados. |
+| 4 — Terrenos y visualización | Registro de terrenos (área, pendiente, suelo, coordenadas). | Todas las visualizaciones (3D, vistas, perfil, capas). |
+| 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). | Plano de implantación y visor. |
+| 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas. | Probar el asistente con una clave real. |
+| 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Ejecutarla contra PostgreSQL real: las pruebas usan SQLite en memoria. No hay migraciones. |
+| 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. | Vista 3D. Revisar la interfaz en el navegador. |
+| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, estados de carga, vacío y error. | Límite de intentos de login, recuperación de contraseña, revisión de rendimiento. |
+| 10 — Versión profesional | — | Todo. |
+
 ---
 
 # INSTRUCCIÓN PARA CLAUDE CODE

@@ -18,8 +18,8 @@ Aplicar los conceptos de estructuras de datos vistos en clase dentro de un proye
 ## Tecnologías
 
 - C++ para las implementaciones académicas de estructuras de datos.
-- Python y FastAPI para el backend.
-- TypeScript para el frontend.
+- Python y FastAPI para el backend, con SQLAlchemy y PostgreSQL.
+- TypeScript, React y Vite para el frontend.
 - Git para control de versiones.
 
 ## Regla de código
@@ -32,11 +32,12 @@ La explicación del proyecto está separada del código y está escrita en espa�
 
 ```text
 ARQUILA/
-├── data_structures/
-├── backend/
-├── frontend/
-├── docs/
-└── .agentes/
+├── data_structures/   Estructuras de datos en C++
+├── backend/           API en Python (FastAPI)
+├── frontend/          Interfaz en TypeScript (React)
+├── database/          Esquema y datos de ejemplo
+├── docs/              Documentación en español
+└── .agentes/          Reglas del asistente
 ```
 
 ## Principio de diseño
@@ -46,7 +47,7 @@ El proyecto mantiene una complejidad adecuada para cuarto semestre. Se prioriza 
 ## Ejecución de una estructura
 
 ```bash
-g++ data_structures/stack/Stack.cpp -o stack
+g++ -std=c++17 data_structures/stack/Stack.cpp -o stack
 ./stack
 ```
 
@@ -54,9 +55,29 @@ g++ data_structures/stack/Stack.cpp -o stack
 
 ```bash
 cd backend
-pip install -r requirements.txt
-uvicorn app.main:app --reload
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements-dev.txt
 ```
+
+El backend necesita la variable `DATABASE_URL`. Con PostgreSQL (por ejemplo, el de `docker-compose.yml`):
+
+```bash
+set DATABASE_URL=postgresql+psycopg://arquila:arquila@localhost:5432/arquila
+uvicorn app.main:app --port 8000
+```
+
+Las demás variables están en `backend/.env.example` y se explican en `docs/10_BACKEND_Y_API.md`.
+
+## Ejecución del frontend
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+La interfaz queda en `http://localhost:5173` y se comunica con el backend en el puerto 8000.
 
 ## Pruebas
 
@@ -64,3 +85,14 @@ uvicorn app.main:app --reload
 cd backend
 pytest
 ```
+
+```bash
+cd frontend
+npm run build
+```
+
+## Documentación
+
+- `docs/05_COMPLEJIDAD.md`: complejidad de cada operación de las estructuras.
+- `docs/10_BACKEND_Y_API.md`: decisiones del backend, autenticación, archivos e IA.
+- `06_EVOLUCION_POR_SEMANAS.md`: evolución del proyecto y estado real de implementación.

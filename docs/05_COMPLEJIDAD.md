@@ -1,16 +1,87 @@
 # COMPLEJIDAD BÁSICA
 
-| Estructura | Operación | Complejidad |
+Como el código no lleva comentarios, la complejidad de cada operación se documenta aquí. Las tablas aplican tanto a las implementaciones en C++ (`data_structures/`) como a las de Python (`backend/app/data_structures/`), salvo donde se indica.
+
+`n` es el número de elementos almacenados.
+
+## Array
+
+| Operación | Tiempo | Notas |
 |---|---|---|
-| Array | Acceso por índice | O(1) |
-| Array | Recorrido | O(n) |
-| Stack | Push | O(1) |
-| Stack | Pop | O(1) |
-| Queue | Enqueue | O(1) |
-| Queue | Dequeue | O(1) |
-| Lista simple | Buscar | O(n) |
-| Lista simple | Insertar al inicio | O(1) |
-| Lista doble | Buscar | O(n) |
-| Lista doble | Insertar al inicio | O(1) |
+| Acceso por índice | O(1) | |
+| Recorrido | O(n) | |
+| Búsqueda lineal | O(n) | No requiere orden. |
+| Búsqueda binaria | O(log n) | Requiere el array ordenado de forma ascendente. |
+| Insertar en una posición | O(n) | Desplaza los elementos hacia la derecha. |
+| Eliminar en una posición | O(n) | Desplaza los elementos hacia la izquierda. |
+
+## Array dinámico
+
+| Operación | Tiempo | Notas |
+|---|---|---|
+| Agregar al final | O(1) amortizado | Cuando se llena, duplica su capacidad. |
+| Redimensionar | O(n) | Reserva un bloque mayor y copia los elementos. |
+| Insertar o eliminar en una posición | O(n) | |
+
+## Stack (LIFO)
+
+Implementada sobre un array de capacidad fija.
+
+| Operación | Tiempo |
+|---|---|
+| Push | O(1) |
+| Pop | O(1) |
+| Peek | O(1) |
+| Tamaño, vacía, llena | O(1) |
+
+## Queue (FIFO)
+
+Implementada como cola circular sobre un array de capacidad fija: las posiciones que libera `dequeue` se reutilizan, así que la cola solo se reporta llena cuando realmente contiene tantos elementos como su capacidad.
+
+| Operación | Tiempo |
+|---|---|
+| Enqueue | O(1) |
+| Dequeue | O(1) |
+| Peek | O(1) |
+| Tamaño, vacía, llena | O(1) |
+
+## Lista simplemente enlazada
+
+Mantiene puntero a la cabeza y a la cola.
+
+| Operación | Tiempo | Notas |
+|---|---|---|
+| Insertar al inicio | O(1) | |
+| Insertar al final | O(1) | Gracias al puntero a la cola. |
+| Insertar en una posición | O(n) | |
+| Eliminar al inicio | O(1) | |
+| Eliminar un valor | O(n) | Elimina la primera aparición. |
+| Buscar | O(n) | |
+| Invertir | O(n) | Usa O(1) de memoria adicional. |
+| Tamaño | O(1) | Se mantiene un contador. |
+
+## Lista doblemente enlazada
+
+| Operación | Tiempo | Notas |
+|---|---|---|
+| Insertar al inicio o al final | O(1) | |
+| Insertar en una posición | O(n) | |
+| Eliminar al inicio o al final | O(1) | |
+| Eliminar un valor | O(n) | Encontrado el nodo, desenlazarlo es O(1). |
+| Buscar | O(n) | |
+| Recorrer hacia adelante o hacia atrás | O(n) | |
+| Tamaño | O(1) | Se mantiene un contador. |
+
+## Uso dentro del backend
+
+El historial para deshacer eliminaciones (`backend/app/services/undo_history.py`) usa una lista doblemente enlazada por proyecto. Necesita tres operaciones, y las tres son O(1) en esa estructura:
+
+| Acción | Operación de la lista |
+|---|---|
+| Registrar una eliminación | Insertar al final |
+| Deshacer la última eliminación | Eliminar al final |
+| Descartar la más antigua al superar el límite | Eliminar al inicio |
+
+Una pila sola no serviría, porque no permite descartar el elemento más antiguo.
 
 La complejidad depende de la operación y de la implementación utilizada.
