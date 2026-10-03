@@ -536,7 +536,7 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 | Semana | Hecho | Falta |
 |---|---|---|
 | 2 — Sistema visual | Paleta de colores aplicada en el frontend. | El resto del sistema visual; hay dos paletas distintas en los documentos y hay que elegir una. |
-| 3 — Arquitectura UI | Páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. | Sidebar y los demás componentes listados. |
+| 3 — Arquitectura UI | Sidebar, página de inicio con métricas, páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. | Módulos de Visualización 3D y Configuración, y los componentes de visor (TerrainViewer, LayerPanel, ImageViewer, Modal). |
 | 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Esquemas de vista superior y perfil de pendiente. | Vista 3D, vistas frontal, lateral e isométrica, mapa de análisis, capas y forma del lote distinta de un rectángulo. |
 | 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). | Plano de implantación y visor. |
 | 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas. | Probar el asistente con una clave real. |

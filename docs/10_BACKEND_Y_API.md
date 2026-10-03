@@ -34,6 +34,7 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 - En producción hay que definir `COOKIE_SECURE=1` para que la cookie solo viaje por HTTPS.
 
 - Tras 5 intentos fallidos con el mismo correo en un minuto, el inicio de sesión responde 429 hasta que los intentos salen de esa ventana de tiempo. Un inicio de sesión correcto borra la cuenta de fallos. El control usa la cola de `app/data_structures` (ver `05_COMPLEJIDAD.md`) y vive en memoria, igual que el historial de deshacer.
+- El control recuerda como máximo 10 000 correos a la vez; al llegar a ese número descarta los que ya caducaron, para que no pueda crecer sin límite.
 - El límite se cuenta por correo, no por dirección IP: alguien que conozca un correo puede bloquear su inicio de sesión durante un minuto escribiendo contraseñas falsas.
 
 Pendiente: recuperación de contraseña.
@@ -94,5 +95,7 @@ La API recibe y devuelve áreas, cantidades y costos como números JSON. En la b
 | `ANTHROPIC_API_KEY` | Activa el asistente de IA. |
 
 ## Frontend
+
+Los mensajes de error del backend están en inglés. El frontend los traduce al español en `frontend/src/utils/errors.ts`; un mensaje que no esté en esa lista se muestra tal cual. Si cualquier petición responde 401, la aplicación vuelve a la pantalla de inicio de sesión.
 
 En desarrollo, Vite reenvía las peticiones `/api/*` al backend en `localhost:8000`, por lo que el backend no necesita configurar CORS y la cookie de sesión funciona en el mismo origen. Los tipos de `frontend/src/types/api.ts` reflejan los de `backend/app/schemas.py` y deben mantenerse sincronizados.
