@@ -30,7 +30,9 @@ cd backend
 python -m app.migrate
 ```
 
-Con `python -m app.migrate --seed` se cargan además los datos de ejemplo de `seed.sql`.
+Con `python -m app.migrate --seed` se cargan además los datos de ejemplo de `seed.sql`: un usuario de demostración con tres proyectos, sus terrenos, planos, elevaciones, materiales y notas. Se puede ejecutar varias veces sin duplicar nada.
+
+El usuario de demostración es `demo@example.com` con contraseña `arquila-demo`. Es una credencial pública, pensada solo para desarrollo: no se debe cargar `seed.sql` en una base con datos reales ni en un servidor accesible desde internet.
 
 El script (`backend/app/migrate.py`) anota cada archivo aplicado en la tabla `schema_migrations`, y en cada ejecución aplica solo los que faltan. Cada migración corre dentro de una transacción: si falla, no queda anotada y el proceso se detiene.
 
