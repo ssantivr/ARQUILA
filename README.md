@@ -60,15 +60,19 @@ python -m venv .venv
 pip install -r requirements-dev.txt
 ```
 
-El backend necesita la variable `DATABASE_URL`. Con PostgreSQL (por ejemplo, el de `docker-compose.yml`):
+La configuración se guarda en `backend/.env`, que no se sube al repositorio. La primera vez:
+
+1. Copiar `backend/.env.example` a `backend/.env`.
+2. Poner en `DATABASE_URL` la conexión a PostgreSQL, por ejemplo `postgresql+psycopg://postgres:CLAVE@localhost:5432/arquila`. La base `arquila` debe existir.
+3. Cargar los datos de ejemplo, si se quieren: `python -m app.migrate --seed`, con `DATABASE_URL` definida en la terminal.
+
+Después, para arrancar el backend basta con:
 
 ```bash
-set DATABASE_URL=postgresql+psycopg://arquila:arquila@localhost:5432/arquila
-python -m app.migrate --seed
-uvicorn app.main:app --port 8000
+python -m app.dev
 ```
 
-`python -m app.migrate` crea o actualiza las tablas; `--seed` carga además los datos de ejemplo. Ver `docs/07_BASE_DATOS.md`.
+Ese comando lee `backend/.env`, crea o actualiza las tablas con las migraciones pendientes y arranca el servidor en el puerto 8000. Ver `docs/07_BASE_DATOS.md`.
 
 Las demás variables están en `backend/.env.example` y se explican en `docs/10_BACKEND_Y_API.md`.
 

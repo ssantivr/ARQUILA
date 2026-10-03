@@ -107,6 +107,8 @@ La API recibe y devuelve áreas, cantidades y costos como números JSON. En la b
 
 ## Variables de entorno
 
+Se pueden definir en la terminal o en el archivo `backend/.env`, que `python -m app.dev` lee al arrancar. Una variable ya definida en la terminal tiene prioridad sobre el archivo. `backend/.env` está excluido del repositorio porque contiene contraseñas.
+
 | Variable | Uso |
 |---|---|
 | `DATABASE_URL` | Conexión a la base de datos (obligatoria). |
