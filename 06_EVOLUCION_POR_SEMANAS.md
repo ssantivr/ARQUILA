@@ -540,7 +540,7 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 | 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Esquemas de vista superior y perfil de pendiente. | Vista 3D, vistas frontal, lateral e isométrica, mapa de análisis, capas y forma del lote distinta de un rectángulo. |
 | 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). | Plano de implantación y visor. |
 | 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas. | Probar el asistente con una clave real. |
-| 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Ejecutarla contra PostgreSQL real: las pruebas usan SQLite en memoria. No hay migraciones. |
+| 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Migraciones: los cambios de esquema se aplican a mano con `schema.sql`. Las pruebas pasan contra PostgreSQL 16 (ver `docs/06_PRUEBAS.md`). |
 | 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. | Vista 3D. |
 | 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, estados de carga, vacío y error. | Límite de intentos de login, recuperación de contraseña, revisión de rendimiento. |
 | 10 — Versión profesional | — | Todo. |
