@@ -45,7 +45,8 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 - Al cambiar la contraseña se cierran todas las sesiones abiertas de esa cuenta.
 - El correo se envía por SMTP si están definidas `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` y `SMTP_FROM`. Si `SMTP_HOST` no está definida, el mensaje con el enlace se escribe en la consola del servidor: sirve para desarrollo, pero en producción hay que configurar el correo.
 - `APP_URL` indica la dirección de la aplicación que se pone en el enlace.
-- El envío real por SMTP no está probado: las pruebas usan un envío simulado. No hay límite de solicitudes de recuperación por correo.
+- Se atienden como máximo 3 solicitudes por correo cada 15 minutos; las demás se ignoran sin avisar, con la misma respuesta. Usa el mismo control basado en la cola que el inicio de sesión.
+- El envío real por SMTP no está probado: las pruebas usan un envío simulado.
 
 ## Permisos
 

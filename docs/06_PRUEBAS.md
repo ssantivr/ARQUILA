@@ -63,4 +63,12 @@ Cubren:
 - Recomendaciones automáticas y deshacer eliminaciones.
 - Conversaciones con el asistente, usando un asistente simulado.
 
-No están cubiertos por pruebas automáticas: la llamada real al servicio de IA y la interfaz del frontend.
+### Frontend
+
+Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, que se ejecutan con `npm test`: área y lectura de los vértices de un lote, traducción de los mensajes de error y formato de números.
+
+Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
+
+### Sin cobertura automática
+
+La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend.
