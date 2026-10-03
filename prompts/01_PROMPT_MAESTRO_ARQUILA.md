@@ -22,6 +22,7 @@ El contenido de Estructuras de Datos debe limitarse a:
 - `frontend/`: interfaz en TypeScript.
 - `docs/`: documentación en español.
 - `.agentes/`: reglas del asistente.
+- `prompts/`: instrucciones dadas al asistente.
 
 ## Reglas de código
 

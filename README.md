@@ -37,6 +37,7 @@ ARQUILA/
 ├── frontend/          Interfaz en TypeScript (React)
 ├── database/          Esquema y datos de ejemplo
 ├── docs/              Documentación en español
+├── prompts/           Instrucciones dadas al asistente de IA
 └── .agentes/          Reglas del asistente
 ```
 
@@ -116,3 +117,4 @@ npm run build
 | `docs/09_PLAN_TRABAJO.md` | Fases del trabajo y su estado. |
 | `docs/10_BACKEND_Y_API.md` | Decisiones del backend: autenticación, archivos, terreno e IA. |
 | `06_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
+| `prompts/README.md` | Índice de los prompts usados con el asistente de IA. |

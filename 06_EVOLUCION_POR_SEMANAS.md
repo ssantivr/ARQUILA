@@ -535,7 +535,7 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 
 | Semana | Hecho | Falta |
 |---|---|---|
-| 2 — Sistema visual | Paleta de la Semana 2 aplicada en todo el frontend y adoptada como única (ver `frontend/02_PROMPT_UI_VISUAL.md`). | Tipografía propia, iconos y animaciones. |
+| 2 — Sistema visual | Paleta de la Semana 2 aplicada en todo el frontend y adoptada como única (ver `prompts/02_PROMPT_UI_VISUAL.md`). | Tipografía propia, iconos y animaciones. |
 | 3 — Arquitectura UI | Sidebar, página de inicio con métricas, páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. | Módulos de Visualización 3D y Configuración, y los componentes de visor (TerrainViewer, LayerPanel, ImageViewer, Modal). |
 | 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Lotes rectangulares o con forma libre por vértices. Esquemas de vista superior, perfil de pendiente y vista 3D giratoria con capas. | Vistas frontal y lateral, mapa de análisis, y capas de construcción, vegetación y vías (no hay datos de eso). El terreno se modela como un plano inclinado, sin relieve. |
 | 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). | Plano de implantación y visor. |
