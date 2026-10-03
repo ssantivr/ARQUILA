@@ -10,8 +10,6 @@ services:
       - "5432:5432"
     volumes:
       - arquila_pgdata:/var/lib/postgresql/data
-      - ./database/schema.sql:/docker-entrypoint-initdb.d/01_schema.sql:ro
-      - ./database/seed.sql:/docker-entrypoint-initdb.d/02_seed.sql:ro
 
 volumes:
   arquila_pgdata:
