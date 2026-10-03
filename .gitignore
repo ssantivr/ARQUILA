@@ -11,3 +11,4 @@ dist/
 *.out
 node_modules/
 .pytest_cache/
+*.db
