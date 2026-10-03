@@ -20,6 +20,7 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 | 409 | Conflicto: correo o nombre ya usados. |
 | 413 | El archivo supera el tamaño máximo. |
 | 415 | Tipo de archivo no admitido. |
+| 400 | El enlace de recuperación de contraseña no es válido o caducó. |
 | 422 | Los datos enviados no son válidos. |
 | 429 | Demasiados intentos fallidos de inicio de sesión. |
 | 503 | El asistente de IA no está disponible. |
@@ -37,7 +38,14 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 - El control recuerda como máximo 10 000 correos a la vez; al llegar a ese número descarta los que ya caducaron, para que no pueda crecer sin límite.
 - El límite se cuenta por correo, no por dirección IP: alguien que conozca un correo puede bloquear su inicio de sesión durante un minuto escribiendo contraseñas falsas.
 
-Pendiente: recuperación de contraseña.
+### Recuperación de contraseña
+
+- «Olvidé mi contraseña» pide un correo. Si existe una cuenta, se genera un enlace válido 30 minutos y de un solo uso; la respuesta es la misma exista o no la cuenta, para no revelar qué correos están registrados.
+- En la base solo se guarda el hash del identificador del enlace. Pedir un enlace nuevo invalida el anterior.
+- Al cambiar la contraseña se cierran todas las sesiones abiertas de esa cuenta.
+- El correo se envía por SMTP si están definidas `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD` y `SMTP_FROM`. Si `SMTP_HOST` no está definida, el mensaje con el enlace se escribe en la consola del servidor: sirve para desarrollo, pero en producción hay que configurar el correo.
+- `APP_URL` indica la dirección de la aplicación que se pone en el enlace.
+- El envío real por SMTP no está probado: las pruebas usan un envío simulado. No hay límite de solicitudes de recuperación por correo.
 
 ## Permisos
 
@@ -74,12 +82,24 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 
 ## Esquemas del terreno
 
-La pestaña Terreno dibuja dos esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx`), sin librerías adicionales:
+La pestaña Terreno dibuja tres esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx` y `Terrain3D.tsx`), sin librerías adicionales:
 
-- **Vista superior**: un rectángulo con el ancho y el largo, a escala entre sí.
+- **Vista superior**: el contorno del lote a escala.
 - **Perfil**: una línea con la pendiente real. El desnivel se calcula como `largo × pendiente / 100`.
+- **Vista 3D**: el lote como una superficie inclinada según la pendiente, que se puede girar con un control. Es una proyección calculada a mano: cada vértice se rota alrededor del eje vertical y se proyecta con una inclinación fija de 30°.
 
-Son simplificaciones: el lote se trata como un rectángulo y se asume que la pendiente va en el sentido del largo. El ancho y el largo son opcionales; si faltan, el esquema muestra qué dato falta. El área se guarda aparte porque un lote real puede no ser rectangular; el formulario la propone como ancho por largo si se deja vacía.
+La vista 3D tiene cuatro capas que se pueden mostrar u ocultar: superficie, plano base (el nivel de referencia), límites (contorno y aristas verticales) y medidas. No hay capas de construcción, vegetación ni vías, porque el proyecto no guarda esos datos.
+
+### Lotes no rectangulares
+
+Un terreno puede tener una lista de vértices `x y` en metros, guardados en la tabla `terrain_points` con su posición en el contorno. Si los tiene, los esquemas dibujan ese polígono; si no, usan el rectángulo de ancho por largo.
+
+- Se aceptan entre 3 y 50 vértices, y deben encerrar un área mayor que cero.
+- El área se calcula con la fórmula del área de Gauss (o «del cordón»), recorriendo los vértices una vez: O(n). Está en `backend/app/services/geometry.py` y en `frontend/src/utils/geometry.ts`.
+- No se comprueba que el contorno no se cruce a sí mismo.
+- Al deshacer la eliminación de un terreno se recuperan sus datos, pero no sus vértices.
+
+Simplificaciones: la superficie es un plano inclinado y se asume que la pendiente va en el sentido del largo (el eje `y`). El ancho y el largo son opcionales; si faltan, el esquema muestra qué dato falta. El área se guarda aparte porque un lote real puede no ser rectangular; el formulario la propone como ancho por largo si se deja vacía.
 
 ## Datos numéricos
 

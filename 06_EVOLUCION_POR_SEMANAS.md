@@ -535,14 +535,14 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 
 | Semana | Hecho | Falta |
 |---|---|---|
-| 2 — Sistema visual | Paleta de colores aplicada en el frontend. | El resto del sistema visual; hay dos paletas distintas en los documentos y hay que elegir una. |
+| 2 — Sistema visual | Paleta de la Semana 2 aplicada en todo el frontend y adoptada como única (ver `frontend/02_PROMPT_UI_VISUAL.md`). | Tipografía propia, iconos y animaciones. |
 | 3 — Arquitectura UI | Sidebar, página de inicio con métricas, páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. | Módulos de Visualización 3D y Configuración, y los componentes de visor (TerrainViewer, LayerPanel, ImageViewer, Modal). |
-| 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Esquemas de vista superior y perfil de pendiente. | Vista 3D, vistas frontal, lateral e isométrica, mapa de análisis, capas y forma del lote distinta de un rectángulo. |
+| 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Lotes rectangulares o con forma libre por vértices. Esquemas de vista superior, perfil de pendiente y vista 3D giratoria con capas. | Vistas frontal y lateral, mapa de análisis, y capas de construcción, vegetación y vías (no hay datos de eso). El terreno se modela como un plano inclinado, sin relieve. |
 | 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). | Plano de implantación y visor. |
 | 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas. | Probar el asistente con una clave real. |
 | 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Las pruebas pasan contra PostgreSQL 16 y 18 (ver `docs/06_PRUEBAS.md`) y hay migraciones (ver `docs/07_BASE_DATOS.md`). Falta desplegarlo fuera del equipo local. |
 | 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. | Vista 3D. |
-| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, estados de carga, vacío y error. | Recuperación de contraseña, revisión de rendimiento. |
+| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, recuperación de contraseña, estados de carga, vacío y error. | Configurar un servicio de correo real para la recuperación de contraseña; revisión de rendimiento. |
 | 10 — Versión profesional | — | Todo. |
 
 ---

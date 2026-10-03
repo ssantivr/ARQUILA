@@ -13,7 +13,9 @@ SQLAlchemy.
 ```text
 database/
 ├── migrations/
-│   └── 001_initial_schema.sql
+│   ├── 001_initial_schema.sql
+│   ├── 002_password_reset_tokens.sql
+│   └── 003_terrain_points.sql
 └── seed.sql
 ```
 

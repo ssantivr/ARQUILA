@@ -15,6 +15,8 @@ Como el código no lleva comentarios, la complejidad de cada operación se docum
 | Insertar en una posición | O(n) | Desplaza los elementos hacia la derecha. |
 | Eliminar en una posición | O(n) | Desplaza los elementos hacia la izquierda. |
 
+El área de un lote con forma libre se calcula recorriendo una vez el array de sus vértices (fórmula del área de Gauss), es decir, en O(n). Ver `backend/app/services/geometry.py`.
+
 ## Array dinámico
 
 | Operación | Tiempo | Notas |
