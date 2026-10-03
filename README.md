@@ -64,8 +64,11 @@ El backend necesita la variable `DATABASE_URL`. Con PostgreSQL (por ejemplo, el 
 
 ```bash
 set DATABASE_URL=postgresql+psycopg://arquila:arquila@localhost:5432/arquila
+python -m app.migrate --seed
 uvicorn app.main:app --port 8000
 ```
+
+`python -m app.migrate` crea o actualiza las tablas; `--seed` carga además los datos de ejemplo. Ver `docs/07_BASE_DATOS.md`.
 
 Las demás variables están en `backend/.env.example` y se explican en `docs/10_BACKEND_Y_API.md`.
 

@@ -8,7 +8,7 @@ Este documento explica las decisiones del backend. El código no lleva comentari
 api/           Recibe la petición HTTP y valida los datos (schemas).
 services/      Lógica de negocio y control de permisos.
 repositories/  Consultas a la base de datos.
-models.py      Tablas (SQLAlchemy). Debe coincidir con database/schema.sql.
+models.py      Tablas (SQLAlchemy). Debe coincidir con database/migrations/.
 ```
 
 Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convierte en respuestas HTTP:
