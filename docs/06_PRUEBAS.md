@@ -50,7 +50,7 @@ En ese modo las tablas se crean con `database/schema.sql`, de modo que también 
 
 Antes de cada prueba se vacían todas las tablas de esa base. Por seguridad, las pruebas se niegan a ejecutarse si el nombre de la base no termina en `test`. Nunca se debe apuntar a una base con datos reales.
 
-Verificado el 3 de octubre de 2026 con PostgreSQL 16.2: las 126 pruebas pasan, y `schema.sql` y `seed.sql` se pueden aplicar dos veces seguidas sin errores.
+Verificado el 3 de octubre de 2026 con PostgreSQL 16.2 y 18.6: todas las pruebas pasan, y `schema.sql` y `seed.sql` se pueden aplicar dos veces seguidas sin errores.
 
 Cubren:
 
