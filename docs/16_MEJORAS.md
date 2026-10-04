@@ -61,15 +61,15 @@ Revisado el 4 de octubre de 2026 con el usuario de demostración: las siete pant
 
 ### Datos de la demostración
 
-Es lo que más afea la aplicación hoy, y no es código.
+Los datos son de la base local, no del repositorio.
 
-- **Datos en dos idiomas.** En la base local hay un proyecto antiguo, «Demo House», con datos en inglés: «Main Lot», «Concrete 210 kg/cm2», «Clay brick», suelo «clay», nivel «Ground floor». `database/seed.sql` ya no lo crea. Por eso en Materiales aparecen como categorías distintas «Estructura» y «structure», «Mampostería» y «masonry». Borrar ese proyecto, o recrear la base con `python -m app.migrate --seed`, lo arregla.
-- **Proyectos repetidos.** Hay «Casa Familiar Andina», «(2)» y «(3)», y tres ejemplos «Sin ubicación» en borrador. Dejar tres o cuatro proyectos distintos y completos antes de la demostración.
-- **El modelo 3D del primer proyecto es un bloque.** «Demo House» no tiene cuartos, así que se dibuja un solo volumen. La demostración debe abrir un proyecto con cuartos, columnas y ventanas.
+- **Ya corregido.** Había un proyecto antiguo, «Demo House», con datos en inglés, que hacía aparecer «Estructura» y «structure» como categorías distintas, y dos copias de «Casa Familiar Andina». Se borraron los tres. `database/seed.sql` no crea ninguno de ellos.
+- **Ejemplos sin ubicación.** Quedan tres proyectos creados desde los ejemplos («Vivienda compacta», «Edificio multifamiliar», «Oficina profesional») con «Sin ubicación» y en borrador. Completarlos o borrarlos antes de la demostración.
+- **El modelo 3D del primer proyecto son bloques.** «Casa Los Arrayanes», que crea `database/seed.sql`, no tiene cuartos: cada nivel se dibuja como un volumen, y el plano «Cubiertas» cuenta como un tercer nivel. La demostración debe abrir un proyecto con cuartos, columnas y ventanas, o hay que añadirlos a los datos de ejemplo.
 
 ### Detalles visibles
 
-- **Categorías como texto libre.** La mezcla anterior es posible porque la categoría de un material se escribe a mano. Una lista cerrada (Estructura, Mampostería, Acabados, Carpintería, Cubierta, Instalaciones) evita duplicados y errores de escritura.
+- **Categorías como texto libre.** La mezcla de «Estructura» y «structure» fue posible porque la categoría de un material se escribe a mano. Una lista cerrada (Estructura, Mampostería, Acabados, Carpintería, Cubierta, Instalaciones) evita duplicados y errores de escritura.
 - **Gráfico de costo por categoría.** La barra de «Instalaciones» con 0,00 US$ no se dibuja y las barras pequeñas casi no se distinguen. Mostrar el porcentaje al lado de cada valor ayuda.
 - **Tabla de materiales en el móvil.** Cada material ocupa siete filas y la pantalla mide casi 4800 px de alto con 17 materiales. Una tarjeta compacta (nombre, proyecto y subtotal, con el resto al abrirla) la acorta.
 - **Barra de módulos en el móvil.** Se desplaza de lado y los últimos módulos quedan ocultos sin ninguna señal. Un degradado en el borde o solo iconos con texto debajo lo hacen evidente.
