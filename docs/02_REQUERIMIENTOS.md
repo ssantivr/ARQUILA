@@ -25,7 +25,7 @@ El proyecto tiene dos partes: un núcleo académico, que es lo que evalúa la as
 | RF-04 | Usar estructuras de datos apropiadas. | Lista doble en «Deshacer» y cola en el límite de intentos (ver `05_COMPLEJIDAD.md`) |
 | RF-05 | Persistir la información en la base de datos. | PostgreSQL mediante SQLAlchemy (ver `07_BASE_DATOS.md`) |
 | RF-06 | Exponer endpoints documentados para el frontend. | FastAPI genera la documentación en `/docs` |
-| RF-07 | Incluir pruebas automatizadas. | `backend/tests/`, `frontend/src/utils/*.test.ts` y `frontend/src/state/*.test.ts` (ver `06_PRUEBAS.md`) |
+| RF-07 | Incluir pruebas automatizadas. | `backend/tests/`, `frontend/src/utils/*.test.ts`, `frontend/src/state/*.test.ts` y `frontend/src/three/*.test.ts` (ver `06_PRUEBAS.md`) |
 
 ## Requerimientos no funcionales
 

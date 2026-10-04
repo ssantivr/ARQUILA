@@ -146,6 +146,8 @@ Porque una caja alineada con los ejes se describe con seis números (posición `
 
 El costo es que no hay muros en diagonal ni cuartos con forma de L, y que no hay cálculo estructural: los componentes se registran y se dibujan, nada más.
 
+En los datos un cuarto sigue siendo una caja. Solo al dibujarlo, `frontend/src/three/roomGeometry.ts` la convierte en cuatro muros con espesor, con un hueco por cada ventana o puerta, y dos losas. Es un recorrido de los vanos del cuarto, O(v).
+
 ## 19. Cómo se evita que el visor 3D gaste memoria
 
 Three.js reserva memoria en la tarjeta gráfica para cada geometría y cada material, y no la libera sola. Es la misma idea que `new` y `delete` del punto 4: lo que se reserva hay que liberarlo.
