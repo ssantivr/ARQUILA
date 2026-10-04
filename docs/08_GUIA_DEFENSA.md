@@ -92,7 +92,7 @@ Las estructuras en C++ se validan ejecutando cada programa y comparando su salid
 
 - Solo se usan las estructuras estudiadas: arrays, pila, cola y listas enlazadas. No hay árboles, grafos ni tablas hash propias.
 - Las estructuras tienen capacidad fija o enlaces simples, sin plantillas ni optimizaciones avanzadas en C++.
-- La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA). Siguen el plan de `06_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
+- La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA, modelo 3D). Siguen el plan de `06_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
 
 ## 14. Qué patrón de diseño se usa y por qué
 
@@ -122,3 +122,39 @@ Todos recorren los vértices del lote una sola vez, O(n), sobre un array de punt
 - La vista frontal convierte la profundidad de cada vértice en altura según la pendiente.
 
 Es un ejemplo de recorrido de array con acceso por índice, incluido el paso del último elemento al primero con el operador módulo, igual que en la cola circular.
+
+## 17. Cómo se arma el modelo 3D del proyecto
+
+El backend no guarda el modelo: lo calcula cada vez que se pide, con los terrenos, planos, cuartos y componentes del proyecto (`backend/app/services/structure_service.py`). Devuelve una lista de cajas en metros y el frontend solo las dibuja.
+
+- Cada terreno es una losa. Como cada terreno guarda sus medidas desde su propio origen, se colocan uno al lado del otro.
+- Un plano es un nivel si tiene cuartos o componentes, o si su campo Nivel es un número. Así un plano de implantación no se apila como si fuera un piso.
+- Los niveles se apilan con un acumulador: la base de cada nivel es la suma de las alturas de los anteriores. Es un recorrido de la lista de planos, O(n).
+- Un plano sin cuartos se dibuja como un volumen de 3 m dentro del retiro del lote.
+
+Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `docs/10_BACKEND_Y_API.md`.
+
+## 18. Por qué un cuarto, una columna, una viga y un muro son cajas
+
+Porque una caja alineada con los ejes se describe con seis números (posición `x`, `y` y ancho, largo, alto) y alcanza para lo que el proyecto necesita mostrar. Con esa decisión:
+
+- los cuartos y los componentes comparten validaciones, formulario y dibujo;
+- una columna, una viga y un muro son la misma tabla con un campo `kind`, en lugar de tres tablas;
+- la única diferencia al dibujar es que la viga se cuelga del techo del nivel y los demás se apoyan en el piso.
+
+El costo es que no hay muros en diagonal ni cuartos con forma de L, y que no hay cálculo estructural: los componentes se registran y se dibujan, nada más.
+
+## 19. Cómo se evita que el visor 3D gaste memoria
+
+Three.js reserva memoria en la tarjeta gráfica para cada geometría y cada material, y no la libera sola. Es la misma idea que `new` y `delete` del punto 4: lo que se reserva hay que liberarlo.
+
+- Cada vez que cambia el modelo, y al salir de la pestaña, se llama a `dispose` sobre geometrías, materiales, el mapa de sombras y el contexto WebGL, y se quitan los eventos del ratón y de la ventana.
+- Three.js se carga solo al abrir la pestaña Modelo 3D, así que no pesa en el resto de la aplicación.
+
+Mostrar `disposeObject` y `dispose` en `frontend/src/three/structureViewer.ts`. Para demostrarlo en vivo: abrir la pestaña, cambiar a otra y comprobar en las herramientas del navegador que ya no hay ningún lienzo (`canvas`) en la página.
+
+## 20. Cómo se selecciona un cuarto con un clic
+
+Con un rayo (`Raycaster`): se traza una línea desde la cámara que pasa por el punto donde se hizo clic y se toma la primera caja que atraviesa. Si el puntero se movió más de 4 píxeles entre pulsar y soltar, se considera que el usuario estaba girando la cámara y no se selecciona nada.
+
+El elemento seleccionado se guarda en un solo lugar, el componente de React, y de ahí lo leen el modelo, la lista de niveles y el inspector. Por eso los tres muestran siempre lo mismo.

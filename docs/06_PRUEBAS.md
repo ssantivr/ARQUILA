@@ -78,9 +78,9 @@ Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen p
 
 Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12, Node 24 y PostgreSQL:
 
-- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 195 pruebas pasan.
+- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 205 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las cinco migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
+- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
 - Estructuras en C++: los cinco programas de `data_structures/` compilan con GCC 16.2 (`g++ -std=c++17 -static -Wall -Wextra -Wpedantic`) sin ningún aviso, y al ejecutarlos su salida coincide con los casos de este documento: la pila devuelve 30, 20, 10; la cola 10, 20, 30 y sigue funcionando después de dar la vuelta; las listas insertan, eliminan y se recorren en los dos sentidos. No se analizó el uso de memoria con una herramienta, porque GCC para Windows no incluye ese análisis.
