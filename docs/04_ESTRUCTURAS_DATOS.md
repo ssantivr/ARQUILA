@@ -63,13 +63,17 @@ La práctica principal consiste en entender cómo cambian las referencias cuando
 
 ## Dónde están
 
-| Estructura | C++ | Python |
-|---|---|---|
-| Array y array dinámico | `data_structures/arrays/ArrayExamples.cpp` | `backend/app/data_structures/arrays.py` |
-| Stack | `data_structures/stack/Stack.cpp` | `backend/app/data_structures/stack.py` |
-| Queue | `data_structures/queue/Queue.cpp` | `backend/app/data_structures/queue.py` |
-| Lista simple | `data_structures/singly_linked_list/SinglyLinkedList.cpp` | `backend/app/data_structures/singly_linked_list.py` |
-| Lista doble | `data_structures/doubly_linked_list/DoublyLinkedList.cpp` | `backend/app/data_structures/doubly_linked_list.py` |
+Las rutas de C++ son relativas a `data_structures/`, las de Python a `backend/app/data_structures/` y las de uso a `backend/app/services/`.
+
+| Estructura | Archivo C++ | Archivo Python | Dónde se usa en la app |
+|---|---|---|---|
+| Array dinámico | `arrays/ArrayExamples.cpp` | `arrays.py` | `material_ranking.py`: ordena los materiales del más caro al más barato para el asistente, insertando cada uno en su posición. |
+| Stack | `stack/Stack.cpp` | `stack.py` | `undo_history.py`: guarda lo que se restauró con «Deshacer» para poder rehacerlo (`POST /projects/{id}/redo`). |
+| Queue | `queue/Queue.cpp` | `queue.py` | `login_limiter.py`: horas de los intentos fallidos de inicio de sesión de cada correo. |
+| Lista simple | `singly_linked_list/SinglyLinkedList.cpp` | `singly_linked_list.py` | `conversation_context.py`: ventana con los últimos 20 mensajes que se envían a la IA. |
+| Lista doble | `doubly_linked_list/DoublyLinkedList.cpp` | `doubly_linked_list.py` | `undo_history.py`: historial de eliminaciones de cada proyecto. |
+
+Las cinco están escritas a mano, sin `collections.deque`, `queue` ni otra librería que las reemplace. La búsqueda lineal y la búsqueda binaria de `arrays.py` son las únicas piezas que la aplicación no usa: solo se ejercitan en las pruebas.
 
 La complejidad de cada operación y el uso de estas estructuras dentro de la aplicación están en `05_COMPLEJIDAD.md`.
 

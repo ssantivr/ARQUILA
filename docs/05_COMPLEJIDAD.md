@@ -96,4 +96,10 @@ El límite de intentos de inicio de sesión (`backend/app/services/login_limiter
 
 La cola sirve porque los intentos caducan en el mismo orden en que ocurrieron: el más antiguo siempre está al frente (FIFO). Cada operación es O(1); descartar caducados cuesta como máximo tantos pasos como la capacidad, que es fija.
 
+Rehacer (`backend/app/services/undo_history.py`) usa una pila por proyecto. Cada vez que «Deshacer» restaura un elemento, se apila; rehacer saca el de la cima y lo vuelve a eliminar. Lo último que se deshizo es lo primero que se rehace (LIFO), y `push` y `pop` son O(1). Una eliminación nueva vacía la pila, porque lo deshecho antes ya no se puede rehacer. La pila nunca se llena: entre el historial y la pila no hay más de 20 elementos.
+
+El contexto que se envía a la IA (`backend/app/services/conversation_context.py`) usa una lista simplemente enlazada como ventana de los últimos 20 mensajes: cada mensaje se inserta al final y, al superar el límite, se elimina el del inicio. Las dos operaciones son O(1) y la lista se recorre una sola vez hacia adelante, así que no hace falta el puntero al nodo anterior.
+
+El orden de los materiales para el asistente (`backend/app/services/material_ranking.py`) usa un array dinámico. Cada material se inserta en la posición que le corresponde por costo, lo que desplaza los siguientes: O(n) por inserción y O(n²) en total. Es aceptable porque un proyecto tiene pocos materiales, y a cambio el más caro se consulta por índice en O(1).
+
 La complejidad depende de la operación y de la implementación utilizada.
