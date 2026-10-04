@@ -130,7 +130,8 @@ El backend no guarda el modelo: lo calcula cada vez que se pide, con los terreno
 - Cada terreno es una losa. Como cada terreno guarda sus medidas desde su propio origen, se colocan uno al lado del otro.
 - Un plano es un nivel si tiene cuartos o componentes, o si su campo Nivel es un número. Así un plano de implantación no se apila como si fuera un piso.
 - Los niveles se apilan con un acumulador: la base de cada nivel es la suma de las alturas de los anteriores. Es un recorrido de la lista de planos, O(n).
-- Un plano sin cuartos se dibuja como un volumen de 3 m dentro del retiro del lote.
+- Mientras el proyecto no tiene cuartos, cada nivel se dibuja como un volumen de 3 m dentro del retiro del lote.
+- Las ventanas, la puerta, el techo y los árboles no son datos: el visor los añade al dibujar para que el modelo se lea como una edificación.
 
 Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `docs/10_BACKEND_Y_API.md`.
 
