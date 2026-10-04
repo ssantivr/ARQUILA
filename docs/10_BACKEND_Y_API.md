@@ -105,11 +105,13 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 No hay que configurar nada en `backend/.env`. Pasos, una sola vez:
 
 1. Instalar Ollama desde https://ollama.com.
-2. Descargar un modelo, por ejemplo `ollama pull llama3.2` (unos 2 GB).
+2. Descargar un modelo: `ollama pull llama3.2` (unos 2 GB). Los modelos más pequeños, como `llama3.2:1b`, se inventan cifras del proyecto.
 
 Con Ollama encendido, el asistente lo encuentra en `http://127.0.0.1:11434` y usa el primer modelo instalado. Dos variables opcionales cambian eso: `OLLAMA_MODEL` fija el modelo y `OLLAMA_URL` la dirección.
 
 - La velocidad y la calidad de las respuestas dependen del equipo y del modelo; un modelo pequeño responde peor que Claude.
+- Probado el 3 de octubre de 2026 con Ollama 0.35.1 y `llama3.2:1b` (1,3 GB): la conexión funciona y las respuestas quedan guardadas con origen `ai`. La primera respuesta tardó cerca de un minuto, mientras se cargaba el modelo; las siguientes, unos dos segundos. Pero ese modelo no es fiable con los datos: acertó la pendiente del terreno y se inventó el costo total de los materiales y el nombre de un plano. Con un modelo tan pequeño, las reglas dan cifras más fiables.
+- Probado el mismo día con `llama3.2` (2 GB) y las mismas tres preguntas: acertó la pendiente, el costo total y el detalle de los materiales, y el plano registrado. Es el modelo recomendado; se fija con `OLLAMA_MODEL=llama3.2`. Sigue siendo un modelo pequeño: redacta con alguna imprecisión y puede equivocarse en preguntas más difíciles.
 - Si Ollama no está encendido o no tiene modelos, el backend lo detecta en un segundo como máximo y contesta con las reglas.
 - Algunos modelos escriben su razonamiento entre etiquetas `<think>`; el adaptador lo quita de la respuesta.
 
