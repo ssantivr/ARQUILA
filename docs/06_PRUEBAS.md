@@ -79,7 +79,7 @@ Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen p
 
 Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12, Node 24 y PostgreSQL:
 
-- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 205 pruebas pasan.
+- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
