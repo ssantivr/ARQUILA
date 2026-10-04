@@ -66,7 +66,7 @@ Cubren:
 
 ### Frontend
 
-Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal y lectura de los vértices de un lote, traducción de los mensajes de error y formato de números.
+Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, cotas de cada lado, área edificable y lectura de los vértices de un lote, traducción de los mensajes de error y formato de números.
 
 Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
 

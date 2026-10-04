@@ -127,6 +127,23 @@ Un terreno puede tener una lista de vértices `x y` en metros, guardados en la t
 
 Simplificaciones: la superficie es un plano inclinado y se asume que la pendiente va en el sentido del largo (el eje `y`). El ancho y el largo son opcionales; si faltan, el esquema muestra qué dato falta. El área se guarda aparte porque un lote real puede no ser rectangular; el formulario la propone como ancho por largo si se deja vacía.
 
+## Plano de implantación
+
+La pestaña Planos dibuja, debajo de la lista de planos, un plano de implantación en SVG por cada terreno (`frontend/src/components/SitePlan.tsx`). Usa solo los datos del terreno:
+
+- **Límite del terreno**: el contorno del lote a escala, con una cota en cada lado. La longitud de cada lado y hacia dónde queda el exterior se calculan recorriendo los vértices una vez: O(n) (`edges` en `frontend/src/utils/geometry.ts`).
+- **Área edificable**: el rectángulo que queda al descontar un retiro igual en los cuatro lados. El retiro se elige con un control (de 0 a 10 m, 3 m al abrir) y el plano muestra el área resultante.
+- **Acceso**: una marca en el frente del lote.
+- **Norte**: una flecha cuya dirección se elige con un control.
+- **Leyenda** y botón **Descargar plano (SVG)**. El archivo descargado lleva sus colores dentro, así que se ve igual fuera de la aplicación.
+
+Simplificaciones:
+
+- El retiro y el norte no se guardan: el proyecto no tiene esos datos y vuelven a su valor inicial al recargar.
+- El acceso se asume por el frente, el lado más bajo, igual que en la vista frontal del terreno.
+- El área edificable solo se calcula en lotes rectangulares. En un lote con vértices se dibujan el contorno y las cotas, sin área edificable.
+- No se dibujan vivienda, áreas verdes, andenes ni parqueadero, porque el proyecto no guarda esos datos. Tampoco hay descarga en PDF.
+
 ## Datos numéricos
 
 La API recibe y devuelve áreas, cantidades y costos como números JSON. En la base de datos son `NUMERIC`.
