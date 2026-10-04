@@ -2,7 +2,7 @@
 
 ARQUILA se concentra en las estructuras de datos estudiadas actualmente: arrays, pilas, colas, listas simples y listas dobles. El proyecto prioriza comprenderlas correctamente.
 
-Las estructuras se implementan dos veces: en C++, como plantillas independientes con sus propias pruebas, para facilitar su análisis y explicación durante la presentación final; y en Python, dentro del backend, que es la versión que usa la aplicación.
+Las estructuras están implementadas desde cero en Python, en `backend/app/data_structures/`, sin librerías que las reemplacen. Es la única versión: la que usa la aplicación es la misma que se prueba y se explica.
 
 Una estructura no se elige solo por saber implementarla, sino por lo que el sistema necesita. La aplicación lo muestra en cinco casos:
 
@@ -20,4 +20,19 @@ La aplicación incluye partes que van más allá del contenido de la asignatura,
 
 El asistente dejó dos lecciones. La primera, sobre diseño: como los servicios solo conocen una interfaz (patrón Adapter), se pudo añadir un modelo local gratuito sin tocar la lógica de las conversaciones. La segunda, sobre confiar en una IA: un modelo pequeño se equivoca al hacer cuentas, así que los cálculos los hace el backend y el modelo solo los explica; y cuando no hay IA, unas reglas fijas dan una respuesta peor redactada pero exacta.
 
-Las estructuras más avanzadas pueden incorporarse posteriormente cuando formen parte del contenido académico de la asignatura.
+## Limitaciones y trabajo futuro
+
+Lo que no se hizo, sin orden de importancia:
+
+- **Estructuras.** La pila y la cola tienen capacidad fija y fallan si se llenan. No hay árboles, grafos ni tablas hash propias; donde hace falta buscar por clave (un historial por proyecto, una cola por correo) se usa el diccionario de Python. La búsqueda lineal y la binaria no se usan en la aplicación, solo en las pruebas y en las mediciones.
+- **Orden de materiales.** Es por inserción, O(n²). Sirve para los pocos materiales de un proyecto, no para miles.
+- **Mediciones.** Llegan a 100 000 elementos y se hicieron en un solo equipo. No se midió el uso de memoria.
+- **Memoria manual.** Al retirar la versión en C++, el proyecto ya no muestra la reserva y liberación manual de memoria.
+- **Deshacer.** Solo cubre terrenos, planos, elevaciones y materiales; los cuartos y los componentes estructurales no. El historial vive en la memoria del servidor: se pierde al reiniciarlo. Lo mismo ocurre con el límite de intentos de inicio de sesión.
+- **Asistente.** No se probó con Claude, porque necesita una clave de pago; solo con el modelo local de Ollama y con las reglas fijas.
+- **Correo.** No hay un servicio de correo configurado: el enlace de recuperación de contraseña se escribe en la consola del servidor.
+- **Despliegue.** La aplicación solo se ejecutó en el equipo local. No se desplegó en un servidor.
+- **Modelo 3D.** No representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. No hay cálculo estructural.
+- **Pruebas del frontend.** La mayoría de las pantallas no tiene pruebas automáticas.
+
+Como trabajo futuro, los hitos propuestos están en `13_EVOLUCION_POR_SEMANAS.md`. Las estructuras más avanzadas pueden incorporarse cuando formen parte del contenido de la asignatura.

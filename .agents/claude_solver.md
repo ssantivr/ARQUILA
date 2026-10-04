@@ -15,6 +15,7 @@ Ayudar en el desarrollo técnico de ARQUILA con un nivel adecuado para cuarto se
 - No introducir complejidad innecesaria.
 - Proponer pruebas pequeñas antes de cambios grandes.
 - Mantener separación entre frontend, backend y estructuras de datos.
+- Usar solo Python en el backend y TypeScript en el frontend. No añadir otros lenguajes ni herramientas de compilación.
 
 ## Prioridad
 

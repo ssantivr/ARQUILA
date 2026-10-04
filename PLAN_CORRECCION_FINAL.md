@@ -6,7 +6,7 @@ Objetivo: el proyecto queda solo con backend en Python (FastAPI) y frontend en T
 - [x] Fase 2 - Eliminar C++
 - [x] Fase 3 - Configuración y arranque
 - [x] Fase 4 - README
-- [ ] Fase 5 - Documentación
+- [x] Fase 5 - Documentación
 - [ ] Fase 6 - Comprobación final
 
 ## Fase 1: resultado
@@ -75,3 +75,13 @@ Cambios: Docker no está instalado en el equipo, así que se eliminó `docker-co
 No existía `README_corregido.md`, así que los cambios se aplicaron al `README.md` actual. Se comprobó con un script que todas las rutas citadas existen (`frontend/.env` no existe porque lo crea quien instala) y se contrastaron con el código los datos de la sección «Seguridad» (sesión de 7 días, cookie `HttpOnly`, 5 intentos en 60 segundos) y la ventana de 20 mensajes. No se volvieron a ejecutar los comandos de arranque: se comprobaron en la fase 3. El comando `psql` del «Inicio rápido» no se ejecutó en esta fase.
 
 Pendiente para la fase 5: añadir `docs/15_ESTUDIO_PARA_LA_DEFENSA.md` a la tabla «Documentación» del README cuando se cree.
+
+## Fase 5: resultado
+
+Reescritos sin C++ ni CMake: `docs/03`, `04`, `05`, `06`, `09`, `10`, `11`, `.agents/claude_solver.md` y `prompts/README.md`. `docs/04` tiene los diagramas Mermaid de las dos listas; `docs/09` las cinco respuestas nuevas (puntos 23 a 27); `docs/10` la sección de limitaciones; y se creó `docs/15_ESTUDIO_PARA_LA_DEFENSA.md`, ya enlazado en el README. `CHANGELOG.md` y `docs/13` conservan los hechos históricos con una nota de que C++ y CMake se retiraron.
+
+`docs/13` se comparó con `git log`: las fechas que cita (3 y 4 de octubre de 2026) coinciden con los commits y no se encontró nada que contradiga el historial, así que solo se añadió la nota.
+
+Solo cambió documentación. `python scripts/quality.py` pasa (ejecutado con el Python de `backend/.venv`); `pytest`, `npm test` y `npm run build` no se ejecutaron en esta fase. Los diagramas Mermaid no se renderizaron; se revisó su sintaxis a mano. La respuesta sobre 1 millón de elementos es un razonamiento sobre el código y las mediciones hasta 100 000, no una medición.
+
+Pendiente para la fase 6: los conteos de pruebas de `docs/06_PRUEBAS.md` («Instalación desde cero») son anteriores y hay que reemplazarlos por los resultados reales.

@@ -1,6 +1,6 @@
 # COMPLEJIDAD BÁSICA
 
-Como el código no lleva comentarios, la complejidad de cada operación se documenta aquí. Las tablas aplican tanto a las implementaciones en C++ (`data_structures/`) como a las de Python (`backend/app/data_structures/`), salvo donde se indica.
+Como el código no lleva comentarios, la complejidad de cada operación se documenta aquí. Las tablas describen las implementaciones de `backend/app/data_structures/`.
 
 `n` es el número de elementos almacenados.
 
@@ -106,7 +106,7 @@ La complejidad depende de la operación y de la implementación utilizada.
 
 ## Mediciones
 
-La tabla de arriba es teoría. Para comprobarla, `backend/app/benchmark.py` mide las implementaciones en Python, que son las que usa la aplicación, con tres tamaños de entrada. Se ejecuta con:
+La tabla de arriba es teoría. Para comprobarla, `backend/app/benchmark.py` mide esas implementaciones con tres tamaños de entrada. Se ejecuta con:
 
 ```bash
 cd backend
@@ -142,4 +142,4 @@ Comparación con la teoría:
 
 La diferencia práctica se ve en una misma fila: buscar un valor en una lista de 100 000 elementos tarda unos 11 milisegundos, y la búsqueda binaria en un array ordenado del mismo tamaño, 2,4 microsegundos.
 
-Las cifras exactas cambian de un equipo a otro y entre ejecuciones; lo que se mantiene es cómo crecen. No se midieron las estructuras en C++: la pila y la cola tienen ahí capacidad fija de 100 elementos, así que no admiten tamaños distintos.
+Las cifras exactas cambian de un equipo a otro y entre ejecuciones; lo que se mantiene es cómo crecen. No se midió ningún tamaño mayor que 100 000 elementos.

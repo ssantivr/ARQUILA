@@ -33,22 +33,19 @@ El proyecto utiliza pruebas sencillas porque el objetivo es validar los concepto
 - Recorrer hacia adelante.
 - Recorrer hacia atrás.
 
-### Estructuras en C++
+### Casos borde de las estructuras
 
-Los casos anteriores, y los de los arrays, están automatizados con Catch2 en `data_structures/tests/`. Se ejecutan con un solo comando, que también compila:
+Los casos anteriores, y los de los arrays, están automatizados en `backend/tests/test_data_structures.py`. Además comprueban:
 
-```bash
-cd data_structures
-cmake --workflow --preset default
-```
+- `pop`, `peek` y `dequeue` en una estructura vacía, y `push` y `enqueue` en una llena.
+- Que la cola mantiene el orden después de dar la vuelta al array.
+- Las listas vacías, las de un solo elemento, y eliminar la cabeza, la cola y un nodo intermedio.
+- Que en la lista doble los enlaces hacia atrás siguen siendo coherentes después de insertar y eliminar.
+- Una lista de 1000 nodos después de eliminar la mitad.
+- Que las estructuras guardan tipos distintos de `int` y que las búsquedas funcionan con textos.
+- Que el array dinámico crece, desplaza los elementos y rechaza los índices fuera de rango.
 
-Además de los casos de cada estructura, las pruebas comprueban:
-
-- La pila y la cola llenas (100 elementos) y vacías, y que la cola mantiene el orden después de dar la vuelta al array.
-- Que cada estructura funciona con un tipo distinto de `int` (`std::string`).
-- La memoria de las listas: con un tipo que cuenta cuántos valores existen, se verifica que insertar, eliminar, vaciar y destruir la lista deja el contador en cero, es decir, que cada nodo se libera una sola vez.
-
-En GitHub las mismas pruebas y los cinco programas se ejecutan compilados con AddressSanitizer y UndefinedBehaviorSanitizer, que fallan ante una fuga, una doble liberación o un acceso fuera de rango. En Windows no se pueden usar porque GCC para Windows no los incluye.
+`backend/tests/test_structure_usage.py` comprueba dos de sus usos en los servicios: la ventana de mensajes del asistente y el orden de los materiales por costo.
 
 ### Backend
 
@@ -128,8 +125,6 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones que había entonces (hoy son nueve) y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
-- Estructuras en C++: los cinco programas de `data_structures/` compilan con GCC 16.2 (`g++ -std=c++17 -static -Wall -Wextra -Wpedantic`) sin ningún aviso, y al ejecutarlos su salida coincide con los casos de este documento: la pila devuelve 30, 20, 10; la cola 10, 20, 30 y sigue funcionando después de dar la vuelta; las listas insertan, eliminan y se recorren en los dos sentidos. Entonces no se analizó el uso de memoria con una herramienta, porque GCC para Windows no incluye ese análisis; desde el 4 de octubre lo hace GitHub con AddressSanitizer, y los programas se compilan con CMake (ver «Estructuras en C++» más arriba).
-
 En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
 
 ### Cobertura del backend
@@ -144,10 +139,9 @@ coverage report -m
 
 ### Integración continua
 
-El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `santiago` o a `main` y en cada pull request. Son cuatro trabajos independientes:
+El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `main` y en cada pull request. Son tres trabajos independientes:
 
-- **Formato y reglas:** ejecuta `python scripts/quality.py` (Ruff, Prettier, ESLint y clang-format) y falla si algún archivo no cumple.
-- **Estructuras en C++:** compila `data_structures/` con CMake, con AddressSanitizer y UndefinedBehaviorSanitizer activados, ejecuta las pruebas de Catch2 y después cada programa de ejemplo.
+- **Formato y reglas:** ejecuta `python scripts/quality.py` (Ruff, Prettier y ESLint) y falla si algún archivo no cumple.
 - **Backend:** instala `requirements-dev.txt` con Python 3.12 y ejecuta `pytest` dos veces, con SQLite y contra un PostgreSQL 16 que se levanta solo para esa ejecución.
 - **Frontend:** `npm ci`, `npm test` y `npm run build` con Node 24.
 

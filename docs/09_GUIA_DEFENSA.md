@@ -16,7 +16,7 @@ Cada parte tiene una sola responsabilidad y se puede probar y cambiar sin tocar 
 
 - `frontend/` muestra la información y envía peticiones; no guarda datos ni decide permisos.
 - `backend/` valida, aplica las reglas y guarda en la base de datos.
-- `data_structures/` contiene las estructuras en C++ como material de estudio, independientes de la aplicación.
+- `backend/app/data_structures/` contiene las estructuras, escritas en Python. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos.
 
 Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `docs/12_BACKEND_Y_API.md`.
 
@@ -24,45 +24,47 @@ Dentro del backend se repite la misma idea por capas: `api` recibe la petición,
 
 Guarda los elementos en posiciones consecutivas de memoria. Por eso llegar a una posición por su índice es inmediato, O(1), pero insertar o eliminar en medio obliga a desplazar los elementos que siguen, O(n).
 
-Mostrar `insertAt` y `removeAt` en `data_structures/arrays/ArrayExamples.cpp`.
+Mostrar `insert_at` y `remove_at` de `DynamicArray` en `backend/app/data_structures/arrays.py`.
 
 ## 4. Qué significa memoria dinámica
 
-Es memoria que se reserva mientras el programa se ejecuta, con `new`, y que el programa debe liberar con `delete`. Permite decidir el tamaño en tiempo de ejecución.
+Es memoria que se reserva mientras el programa se ejecuta, y no antes. Permite decidir el tamaño en tiempo de ejecución.
 
-En `ArrayExamples.cpp`, cuando el array dinámico se llena, `resize` reserva un bloque más grande, copia los elementos y libera el bloque anterior. En las listas, cada nodo se reserva con `new` y el destructor los libera todos con `clear`.
+En `arrays.py`, cuando el array dinámico se llena, `_resize` crea un bloque del doble de tamaño y copia los elementos uno por uno. En las listas, cada `push_front` o `push_back` crea un nodo nuevo.
+
+En Python el programa no libera la memoria a mano: el intérprete la recupera cuando ya nada hace referencia al objeto. Por eso, al quitar un nodo, basta con que ningún otro nodo ni `head` ni `tail` lo sigan apuntando.
 
 ## 5. Por qué Stack utiliza LIFO
 
-Porque solo se trabaja por un extremo, la cima: el último elemento que entra es el primero que sale. `push` y `pop` solo mueven el índice `top`, por eso son O(1).
+Porque solo se trabaja por un extremo, la cima: el último elemento que entra es el primero que sale. `push` y `pop` solo mueven el contador `_size`, que indica la cima, por eso son O(1).
 
-Mostrar `data_structures/stack/Stack.cpp`. `pop` devuelve `false` si la pila está vacía, en lugar de un valor especial, para poder guardar cualquier entero.
+Mostrar `backend/app/data_structures/stack.py`. `pop` en una pila vacía produce `IndexError`, en lugar de devolver un valor especial como `None`, para que la pila pueda guardar cualquier valor.
 
 ## 6. Por qué Queue utiliza FIFO
 
 Porque se inserta por un extremo y se retira por el otro: el primero que entra es el primero que sale.
 
-La cola es circular: el índice avanza con el operador módulo y reutiliza las posiciones que quedan libres al retirar elementos. Sin eso, después de 100 inserciones la cola se reportaría llena aunque estuviera vacía. Mostrar `data_structures/queue/Queue.cpp`.
+La cola es circular: el índice avanza con el operador módulo y reutiliza las posiciones que quedan libres al retirar elementos. Sin eso, después de tantas inserciones como su capacidad la cola se reportaría llena aunque estuviera vacía. Mostrar `enqueue` y `dequeue` en `backend/app/data_structures/queue.py`.
 
-## 7. Cómo funciona el puntero `next` de una lista simple
+## 7. Cómo funciona la referencia `next` de una lista simple
 
-Cada nodo guarda un dato y la dirección del nodo siguiente; el último apunta a `nullptr`. Para recorrer la lista se empieza en `head` y se sigue `next` hasta llegar a `nullptr`.
+Cada nodo guarda un dato y una referencia al nodo siguiente; en el último, `next` es `None`. Para recorrer la lista se empieza en `head` y se sigue `next` hasta llegar a `None`.
 
-Solo se puede avanzar. Para eliminar un nodo hay que estar parado en el anterior, porque es su `next` el que se debe cambiar. Mostrar `remove` en `data_structures/singly_linked_list/SinglyLinkedList.cpp`.
+Solo se puede avanzar. Para eliminar un nodo hay que estar parado en el anterior, porque es su `next` el que se debe cambiar. Mostrar `remove` en `backend/app/data_structures/singly_linked_list.py`. El diagrama de nodos está en `docs/04_ESTRUCTURAS_DATOS.md`.
 
 ## 8. Cómo funcionan `previous` y `next` en una lista doble
 
 Cada nodo conoce a su vecino anterior y al siguiente, así que la lista se puede recorrer en los dos sentidos y se puede retirar un nodo teniendo solo ese nodo.
 
-El costo es más memoria por nodo y más punteros que mantener en cada operación. Mostrar `printForward` y `printBackward` en `data_structures/doubly_linked_list/DoublyLinkedList.cpp`.
+El costo es más memoria por nodo y más referencias que mantener en cada operación. Mostrar `__iter__` y `__reversed__` en `backend/app/data_structures/doubly_linked_list.py`.
 
 ## 9. Qué ocurre cuando se elimina un nodo
 
-En la lista doble, la función `unlink` hace tres cosas:
+En la lista doble, el método `_unlink` hace tres cosas:
 
 1. El `next` del nodo anterior pasa a apuntar al nodo siguiente. Si no hay anterior, el nodo era la cabeza y `head` pasa al siguiente.
 2. El `previous` del nodo siguiente pasa a apuntar al anterior. Si no hay siguiente, el nodo era la cola y `tail` pasa al anterior.
-3. Se libera la memoria del nodo con `delete` y se descuenta del contador.
+3. Se descuenta el nodo del contador y se devuelve su dato. Como ya nada lo apunta, el intérprete recupera su memoria.
 
 Los casos que hay que saber explicar son: eliminar la cabeza, eliminar la cola, eliminar el único nodo y eliminar uno intermedio.
 
@@ -86,12 +88,12 @@ El límite de intentos de inicio de sesión usa una cola (`backend/app/services/
 
 Con pruebas automatizadas en `backend/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.
 
-Las estructuras en C++ tienen sus propias pruebas con Catch2 en `data_structures/tests/`, que se ejecutan con `cmake --workflow --preset default`.
+Las pruebas de las estructuras están en `backend/tests/test_data_structures.py` y cubren los casos borde: vacía, llena, un solo elemento, y eliminar la cabeza y la cola.
 
 ## 13. Qué decisiones se tomaron para mantener el proyecto dentro del alcance de la asignatura
 
 - Solo se usan las estructuras estudiadas: arrays, pila, cola y listas enlazadas. No hay árboles, grafos ni tablas hash propias.
-- Las estructuras tienen capacidad fija o enlaces simples. En C++ son plantillas sencillas, sin optimizaciones avanzadas.
+- La pila y la cola tienen capacidad fija y las listas solo guardan las referencias necesarias. No hay optimizaciones avanzadas.
 - La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA, modelo 3D). Siguen el plan de `13_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
 
 ## 14. Qué patrón de diseño se usa y por qué
@@ -150,7 +152,7 @@ En los datos un cuarto sigue siendo una caja. Solo al dibujarlo, `frontend/src/t
 
 ## 19. Cómo se evita que el visor 3D gaste memoria
 
-Three.js reserva memoria en la tarjeta gráfica para cada geometría y cada material, y no la libera sola. Es la misma idea que `new` y `delete` del punto 4: lo que se reserva hay que liberarlo.
+Three.js reserva memoria en la tarjeta gráfica para cada geometría y cada material, y no la libera sola. Es lo contrario de lo que pasa en Python (punto 4): aquí lo que se reserva hay que liberarlo a mano.
 
 - Cada vez que cambia el modelo, y al salir de la pestaña, se llama a `dispose` sobre geometrías, materiales, el mapa de sombras y el contexto WebGL, y se quitan los eventos del ratón y de la ventana.
 - Three.js se carga solo al abrir la pestaña Modelo 3D, así que no pesa en el resto de la aplicación.
@@ -181,3 +183,41 @@ Al seleccionar un elemento, el inspector muestra un selector «Material». Al el
 - El elemento seleccionado se marca con un contorno cian y no con un tinte, para que el material se vea tal cual.
 - El tipo de cubierta (a dos aguas o plana) sigue el mismo camino, pero es un dato del proyecto y no de un elemento: `appState.setRoof`, `PATCH /projects/{id}/structure/roof` y la columna `roof` de `projects`.
 - Límite que conviene decir: es un dato visual, distinto de los Materiales del proyecto, que son partidas de presupuesto; no cambia el coste estimado.
+
+## 23. Por qué las estructuras están en Python y no en C++
+
+Porque la aplicación está escrita en Python y esas son las estructuras que usa. Al principio también había una versión en C++ en una carpeta aparte, compilada con CMake, pero la aplicación nunca la llamó: era una segunda implementación que había que mantener y probar por separado. Se retiró para que el proyecto tuviera un solo lenguaje en el backend y una sola versión que explicar.
+
+Lo que se pierde: en Python no se ve la reserva y liberación manual de memoria. El punto 4 explica cómo lo resuelve el intérprete.
+
+## 24. Por qué un array dinámico para ordenar los materiales
+
+Porque el resultado se lee por posición: el asistente recibe los materiales en orden y el más caro es el índice 0, en O(1). Además no se sabe de antemano cuántos materiales tiene un proyecto, así que el array tiene que poder crecer.
+
+El costo: cada material se inserta en su posición desplazando los que siguen, O(n) por inserción y O(n²) en total. Se acepta porque un proyecto tiene pocos materiales. Mostrar `backend/app/services/material_ranking.py`.
+
+## 25. Por qué una lista simple en la ventana de mensajes y no una cola
+
+El comportamiento sí es de cola: entra por el final y sale por el inicio. Pero la cola del proyecto no alcanza por dos razones:
+
+- No se puede recorrer sin vaciarla, y la ventana hay que recorrerla entera para enviar los mensajes a la IA.
+- Tiene capacidad fija y falla si se llena; la lista crece nodo a nodo.
+
+La lista simple da `push_back` y `pop_front` en O(1) y un recorrido hacia adelante. No hace falta la lista doble porque nunca se recorre hacia atrás ni se quita por el final. Mostrar `backend/app/services/conversation_context.py`.
+
+## 26. Por qué lista doble más pila en Deshacer y Rehacer, y no dos pilas
+
+Deshacer necesita tres operaciones: agregar al final, quitar del final y descartar la más antigua cuando hay más de 20. La tercera es quitar por el fondo, y una pila no lo permite. La lista doble hace las tres en O(1).
+
+Rehacer solo necesita apilar y desapilar, y nunca supera los 20 elementos, así que le basta una pila. Mostrar `record` y `record_restored` en `backend/app/services/undo_history.py`.
+
+## 27. Qué pasa con 1 millón de elementos
+
+No se midió: las mediciones de `docs/05_COMPLEJIDAD.md` llegan a 100 000 elementos. Lo que sigue sale del código y de esas mediciones, no de una prueba.
+
+- Pila y cola: tienen capacidad fija (100 por defecto). Habría que crearlas con capacidad de un millón, y reservan todo el bloque al crearse. `push`, `pop`, `enqueue` y `dequeue` siguen siendo O(1).
+- Array dinámico: agregar al final sigue siendo O(1) amortizado; partiendo de 4 posiciones, duplica su capacidad 18 veces. Insertar al inicio desplaza un millón de elementos cada vez.
+- Listas: insertar en los extremos sigue siendo O(1). Buscar un valor es O(n): con 100 000 elementos tardó unos 11 milisegundos, así que con un millón se espera unas diez veces más. Cada elemento ocupa además un nodo propio.
+- El orden de materiales por inserción, O(n²), dejaría de servir: habría que cambiarlo por un algoritmo de ordenamiento O(n log n).
+
+En la aplicación ninguna estructura se acerca a ese tamaño: el historial guarda 20 eliminaciones por proyecto, la ventana 20 mensajes y la cola 5 intentos por correo.

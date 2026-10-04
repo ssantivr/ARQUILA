@@ -18,8 +18,6 @@ Repositorios    Estructuras de datos (Python)
 PostgreSQL
 ```
 
-Las implementaciones académicas en C++ (`data_structures/`) son un módulo aparte: no las llama la aplicación.
-
 ## Diagrama
 
 El mismo esquema con más detalle. Las flechas continuas son llamadas que ocurren en cada petición; las punteadas, servicios externos que solo se usan si están configurados.
@@ -55,7 +53,6 @@ flowchart TD
     claude["Claude · API de Anthropic"]
     ollama["Ollama · modelo local"]
     smtp["Servidor de correo"]
-    cpp["Estructuras en C++<br/>módulo académico independiente"]
 
     user --> pages
     client -- "HTTP y cookie de sesión" --> api
@@ -64,7 +61,6 @@ flowchart TD
     adapters -.-> claude
     adapters -.-> ollama
     adapters -.-> smtp
-    cpp ~~~ structures
 ```
 
 ## Frontend
@@ -98,12 +94,9 @@ Las decisiones de cada parte están explicadas en `12_BACKEND_Y_API.md`.
 
 ## Estructuras de datos
 
-Las estructuras estudiadas existen en dos versiones:
+Las estructuras estudiadas están implementadas desde cero en Python, dentro de `backend/app/data_structures/`, un archivo por estructura. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos. Por eso se pueden leer, probar y explicar por separado.
 
-- En C++, dentro de `data_structures/`, como material de estudio. Cada estructura es una plantilla en un `.hpp`, con un programa de ejemplo en el `.cpp` del mismo nombre.
-- En Python, dentro de `backend/app/data_structures/`, que son las que usa la aplicación.
-
-Esta separación permite estudiar la materia sin mezclar la implementación académica con la interfaz.
+Qué servicio usa cada una está en `04_ESTRUCTURAS_DATOS.md`.
 
 ## Base de datos
 

@@ -285,5 +285,6 @@ Durante el desarrollo se usó un asistente de IA. Las instrucciones que se le di
 | `docs/12_BACKEND_Y_API.md` | Decisiones del backend y del frontend: autenticación, seguridad, registro de eventos, archivos, terreno, IA y accesibilidad. |
 | `docs/13_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
 | `docs/14_GUION_DEMO.md` | Recorrido paso a paso para la demostración: qué hacer, qué estructura se activa y qué decir. |
+| `docs/15_ESTUDIO_PARA_LA_DEFENSA.md` | Resumen de cada estructura para estudiar y archivos que cada integrante debe poder explicar. |
 | `CHANGELOG.md` | Cambios agrupados por semana y etiquetas de Git propuestas. |
 | `prompts/README.md` | Índice de los prompts usados con el asistente de IA. |

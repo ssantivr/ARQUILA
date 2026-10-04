@@ -12,7 +12,11 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - Contraseñas con Argon2id, registro de eventos en JSON y `DATABASE_URL` leída siempre de `backend/.env` (`e51aeef`).
 - Diseño corregido en pantallas pequeñas, botón «Reintentar», aviso «Guardando…» y pruebas de componentes con Testing Library (`ffee820`).
 - Ruff, ESLint, Prettier y clang-format con un solo comando, hooks de pre-commit, plantilla de pull request y versiones de dependencias fijadas (`fb248e9`).
-- Diagramas de arquitectura y entidad-relación, guion de la demostración, mediciones de las estructuras y este archivo.
+- Diagramas de arquitectura y entidad-relación, guion de la demostración, mediciones de las estructuras y este archivo (`81d1294`).
+- Casos borde que solo probaba la versión en C++, pasados a `pytest` (`c1db608`).
+- C++, CMake, Catch2 y clang-format retirados: la aplicación nunca llamó a esa versión de las estructuras y el proyecto queda solo en Python y TypeScript (`84a5943`). Las entradas de este archivo que los mencionan se conservan como registro histórico.
+- Instalación comprobada desde un clon nuevo (`43b87b4`).
+- `README.md` reescrito para un proyecto solo en Python y TypeScript (`e9c9106`).
 
 ## Semana 9 — Calidad, seguridad y rendimiento
 

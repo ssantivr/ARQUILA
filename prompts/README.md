@@ -25,4 +25,4 @@ Encargos concretos, copiados tal como se enviaron el 3 de octubre de 2026.
 | `07_PROMPT_BACKEND_Y_FRONTEND.md` | Alinear el frontend en TypeScript con el backend en Python. |
 | `08_PROMPT_STACK_ESTRICTO.md` | Auditar que el backend sea solo Python y el frontend solo TypeScript. |
 
-Varias rutas que mencionan estos tres prompts cambiaron después: `database/schema.sql` pasó a ser `database/migrations/001_initial_schema.sql`, y la regla de no escribir comentarios en el código se aplica aunque el segundo y el tercero hablen de comentarios en inglés.
+Varias rutas que mencionan estos tres prompts cambiaron después: `database/schema.sql` pasó a ser `database/migrations/001_initial_schema.sql`, y la regla de no escribir comentarios en el código se aplica aunque el segundo y el tercero hablen de comentarios en inglés. Los dos primeros mencionan las estructuras en C++ de la carpeta `data_structures/`: esa versión se retiró y las estructuras quedan solo en Python, en `backend/app/data_structures/`.
