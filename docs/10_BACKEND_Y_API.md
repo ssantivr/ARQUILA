@@ -74,6 +74,7 @@ Todo lo que pertenece a un proyecto exige sesión y que el proyecto sea del usua
 - El tipo se detecta por los primeros bytes del contenido, no por la extensión ni por lo que declare el navegador. Se admiten PDF, PNG, JPEG y WebP, hasta 20 MB.
 - Al eliminar un archivo se desvincula de forma explícita de los planos y elevaciones que lo usaban. No se depende de `ON DELETE SET NULL` porque SQLite, que se usa en las pruebas, solo lo aplica si se activan las claves foráneas.
 - Al eliminar un proyecto se borran también sus archivos del disco.
+- El botón «Ver», en la pestaña Archivos y junto al archivo adjunto de un plano o una elevación, abre el archivo dentro de la aplicación en una ventana superpuesta (`frontend/src/components/FileViewer.tsx` y `Modal.tsx`): las imágenes se muestran ajustadas a la ventana y los PDF con el lector del navegador. La ventana usa el elemento `<dialog>` del navegador, así que se cierra con Escape, con el botón «Cerrar» o pulsando fuera, y tiene un enlace para abrir el archivo en otra pestaña.
 
 ## Deshacer eliminaciones
 
