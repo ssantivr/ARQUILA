@@ -47,7 +47,7 @@ app/models.py         Tablas
 app/data_structures/  Pila, cola, listas y array dinámico
 ```
 
-Las decisiones de cada parte están explicadas en `10_BACKEND_Y_API.md`.
+Las decisiones de cada parte están explicadas en `12_BACKEND_Y_API.md`.
 
 ## Estructuras de datos
 

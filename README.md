@@ -85,7 +85,7 @@ python -m app.dev
 
 Ese comando lee `backend/.env`, crea o actualiza las tablas con las migraciones pendientes y arranca el servidor en el puerto 8000. Ver `docs/07_BASE_DATOS.md`.
 
-Las demás variables están en `backend/.env.example` y se explican en `docs/10_BACKEND_Y_API.md`.
+Las demás variables están en `backend/.env.example` y se explican en `docs/12_BACKEND_Y_API.md`.
 
 ## Ejecución del frontend
 
@@ -113,7 +113,7 @@ cd backend
 python -m app.check
 ```
 
-Ver `docs/10_BACKEND_Y_API.md`.
+Ver `docs/12_BACKEND_Y_API.md`.
 
 ## Pruebas
 
@@ -139,10 +139,10 @@ npm run build
 | `docs/05_COMPLEJIDAD.md` | Complejidad de cada operación y uso de las estructuras en la aplicación. |
 | `docs/06_PRUEBAS.md` | Qué cubren las pruebas y cómo ejecutarlas. |
 | `docs/07_BASE_DATOS.md` | Base de datos, migraciones y datos de ejemplo. |
-| `docs/07_GIT_Y_TRABAJO_EN_EQUIPO.md` | Flujo de trabajo con Git. |
-| `docs/08_GUIA_DEFENSA.md` | Preguntas de la defensa con sus respuestas. |
-| `docs/09_CONCLUSIONES.md` | Conclusiones. |
-| `docs/09_PLAN_TRABAJO.md` | Fases del trabajo y su estado. |
-| `docs/10_BACKEND_Y_API.md` | Decisiones del backend: autenticación, archivos, terreno e IA. |
-| `06_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
+| `docs/08_GIT_Y_TRABAJO_EN_EQUIPO.md` | Flujo de trabajo con Git. |
+| `docs/09_GUIA_DEFENSA.md` | Preguntas de la defensa con sus respuestas. |
+| `docs/10_CONCLUSIONES.md` | Conclusiones. |
+| `docs/11_PLAN_TRABAJO.md` | Fases del trabajo y su estado. |
+| `docs/12_BACKEND_Y_API.md` | Decisiones del backend: autenticación, archivos, terreno e IA. |
+| `docs/13_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
 | `prompts/README.md` | Índice de los prompts usados con el asistente de IA. |

@@ -18,7 +18,7 @@ Cada parte tiene una sola responsabilidad y se puede probar y cambiar sin tocar 
 - `backend/` valida, aplica las reglas y guarda en la base de datos.
 - `data_structures/` contiene las estructuras en C++ como material de estudio, independientes de la aplicación.
 
-Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `docs/10_BACKEND_Y_API.md`.
+Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `docs/12_BACKEND_Y_API.md`.
 
 ## 3. Cómo funciona un array
 
@@ -92,7 +92,7 @@ Las estructuras en C++ se validan ejecutando cada programa y comparando su salid
 
 - Solo se usan las estructuras estudiadas: arrays, pila, cola y listas enlazadas. No hay árboles, grafos ni tablas hash propias.
 - Las estructuras tienen capacidad fija o enlaces simples, sin plantillas ni optimizaciones avanzadas en C++.
-- La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA, modelo 3D). Siguen el plan de `06_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
+- La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA, modelo 3D). Siguen el plan de `13_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
 
 ## 14. Qué patrón de diseño se usa y por qué
 
@@ -104,7 +104,7 @@ El patrón Adapter, en los servicios externos del backend. El asistente necesita
 
 `ConversationService` solo conoce la interfaz. Por eso se añadió el modelo local sin tocar ese servicio, y las pruebas usan un asistente simulado en lugar de uno real. El correo sigue la misma idea con `SmtpMailer` y `ConsoleMailer`.
 
-Mostrar `backend/app/ai.py`. Ver la tabla de `docs/10_BACKEND_Y_API.md`.
+Mostrar `backend/app/ai.py`. Ver la tabla de `docs/12_BACKEND_Y_API.md`.
 
 ## 15. Qué pasa si la IA no está disponible o se equivoca
 
@@ -134,7 +134,7 @@ El backend no guarda el modelo: lo calcula cada vez que se pide, con los terreno
 - Las ventanas, la puerta, el techo y los árboles no son datos: el visor los añade al dibujar para que el modelo se lea como una edificación.
 - Con esos mismos cuartos se generan las plantas con ejes y cotas, las cuatro fachadas y un corte. Los ejes de una planta salen de ordenar los bordes de los cuartos y quitar los repetidos: un recorrido y un ordenamiento de un array.
 
-Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `docs/10_BACKEND_Y_API.md`.
+Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `docs/12_BACKEND_Y_API.md`.
 
 ## 18. Por qué un cuarto, una columna, una viga y un muro son cajas
 

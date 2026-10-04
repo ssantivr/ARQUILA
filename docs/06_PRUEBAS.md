@@ -93,4 +93,4 @@ En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install
 
 ### Sin cobertura automática
 
-La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `10_BACKEND_Y_API.md`).
+La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `12_BACKEND_Y_API.md`).
