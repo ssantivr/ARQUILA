@@ -542,7 +542,7 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 | 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas; si la IA no está disponible, el asistente responde con reglas e indica el origen. Dos proveedores de IA: Claude (con clave) o un modelo local con Ollama (gratuito, sin clave). | Probado con el modelo local `llama3.2`, que responde bien con los datos del proyecto (`llama3.2:1b` se inventa cifras). Falta probar Claude con una clave real. |
 | 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Las pruebas pasan contra PostgreSQL 16 y 18 (ver `docs/06_PRUEBAS.md`) y hay migraciones (ver `docs/07_BASE_DATOS.md`). Falta desplegarlo fuera del equipo local. |
 | 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. | Vista 3D. |
-| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, recuperación de contraseña, estados de carga, vacío y error. | Configurar un servicio de correo real para la recuperación de contraseña; revisión de rendimiento. |
+| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, recuperación de contraseña, estados de carga, vacío y error. Revisión de rendimiento de la API, con dos correcciones (ver `docs/10_BACKEND_Y_API.md`). | Configurar un servicio de correo real para la recuperación de contraseña. |
 | 10 — Versión profesional | — | Todo. |
 
 ---

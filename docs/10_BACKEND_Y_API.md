@@ -114,7 +114,7 @@ Con Ollama encendido, el asistente lo encuentra en `http://127.0.0.1:11434` y us
 - Probado el 3 de octubre de 2026 con Ollama 0.35.1 y `llama3.2:1b` (1,3 GB): la conexión funciona y las respuestas quedan guardadas con origen `ai`. La primera respuesta tardó cerca de un minuto, mientras se cargaba el modelo; las siguientes, unos dos segundos. Pero ese modelo no es fiable con los datos: acertó la pendiente del terreno y se inventó el costo total de los materiales y el nombre de un plano. Con un modelo tan pequeño, las reglas dan cifras más fiables.
 - Probado el mismo día con `llama3.2` (2 GB) y las mismas tres preguntas: acertó la pendiente, el costo total y el detalle de los materiales, y el plano registrado. Es el modelo recomendado; se fija con `OLLAMA_MODEL=llama3.2`. Sigue siendo un modelo pequeño y redacta con alguna imprecisión.
 - Los modelos pequeños fallan al hacer cuentas: en un proyecto con ocho materiales, `llama3.2` dio bien el costo total pero señaló como más caro un material que no lo era, con una cifra mal multiplicada. Por eso el backend no le deja calcular: los datos que recibe llevan ya el costo de cada material, el total y el nombre del más caro, con los materiales ordenados de mayor a menor costo, y las instrucciones le piden citar esas cifras tal cual. Con ese cambio, la misma pregunta se respondió bien.
-- Si Ollama no está encendido o no tiene modelos, el backend lo detecta en un segundo como máximo y contesta con las reglas.
+- Si Ollama no está encendido o no tiene modelos, el backend lo detecta en un segundo como máximo y contesta con las reglas. Después no vuelve a intentar la conexión durante 30 segundos.
 - Algunos modelos escriben su razonamiento entre etiquetas `<think>`; el adaptador lo quita de la respuesta.
 
 ### Respaldo por reglas
@@ -170,6 +170,18 @@ Simplificaciones:
 ## Datos numéricos
 
 La API recibe y devuelve áreas, cantidades y costos como números JSON. En la base de datos son `NUMERIC`.
+
+## Rendimiento
+
+Revisión hecha el 3 de octubre de 2026: se contó cuántas consultas a la base de datos hace cada endpoint con pocos datos (2 proyectos de 2 elementos) y con más (20 proyectos de 20 elementos). Si el número crece con los datos, hay una consulta repetida por cada elemento.
+
+- Todas las listas hacen un número fijo de consultas, entre 3 y 5, sea cual sea la cantidad de datos.
+- Se corrigió la lista de terrenos, que hacía una consulta más por cada terreno para traer sus vértices: con 20 terrenos pasaba de 6 a 24 consultas. Ahora trae los vértices de todos en una sola consulta y se queda en 5. Una prueba comprueba que el número no cambia al añadir terrenos.
+- Se corrigió una espera en el asistente: sin Ollama encendido, cada pregunta perdía un segundo intentando conectar. Ahora, tras un intento fallido, el backend no vuelve a intentarlo durante 30 segundos y responde con las reglas de inmediato. La contrapartida es que, al encender Ollama, el asistente puede tardar hasta 30 segundos en notarlo.
+- Generar recomendaciones y eliminar un proyecto sí hacen más consultas cuantos más elementos hay, porque escriben o borran una fila por elemento. Son operaciones poco frecuentes y no se cambiaron.
+- El frontend compilado pesa unos 200 kB (62 kB comprimido), sin librerías de gráficos: los esquemas son SVG hechos a mano.
+
+Las medidas se hicieron con una base SQLite en memoria; cuentan consultas, no tiempos reales contra PostgreSQL.
 
 ## Variables de entorno
 
