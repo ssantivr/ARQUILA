@@ -126,9 +126,10 @@ Si no hay ningún proveedor disponible (ni clave de Anthropic ni Ollama encendid
 
 ## Esquemas del terreno
 
-La pestaña Terreno dibuja cuatro esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx` y `Terrain3D.tsx`), sin librerías adicionales:
+La pestaña Terreno dibuja cinco esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx` y `Terrain3D.tsx`), sin librerías adicionales:
 
 - **Vista superior**: el contorno del lote a escala.
+- **Curvas de nivel**: el lote visto desde arriba con una línea cada cierto desnivel y franjas más oscuras cuanto más alto está el terreno. El intervalo entre curvas se elige de una lista de valores redondos (0,1 m, 0,25 m, 0,5 m, 1 m, 2 m…) para que salgan como mucho seis. Como el terreno se modela como un plano inclinado, las curvas son rectas paralelas al frente.
 - **Vista frontal**: el lote visto desde el frente, que es su lado más bajo. Conserva el ancho y convierte la profundidad de cada vértice en altura (`profundidad × pendiente / 100`), así que un lote rectangular se ve como una franja de ancho por desnivel.
 - **Vista lateral**: el perfil del terreno, una línea con la pendiente real. El desnivel se calcula como `largo × pendiente / 100`.
 - **Vista 3D**: el lote como una superficie inclinada según la pendiente, que se puede girar con un control. Es una proyección calculada a mano: cada vértice se rota alrededor del eje vertical y se proyecta con una inclinación fija de 30°.
