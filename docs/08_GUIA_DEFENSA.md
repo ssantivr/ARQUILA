@@ -159,4 +159,14 @@ Mostrar `disposeObject` y `dispose` en `frontend/src/three/structureViewer.ts`. 
 
 Con un rayo (`Raycaster`): se traza una línea desde la cámara que pasa por el punto donde se hizo clic y se toma la primera caja que atraviesa. Si el puntero se movió más de 4 píxeles entre pulsar y soltar, se considera que el usuario estaba girando la cámara y no se selecciona nada.
 
-El elemento seleccionado se guarda en un solo lugar, el componente de React, y de ahí lo leen el modelo, la lista de niveles y el inspector. Por eso los tres muestran siempre lo mismo.
+El elemento seleccionado se guarda en un solo lugar, el estado compartido `frontend/src/state/appState.ts`, y de ahí lo leen el modelo, la lista de niveles, el inspector y el asistente. Por eso todos muestran siempre lo mismo.
+
+## 21. Cómo se colorea el modelo por coste o por alertas
+
+El visor no calcula nada: recibe un diccionario de elemento a color y pinta. Los cálculos están en `frontend/src/utils/elementColors.ts`.
+
+- Coste: se suma el costo de los materiales del proyecto y se reparte entre los elementos según su volumen. Son dos recorridos, O(n + m) con n elementos y m materiales. Es una estimación, porque un material no guarda a qué elemento pertenece.
+- Alertas: por cada elemento se buscan las recomendaciones que lo nombran y se toma la prioridad más alta. Es un recorrido dentro de otro, O(n · r) con r recomendaciones; con los tamaños de un proyecto no se nota.
+- El diccionario es un `Map`, así que pintar cada elemento es una búsqueda O(1).
+
+Los materiales, las recomendaciones, la selección y el modo de color viven en `appState.ts`: una variable con el estado, una lista de funciones suscritas y un aviso a todas cuando algo cambia. Es el patrón observador, sin librerías.

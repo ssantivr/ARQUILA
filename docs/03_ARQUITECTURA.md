@@ -30,6 +30,7 @@ src/components/   Piezas reutilizables: paneles, formularios, esquemas del terre
 src/services/     Cliente HTTP tipado, un método por endpoint
 src/types/        Tipos que reflejan los del backend
 src/hooks/        Lógica compartida de carga de datos
+src/state/        Estado compartido entre el modelo 3D, materiales, recomendaciones y asistente
 src/utils/        Cálculo, formato y traducción de mensajes
 ```
 
