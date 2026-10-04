@@ -173,8 +173,8 @@ Los materiales, las recomendaciones, la selección y el modo de color viven en `
 
 ## 22. Cómo se cambia el material de un elemento en el modelo
 
-Al seleccionar un elemento, el inspector muestra un selector «Material». Al elegir una opción se llama a `appState.setSurface`, que guarda la elección en un diccionario de elemento a material; el visor está suscrito, recibe el diccionario (`setSurfaces`) y cambia el color, la rugosidad, el brillo metálico y la opacidad del material de esa caja. No se reconstruye el modelo, por eso el cambio es inmediato.
+Al seleccionar un elemento, el inspector muestra un selector «Material». Al elegir una opción se llama a `appState.setSurface`, que guarda la elección en un diccionario de elemento a material; el visor está suscrito, recibe el diccionario (`setSurfaces`) y cambia el color, la rugosidad, el brillo metálico y la opacidad del material de esa caja. No se reconstruye el modelo, por eso el cambio es inmediato. A la vez se envía al backend (`PATCH /projects/{id}/structure/{kind}/{element_id}/surface`), que lo guarda en la columna `surface` del cuarto, del componente o del plano; si falla, el visor vuelve al material anterior y muestra el error.
 
 - El catálogo está en `frontend/src/utils/surfaceMaterials.ts`. Buscar el material de un elemento es una consulta O(1) en el diccionario; repintar recorre los n elementos, O(n).
 - El elemento seleccionado se marca con un contorno cian y no con un tinte, para que el material se vea tal cual.
-- Límite que conviene decir: la elección se guarda en el navegador (`localStorage`), no en la base de datos. Es una ayuda visual, distinta de los Materiales del proyecto, que son partidas de presupuesto.
+- Límite que conviene decir: es un dato visual, distinto de los Materiales del proyecto, que son partidas de presupuesto; no cambia el coste estimado.

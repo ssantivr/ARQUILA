@@ -19,7 +19,8 @@ database/
 │   ├── 004_ai_message_source.sql
 │   ├── 005_rooms.sql
 │   ├── 006_structural_components.sql
-│   └── 007_recommendation_priority.sql
+│   ├── 007_recommendation_priority.sql
+│   └── 008_element_surfaces.sql
 └── seed.sql
 ```
 
