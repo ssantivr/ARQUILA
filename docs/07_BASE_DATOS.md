@@ -16,7 +16,8 @@ database/
 │   ├── 001_initial_schema.sql
 │   ├── 002_password_reset_tokens.sql
 │   ├── 003_terrain_points.sql
-│   └── 004_ai_message_source.sql
+│   ├── 004_ai_message_source.sql
+│   └── 005_rooms.sql
 └── seed.sql
 ```
 

@@ -167,6 +167,41 @@ Simplificaciones:
 - El área edificable solo se calcula en lotes rectangulares. En un lote con vértices se dibujan el contorno y las cotas, sin área edificable.
 - No se dibujan vivienda, áreas verdes, andenes ni parqueadero, porque el proyecto no guarda esos datos.
 
+## Cuartos
+
+Un cuarto pertenece a un plano y se gestiona en la pestaña Modelo 3D (`frontend/src/components/RoomsPanel.tsx`). Las rutas siguen el mismo patrón que los planos: `POST` y `GET /projects/{id}/rooms`, y `GET`, `PATCH` y `DELETE /rooms/{id}`.
+
+- Un cuarto es una caja: nombre, posición (`x_m`, `y_m`), ancho, largo y alto, en metros. La posición es la esquina del cuarto medida desde la esquina de origen del primer terreno del modelo.
+- El plano de un cuarto debe ser del mismo proyecto; si no, se responde 404, igual que con el archivo de un plano.
+- Las medidas deben ser mayores que cero. Lo validan el esquema (422) y la base de datos (`CHECK`).
+- Al eliminar un plano o un proyecto se eliminan sus cuartos.
+
+Simplificaciones:
+
+- Los cuartos no entran en el historial de deshacer; por eso la interfaz pide confirmación antes de eliminar uno. Al deshacer la eliminación de un plano se recupera el plano, pero no sus cuartos.
+- No se comprueba que un cuarto quede dentro del terreno ni que dos cuartos no se solapen.
+- No hay puertas, ventanas ni componentes estructurales (columnas, vigas, muros).
+
+## Modelo 3D
+
+La pestaña Modelo 3D muestra el proyecto en tres dimensiones con Three.js. Los datos salen de `GET /projects/{id}/structure` (`backend/app/services/structure_service.py`), que no guarda nada: arma la respuesta con los terrenos, los planos y los cuartos del proyecto, en metros.
+
+- **Terrenos**: cada terreno con contorno (vértices, o ancho y largo) es una losa. Los terrenos se colocan uno al lado del otro sobre el eje `x`, separados 5 m, porque cada uno guarda sus coordenadas desde su propio origen.
+- **Niveles**: cada plano es un nivel, apilado en el orden en que se crearon los planos. Un plano con cuartos muestra sus cuartos (`kind: "room"`) y el nivel mide lo que su cuarto más alto. Un plano sin cuartos se dibuja como un volumen de 3 m (`kind: "volume"`) sobre el área edificable del primer terreno rectangular, con el mismo retiro inicial del plano de implantación (3 m, o menos si el lote es estrecho).
+
+En el frontend, `frontend/src/three/structureViewer.ts` contiene toda la escena y no depende de React; `StructureViewer.tsx` la crea al montar, la destruye al desmontar y dibuja encima los paneles flotantes. Decisiones del visor:
+
+- El eje `y` del plano pasa a ser `-z` en la escena. Así la altura queda en `y` y el modelo no sale reflejado.
+- Las losas se generan por extrusión del contorno, que corrige el sentido de los vértices; por eso las caras quedan hacia afuera aunque el lote se haya escrito en sentido horario.
+- Los planos `near` y `far` de la cámara y la cámara de sombras de la luz se ajustan al tamaño del modelo. Junto con `polygonOffset` en los materiales evita el parpadeo entre caras que coinciden (z-fighting) y las sombras recortadas.
+- La cámara se encuadra solo la primera vez y con el botón «Restablecer vista». Al agregar o editar un cuarto el modelo se reconstruye, pero la cámara se queda donde el usuario la dejó.
+- **Selección**: un clic sobre un cuarto lo selecciona con un rayo desde la cámara (`Raycaster`). Si el puntero se movió más de 4 px entre pulsar y soltar se considera un giro de cámara y no una selección. El cuarto seleccionado lo guarda React, no la escena, así que la lista de niveles y el inspector muestran siempre lo mismo que el modelo; la lista permite además seleccionar con el teclado.
+- Al cambiar de modelo o salir de la pestaña se liberan geometrías, materiales, el mapa de sombras, los eventos y el contexto WebGL (`dispose`).
+- Three.js se carga solo al abrir la pestaña (`lazy` en `ProjectDetailPage.tsx`), para no aumentar la carga inicial.
+- Los paneles flotantes (niveles, inspector y barra inferior) usan `backdrop-filter: blur` y acentos cian `#00F0FF` y magenta `#FF007F`. Ese estilo se limita al visor (clases `.structure-stage` y `.hud` en `styles.css`); el resto de la aplicación conserva su paleta. En pantallas estrechas los paneles pasan debajo del modelo.
+
+Simplificaciones: la pendiente del terreno no se representa. En un lote con vértices no se dibuja el volumen de un plano sin cuartos, igual que en el plano de implantación; los cuartos sí se dibujan siempre.
+
 ## Datos numéricos
 
 La API recibe y devuelve áreas, cantidades y costos como números JSON. En la base de datos son `NUMERIC`.
@@ -195,7 +230,8 @@ Se pueden definir en la terminal o en el archivo `backend/.env`, que `python -m 
 | `ANTHROPIC_API_KEY` | Usa Claude como asistente de IA. Sin ella se usa el modelo local de Ollama. |
 | `OLLAMA_MODEL` | Modelo local que usa el asistente (por defecto, el primero instalado). |
 | `OLLAMA_URL` | Dirección de Ollama (por defecto `http://127.0.0.1:11434`). |
-| `APP_URL` | Dirección de la aplicación, para el enlace del correo de recuperación. |
+| `APP_URL` | Dirección de la aplicación, para el enlace del correo de recuperación. También es el origen que CORS admite si no se define `CORS_ORIGINS`. |
+| `CORS_ORIGINS` | Orígenes que pueden llamar a la API desde el navegador, separados por comas (por defecto, `APP_URL`). |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Servidor de correo para la recuperación de contraseña. |
 
 ### Comprobar los servicios externos
@@ -213,4 +249,4 @@ Hace una pregunta corta al asistente y envía un mensaje de prueba a la direcci�
 
 Los mensajes de error del backend están en inglés. El frontend los traduce al español en `frontend/src/utils/errors.ts`; un mensaje que no esté en esa lista se muestra tal cual. Si cualquier petición responde 401, la aplicación vuelve a la pantalla de inicio de sesión.
 
-En desarrollo, Vite reenvía las peticiones `/api/*` al backend en `localhost:8000`, por lo que el backend no necesita configurar CORS y la cookie de sesión funciona en el mismo origen. Los tipos de `frontend/src/types/api.ts` reflejan los de `backend/app/schemas.py` y deben mantenerse sincronizados.
+En desarrollo, Vite reenvía las peticiones `/api/*` al backend en `localhost:8000`, por lo que la cookie de sesión funciona en el mismo origen. Si el frontend se sirve desde otro origen (`VITE_API_URL` con la dirección completa de la API), el backend lo admite por CORS solo si está en `CORS_ORIGINS`; no se usa `*` porque las peticiones llevan la cookie de sesión. Los tipos de `frontend/src/types/api.ts` reflejan los de `backend/app/schemas.py` y deben mantenerse sincronizados.
