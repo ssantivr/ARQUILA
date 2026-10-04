@@ -20,6 +20,53 @@ PostgreSQL
 
 Las implementaciones académicas en C++ (`data_structures/`) son un módulo aparte: no las llama la aplicación.
 
+## Diagrama
+
+El mismo esquema con más detalle. Las flechas continuas son llamadas que ocurren en cada petición; las punteadas, servicios externos que solo se usan si están configurados.
+
+```mermaid
+flowchart TD
+    user([Usuario en el navegador])
+
+    subgraph frontend["Frontend · TypeScript y React"]
+        pages["Páginas y componentes"]
+        state["Estado compartido"]
+        client["Cliente HTTP tipado"]
+        viewer["Visor 3D · Three.js"]
+        pages --> state
+        pages --> client
+        pages --> viewer
+    end
+
+    subgraph backend["Backend · Python y FastAPI"]
+        api["API · valida los datos recibidos"]
+        services["Servicios · lógica y permisos"]
+        repositories["Repositorios · consultas"]
+        structures["Estructuras de datos<br/>array dinámico, pila, cola,<br/>lista simple y lista doble"]
+        adapters["Adaptadores · IA y correo"]
+        api --> services
+        services --> repositories
+        services --> structures
+        services --> adapters
+    end
+
+    database[("PostgreSQL")]
+    files[("Archivos en disco")]
+    claude["Claude · API de Anthropic"]
+    ollama["Ollama · modelo local"]
+    smtp["Servidor de correo"]
+    cpp["Estructuras en C++<br/>módulo académico independiente"]
+
+    user --> pages
+    client -- "HTTP y cookie de sesión" --> api
+    repositories --> database
+    services --> files
+    adapters -.-> claude
+    adapters -.-> ollama
+    adapters -.-> smtp
+    cpp ~~~ structures
+```
+
 ## Frontend
 
 Está en `frontend/`, escrito en TypeScript con React. Muestra la información y envía peticiones; no guarda datos ni decide permisos.

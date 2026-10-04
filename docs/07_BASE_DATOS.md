@@ -25,6 +25,168 @@ database/
 └── seed.sql
 ```
 
+## Diagrama entidad-relación
+
+Las quince tablas y sus relaciones. Todo cuelga de `projects`, y cada proyecto de su dueño en `users`: al eliminar un proyecto se eliminan sus terrenos, planos, elevaciones, materiales, archivos, recomendaciones y conversaciones. Se omiten las columnas `created_at`, presentes en casi todas las tablas.
+
+```mermaid
+erDiagram
+    users ||--o{ user_sessions : "inicia"
+    users ||--o{ password_reset_tokens : "solicita"
+    users ||--o{ projects : "es dueño de"
+    users ||--o{ ai_conversations : "abre"
+    users |o--o{ files : "sube"
+    projects ||--o{ terrains : "tiene"
+    projects ||--o{ plans : "tiene"
+    projects ||--o{ elevations : "tiene"
+    projects ||--o{ materials : "tiene"
+    projects ||--o{ files : "guarda"
+    projects ||--o{ recommendations : "recibe"
+    projects ||--o{ ai_conversations : "tiene"
+    projects ||--o{ rooms : "contiene"
+    projects ||--o{ structural_components : "contiene"
+    terrains ||--o{ terrain_points : "se delimita con"
+    plans ||--o{ rooms : "dibuja"
+    plans ||--o{ structural_components : "dibuja"
+    files |o--o{ plans : "se adjunta a"
+    files |o--o{ elevations : "se adjunta a"
+    ai_conversations ||--o{ ai_messages : "contiene"
+
+    users {
+        int id PK
+        string name
+        string email UK
+        string password_hash
+        datetime created_at
+    }
+    user_sessions {
+        int id PK
+        int user_id FK
+        string token_hash UK
+        datetime expires_at
+    }
+    password_reset_tokens {
+        int id PK
+        int user_id FK
+        string token_hash UK
+        datetime expires_at
+    }
+    projects {
+        int id PK
+        int owner_id FK
+        string name
+        text description
+        string location
+        string status
+        string roof
+        datetime updated_at
+    }
+    terrains {
+        int id PK
+        int project_id FK
+        string name
+        decimal area_m2
+        decimal width_m
+        decimal length_m
+        decimal slope_percent
+        string soil_type
+        decimal latitude
+        decimal longitude
+    }
+    terrain_points {
+        int id PK
+        int terrain_id FK
+        int position
+        decimal x_m
+        decimal y_m
+    }
+    files {
+        int id PK
+        int project_id FK
+        int uploaded_by FK
+        string filename
+        string storage_path
+        string mime_type
+        bigint size_bytes
+    }
+    plans {
+        int id PK
+        int project_id FK
+        int file_id FK
+        string title
+        string level
+        string scale
+        string surface
+    }
+    rooms {
+        int id PK
+        int project_id FK
+        int plan_id FK
+        string name
+        decimal x_m
+        decimal y_m
+        decimal width_m
+        decimal depth_m
+        decimal height_m
+        string surface
+    }
+    structural_components {
+        int id PK
+        int project_id FK
+        int plan_id FK
+        string kind
+        string name
+        decimal x_m
+        decimal y_m
+        decimal width_m
+        decimal depth_m
+        decimal height_m
+        string surface
+    }
+    elevations {
+        int id PK
+        int project_id FK
+        int file_id FK
+        string title
+        string orientation
+    }
+    materials {
+        int id PK
+        int project_id FK
+        string name
+        string category
+        string unit
+        decimal quantity
+        decimal unit_cost
+    }
+    recommendations {
+        int id PK
+        int project_id FK
+        string category
+        text content
+        string source
+        string priority
+    }
+    ai_conversations {
+        int id PK
+        int project_id FK
+        int user_id FK
+        string title
+    }
+    ai_messages {
+        int id PK
+        int conversation_id FK
+        string role
+        text content
+        string source
+    }
+```
+
+- Un archivo se puede adjuntar a varios planos o elevaciones; si se elimina, estos quedan sin archivo (`file_id` vacío) pero no se eliminan.
+- Un cuarto y un componente estructural pertenecen a un plano y, por comodidad de las consultas, guardan también el proyecto.
+- `user_sessions` y `password_reset_tokens` guardan solo el hash del identificador, nunca el valor que recibe el navegador.
+- La tabla `schema_migrations`, que anota las migraciones aplicadas, no aparece porque no pertenece al modelo de la aplicación.
+
 ## Migraciones
 
 El esquema de la base de datos se define con archivos SQL numerados en `database/migrations/`. Cada archivo es un cambio y se aplica una sola vez, en orden.

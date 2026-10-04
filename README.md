@@ -215,15 +215,17 @@ Las versiones de las dependencias están fijadas: exactas en `backend/requiremen
 |---|---|
 | `docs/01_PLANTEAMIENTO_PROBLEMA.md` | Qué problema resuelve el proyecto. |
 | `docs/02_REQUERIMIENTOS.md` | Requerimientos y dónde se cumple cada uno. |
-| `docs/03_ARQUITECTURA.md` | Partes del sistema y cómo se comunican. |
+| `docs/03_ARQUITECTURA.md` | Partes del sistema y cómo se comunican, con su diagrama. |
 | `docs/04_ESTRUCTURAS_DATOS.md` | Las estructuras estudiadas y dónde están implementadas. |
-| `docs/05_COMPLEJIDAD.md` | Complejidad de cada operación y uso de las estructuras en la aplicación. |
+| `docs/05_COMPLEJIDAD.md` | Complejidad de cada operación, uso de las estructuras en la aplicación y mediciones de tiempo. |
 | `docs/06_PRUEBAS.md` | Qué cubren las pruebas y cómo ejecutarlas. |
-| `docs/07_BASE_DATOS.md` | Base de datos, migraciones y datos de ejemplo. |
+| `docs/07_BASE_DATOS.md` | Base de datos, diagrama entidad-relación, migraciones y datos de ejemplo. |
 | `docs/08_GIT_Y_TRABAJO_EN_EQUIPO.md` | Flujo de trabajo con Git. |
 | `docs/09_GUIA_DEFENSA.md` | Preguntas de la defensa con sus respuestas. |
 | `docs/10_CONCLUSIONES.md` | Conclusiones. |
 | `docs/11_PLAN_TRABAJO.md` | Fases del trabajo y su estado. |
 | `docs/12_BACKEND_Y_API.md` | Decisiones del backend: autenticación, seguridad, archivos, terreno e IA. |
 | `docs/13_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
+| `docs/14_GUION_DEMO.md` | Recorrido paso a paso para la demostración: qué hacer, qué estructura se activa y qué decir. |
+| `CHANGELOG.md` | Cambios agrupados por semana y etiquetas de Git propuestas. |
 | `prompts/README.md` | Índice de los prompts usados con el asistente de IA. |

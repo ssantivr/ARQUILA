@@ -124,7 +124,7 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 118 y `pytest` 266, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
+  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 118 y `pytest` 269, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 

@@ -72,7 +72,7 @@ Los casos que hay que saber explicar son: eliminar la cabeza, eliminar la cola, 
 - O(n): el trabajo crece con la cantidad de elementos. Ejemplos: buscar un valor en una lista, insertar en medio de un array.
 - O(log n): la búsqueda binaria descarta la mitad de los elementos en cada paso, pero exige que el array esté ordenado.
 
-La tabla completa está en `docs/05_COMPLEJIDAD.md`.
+La tabla completa está en `docs/05_COMPLEJIDAD.md`, junto con las mediciones de tiempo que la confirman. El recorrido para mostrar cada estructura en la aplicación está en `docs/14_GUION_DEMO.md`.
 
 ## 11. Dónde se usa una estructura de datos dentro de la aplicación
 
