@@ -103,7 +103,7 @@ La configuración se guarda en `backend/.env`, que no se sube al repositorio. La
 
 1. Copiar `backend/.env.example` a `backend/.env`.
 2. Poner en `DATABASE_URL` la conexión a PostgreSQL, por ejemplo `postgresql+psycopg://postgres:CLAVE@localhost:5432/arquila`. La base `arquila` debe existir.
-3. Cargar los datos de ejemplo, si se quieren: `python -m app.migrate --seed`, con `DATABASE_URL` definida en la terminal.
+3. Cargar los datos de ejemplo, si se quieren: `python -m app.migrate --seed`. Lee la conexión de `backend/.env`, igual que el arranque.
 
 Después, para arrancar el backend basta con:
 
@@ -113,7 +113,13 @@ python -m app.dev
 
 Ese comando lee `backend/.env`, crea o actualiza las tablas con las migraciones pendientes y arranca el servidor en el puerto 8000. Ver `docs/07_BASE_DATOS.md`.
 
-Las demás variables están en `backend/.env.example` y se explican en `docs/12_BACKEND_Y_API.md`.
+`DATABASE_URL` se define en un solo lugar, `backend/.env`, y la usan tanto el arranque como las migraciones y los datos de ejemplo. Las demás variables están en `backend/.env.example` y se explican en `docs/12_BACKEND_Y_API.md`.
+
+Con el backend arrancado:
+
+- `http://localhost:8000/docs` muestra la documentación interactiva de la API, que FastAPI genera a partir del código. Desde ahí se puede probar cada operación.
+- `http://localhost:8000/health` responde `{"status": "ok"}` si el servidor está en marcha.
+- La terminal muestra una línea en formato JSON por cada petición (ver «Registro de eventos» en `docs/12_BACKEND_Y_API.md`).
 
 ### PostgreSQL con Docker (opcional)
 
@@ -123,7 +129,7 @@ Quien no tenga PostgreSQL instalado puede levantarlo con Docker desde la raíz d
 docker compose up -d
 ```
 
-El contenedor crea la base `arquila` con usuario y contraseña `arquila`, así que la conexión es `postgresql+psycopg://arquila:arquila@localhost:5432/arquila`. Este arranque no está comprobado, porque el equipo de desarrollo no tiene Docker.
+El contenedor crea la base `arquila` con usuario y contraseña `arquila`, así que el valor de `DATABASE_URL` en `backend/.env` es `postgresql+psycopg://arquila:arquila@localhost:5432/arquila`, el mismo que trae `backend/.env.example`. Este arranque no está comprobado, porque el equipo de desarrollo no tiene Docker.
 
 ## Ejecución del frontend
 
@@ -142,7 +148,7 @@ Si se cargaron los datos de ejemplo, se puede entrar con el usuario de demostrac
 El asistente funciona sin configurar nada: si no hay ninguna IA disponible, responde con reglas fijas sobre los datos del proyecto. Para que responda una IA hay dos opciones:
 
 - **Modelo local, gratuito y sin clave.** Instalar [Ollama](https://ollama.com) y ejecutar `ollama pull llama3.2`. El backend lo detecta solo.
-- **Claude, de pago.** Escribir `ANTHROPIC_API_KEY` en `backend/.env`.
+- **Claude, de pago.** Escribir `ANTHROPIC_API_KEY` en `backend/.env`. En ese caso los datos del proyecto y las preguntas se envían a Anthropic, un tercero (ver «Privacidad» en `docs/12_BACKEND_Y_API.md`).
 
 Para comprobar qué responde y si funciona:
 

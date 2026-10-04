@@ -46,7 +46,8 @@ Las interfaces se declaran con `typing.Protocol`: cualquier clase que tenga el m
 
 - El registro y el inicio de sesión crean una sesión y la entregan en una cookie `HttpOnly` con `SameSite=Lax`. Al ser `HttpOnly`, el código de la página no puede leerla; al ser `SameSite=Lax`, otros sitios no pueden usarla para enviar peticiones de escritura.
 - En la base solo se guarda el hash SHA-256 del identificador de sesión, de modo que una copia de la base no permite suplantar sesiones.
-- Las contraseñas se guardan con `scrypt` y una sal aleatoria por contraseña, usando la librería estándar de Python.
+- Las contraseñas se guardan con Argon2id (librería `argon2-cffi`, con sus parámetros por defecto: 64 MiB de memoria, 3 pasadas y 4 hilos) y una sal aleatoria por contraseña. Es el algoritmo que recomienda OWASP como primera opción.
+- Las cuentas creadas antes de este cambio tienen la contraseña guardada con `scrypt`. Siguen funcionando: en el primer inicio de sesión correcto, el backend vuelve a guardar la contraseña con Argon2id. Lo mismo ocurre si más adelante se endurecen los parámetros.
 - Un inicio de sesión fallido devuelve el mismo mensaje exista o no el correo y realiza la misma verificación de contraseña en ambos casos, para no revelar qué cuentas existen.
 - La sesión dura 7 días y se elimina del servidor al cerrar sesión.
 - En producción hay que definir `COOKIE_SECURE=1` para que la cookie solo viaje por HTTPS.
@@ -100,9 +101,20 @@ Cada recomendación lleva una prioridad: `high`, `medium` o `low`. Cada regla fi
   - Si está definida `ANTHROPIC_API_KEY`, usa Claude mediante el SDK oficial de Anthropic. Es de pago.
   - Si no, usa un modelo local servido por [Ollama](https://ollama.com), que es gratuito y no necesita clave.
 - `GET /assistant/status` dice quién responderá ahora: `claude`, `ollama` (con el nombre del modelo) o `rules` si no hay IA disponible. La pestaña Asistente lo muestra en la línea «Ahora responde». Se comprueba al abrir la pestaña; si Ollama se enciende o se apaga después, la línea no cambia hasta volver a entrar, aunque cada respuesta sigue llevando su origen real.
-- En cada pregunta se envían los datos del proyecto y el historial completo de la conversación. Los totales de costo van ya calculados, para que el modelo los cite en lugar de calcularlos.
+- En cada pregunta se envían los datos del proyecto y los últimos 20 mensajes de la conversación. Los totales de costo van ya calculados, para que el modelo los cite en lugar de calcularlos.
 - La pestaña ofrece cuatro preguntas sugeridas que se envían con un clic. Son texto fijo del frontend y siguen el mismo camino que una pregunta escrita. Si hay un elemento seleccionado en el modelo 3D de ese proyecto, aparece antes una quinta pregunta sobre él, con su tipo, nombre, medidas y plano escritos en el texto, porque el backend no le pasa al asistente los cuartos ni los componentes.
-- La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado y un servidor de Ollama simulado.
+- Cada llamada tiene un tiempo máximo de espera: 120 segundos para la respuesta, tanto con Claude como con Ollama, y 1 segundo para conectar con Ollama. Con Claude se reintenta una vez. Si se agota el tiempo, el asistente contesta con las reglas.
+- La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado, un cliente de Anthropic simulado y un servidor de Ollama simulado, de modo que no necesitan red ni gastan tokens. Cubren también los tiempos de espera agotados.
+
+### Privacidad
+
+Qué sale del equipo depende de quién responde:
+
+- **Claude.** Si se define `ANTHROPIC_API_KEY`, cada pregunta se envía a los servidores de Anthropic, que es un tercero. Viaja la pregunta, los últimos 20 mensajes de la conversación y los datos del proyecto: nombre, descripción, ubicación, terrenos (con sus medidas y, si se registraron, sus coordenadas), materiales con sus costos, y títulos de planos y elevaciones. No se envían la contraseña, el correo ni los archivos subidos. El tratamiento de esos datos queda sujeto a las condiciones de Anthropic, así que no conviene activarlo con datos reales de clientes sin su permiso.
+- **Ollama.** El modelo corre en el propio equipo: nada sale de él.
+- **Reglas.** Se calculan en el backend, sin llamar a ningún servicio.
+
+La pestaña del asistente indica en «Ahora responde» cuál de los tres está activo.
 
 ### Modelo local con Ollama
 
@@ -326,6 +338,25 @@ Todos los textos que recibe la API tienen una longitud máxima, las listas de v�
 
 Revisadas el 4 de octubre de 2026 con `npm audit` (frontend) y `pip-audit` (backend): sin vulnerabilidades conocidas. `pip-audit` señaló una en `pytest` 8, que solo se usa para las pruebas; `requirements-dev.txt` exige ahora `pytest` 9.0.3 o posterior.
 
+### Registro de eventos
+
+El backend escribe en la salida estándar una línea en formato JSON por cada evento (`app/logs.py`), para que se pueda filtrar o enviar a otra herramienta sin interpretar texto libre:
+
+```json
+{"time": "2026-10-04T20:54:46.650+00:00", "level": "info", "event": "request", "method": "POST", "path": "/auth/login", "status": 401, "duration_ms": 86.0}
+```
+
+| Evento | Cuándo |
+|---|---|
+| `request` | Cada petición atendida, con método, ruta, código de respuesta y duración. |
+| `request_failed` | Una petición terminó con un error no previsto; incluye la traza. |
+| `login_failed` | Inicio de sesión con credenciales incorrectas. |
+| `login_blocked` | Inicio de sesión rechazado por el límite de intentos. |
+| `password_rehashed` | Una contraseña antigua se volvió a guardar con Argon2id. |
+| `assistant_fallback` | La IA no respondió y contestaron las reglas; incluye el motivo. |
+
+No se registran contraseñas, correos, cookies ni los parámetros de la dirección: de cada petición solo queda la ruta. `LOG_LEVEL` fija el nivel mínimo (`INFO` por defecto). Para no duplicar líneas, `python -m app.dev` desactiva el registro de accesos propio de Uvicorn.
+
 ### Limitaciones conocidas
 
 - El límite de intentos de inicio de sesión se cuenta por correo, no por dirección IP, y vive en memoria: se reinicia al reiniciar el servidor y no se comparte entre varios procesos.
@@ -336,13 +367,14 @@ Revisadas el 4 de octubre de 2026 con `npm audit` (frontend) y `pip-audit` (back
 
 ## Variables de entorno
 
-Se pueden definir en la terminal o en el archivo `backend/.env`, que `python -m app.dev` lee al arrancar. Una variable ya definida en la terminal tiene prioridad sobre el archivo. `backend/.env` está excluido del repositorio porque contiene contraseñas.
+Se pueden definir en la terminal o en el archivo `backend/.env`, que leen `python -m app.dev`, `python -m app.migrate` y `python -m app.check`. Una variable ya definida en la terminal tiene prioridad sobre el archivo. `backend/.env` está excluido del repositorio porque contiene contraseñas.
 
 | Variable | Uso |
 |---|---|
 | `DATABASE_URL` | Conexión a la base de datos (obligatoria). |
 | `UPLOAD_DIR` | Carpeta de archivos subidos (por defecto `uploads`). |
 | `COOKIE_SECURE` | `1` para exigir HTTPS en la cookie de sesión. |
+| `LOG_LEVEL` | Nivel mínimo del registro de eventos: `DEBUG`, `INFO`, `WARNING` o `ERROR` (por defecto `INFO`). |
 | `ANTHROPIC_API_KEY` | Usa Claude como asistente de IA. Sin ella se usa el modelo local de Ollama. |
 | `OLLAMA_MODEL` | Modelo local que usa el asistente (por defecto, el primero instalado). |
 | `OLLAMA_URL` | Dirección de Ollama (por defecto `http://127.0.0.1:11434`). |

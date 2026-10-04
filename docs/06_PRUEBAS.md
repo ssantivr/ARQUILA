@@ -74,7 +74,9 @@ Cubren:
 - El endpoint `/health`.
 - Las estructuras de datos en Python: orden LIFO y FIFO, estructura vacía y llena, reutilización de posiciones en la cola circular, inserción y eliminación en las listas, y búsquedas.
 - Registro, inicio y cierre de sesión, y que cada endpoint exija sesión.
-- El resumen de las contraseñas (`test_security.py`): que solo verifique la contraseña correcta, que cambie en cada cálculo y que un valor guardado con otro formato nunca se dé por válido.
+- El resumen de las contraseñas (`test_security.py`): que se calcule con Argon2id, que solo verifique la contraseña correcta, que cambie en cada cálculo, que un valor guardado con otro formato nunca se dé por válido y que una contraseña antigua guardada con `scrypt` siga sirviendo y se actualice al iniciar sesión.
+- El registro de eventos (`test_logs.py`): una línea JSON por petición, los avisos de inicio de sesión fallido y bloqueado, y que no aparezcan contraseñas, correos ni parámetros de la dirección.
+- El comando de migraciones (`test_migrate.py`): que lea la conexión de `backend/.env`, cargue los datos de ejemplo y se detenga con un mensaje claro si falta `DATABASE_URL`.
 - Que un usuario no pueda ver ni modificar los datos de otro.
 - Crear, listar, actualizar y eliminar proyectos, terrenos, materiales, planos y elevaciones, con sus validaciones.
 - Subida de archivos: tipos admitidos, tamaño máximo y adjuntarlos a planos y elevaciones.
@@ -115,7 +117,7 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 94 y `pytest` 252, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
+  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 94 y `pytest` 266, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
