@@ -6,12 +6,12 @@ El proyecto tiene dos partes: un núcleo académico, que es lo que evalúa la as
 
 | Requerimiento | Dónde se cumple |
 |---|---|
-| Demostrar el comportamiento de un array. | `data_structures/arrays/ArrayExamples.cpp` |
-| Demostrar un array dinámico. | `ArrayExamples.cpp` (función `resize`) y `backend/app/data_structures/arrays.py` |
-| Ejecutar operaciones básicas de Stack. | `data_structures/stack/Stack.cpp` y `backend/app/data_structures/stack.py` |
-| Ejecutar operaciones básicas de Queue. | `data_structures/queue/Queue.cpp` y `backend/app/data_structures/queue.py` |
-| Insertar, eliminar y recorrer una lista simple. | `data_structures/singly_linked_list/` y `singly_linked_list.py` |
-| Insertar, eliminar y recorrer una lista doble. | `data_structures/doubly_linked_list/` y `doubly_linked_list.py` |
+| Demostrar el comportamiento de un array. | `backend/app/data_structures/arrays.py` (búsqueda lineal y binaria) y `backend/app/services/geometry.py` (área de un lote) |
+| Demostrar un array dinámico. | `backend/app/data_structures/arrays.py` (clase `DynamicArray`) |
+| Ejecutar operaciones básicas de Stack. | `backend/app/data_structures/stack.py` |
+| Ejecutar operaciones básicas de Queue. | `backend/app/data_structures/queue.py` |
+| Insertar, eliminar y recorrer una lista simple. | `backend/app/data_structures/singly_linked_list.py` |
+| Insertar, eliminar y recorrer una lista doble. | `backend/app/data_structures/doubly_linked_list.py` |
 | Exponer un endpoint básico de salud del backend. | `GET /health` |
 | Mantener el frontend separado del backend. | Carpetas `frontend/` y `backend/`, que solo se comunican por HTTP |
 

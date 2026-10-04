@@ -11,7 +11,7 @@ Hacerlo con tiempo, no delante del público:
 3. Arrancar el frontend: en `frontend/`, `npm run dev`.
 4. Abrir dos pestañas del navegador: `http://localhost:5173` (la aplicación) y `http://localhost:8000/docs` (la documentación de la API).
 5. Opcional: tener Ollama encendido con `llama3.2`, para que el asistente responda con IA. Si no, responde con reglas y el recorrido sirve igual.
-6. Dejar a mano una terminal en `data_structures/` y otra en `backend/` con el entorno virtual activado.
+6. Dejar a mano una terminal en `backend/` con el entorno virtual activado.
 
 Si algo falla durante la demostración, la terminal del backend muestra una línea por cada petición, con su código de respuesta.
 
@@ -94,10 +94,10 @@ Si se usa Claude en lugar de Ollama, mencionar que en ese caso los datos del pro
 
 | | |
 |---|---|
-| **Qué hacer** | En la terminal de `data_structures/`, ejecutar `cmake --workflow --preset default`. En la de `backend/`, `pytest -q` y después `python -m app.benchmark`. |
-| **Qué se ve** | Las pruebas de C++ y las del backend en verde, y una tabla con los tiempos de cada operación para mil, diez mil y cien mil elementos. |
+| **Qué hacer** | En la terminal de `backend/`, ejecutar `pytest -q tests/test_data_structures.py` y después `python -m app.benchmark`. |
+| **Qué se ve** | Las pruebas de las estructuras en verde, y una tabla con los tiempos de cada operación para mil, diez mil y cien mil elementos. |
 | **Estructura** | Todas. |
-| **Qué decir** | «Las estructuras están escritas dos veces: en C++ como plantillas, con sus pruebas y sin fugas de memoria, y en Python, que es la versión que usa la aplicación. La tabla confirma la teoría: las operaciones O(1) tardan lo mismo con mil elementos que con cien mil, y las O(n) tardan unas cien veces más cuando hay cien veces más datos.» |
+| **Qué decir** | «Las estructuras están escritas desde cero en Python, sin librerías que las reemplacen, y cada una tiene pruebas de sus casos borde: vacía, un solo elemento, llena. La tabla confirma la teoría: las operaciones O(1) tardan lo mismo con mil elementos que con cien mil, y las O(n) tardan unas cien veces más cuando hay cien veces más datos.» |
 
 ## Si preguntan
 

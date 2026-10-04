@@ -16,7 +16,6 @@ Describe el cambio en una o dos frases y por qué se hace.
 - [ ] `python scripts/quality.py` pasa
 - [ ] `pytest` pasa en `backend/`
 - [ ] `npm test` y `npm run build` pasan en `frontend/`
-- [ ] `cmake --workflow --preset default` pasa en `data_structures/` (si se tocó C++)
 - [ ] Probado a mano en el navegador (si cambia la interfaz)
 
 ## Lista de comprobación

@@ -6,12 +6,10 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 FRONTEND = ROOT / "frontend"
-DATA_STRUCTURES = ROOT / "data_structures"
 
 
 def find_tool(name: str) -> str:
-    beside_python = shutil.which(name, path=str(Path(sys.executable).parent))
-    found = beside_python or shutil.which(name)
+    found = shutil.which(name)
 
     if found is None:
         sys.exit(f"{name} was not found. Install the tools listed in the README.")
@@ -19,19 +17,9 @@ def find_tool(name: str) -> str:
     return found
 
 
-def cpp_sources() -> list[str]:
-    return sorted(
-        str(path)
-        for pattern in ("*/*.cpp", "*/*.hpp")
-        for path in DATA_STRUCTURES.glob(pattern)
-        if not path.parts[-2].startswith("build")
-    )
-
-
 def steps(fix: bool) -> list[tuple[str, list[str], Path]]:
     python = sys.executable
     npm = find_tool("npm")
-    clang_format = find_tool("clang-format")
 
     if fix:
         return [
@@ -39,7 +27,6 @@ def steps(fix: bool) -> list[tuple[str, list[str], Path]]:
             ("Ruff lint", [python, "-m", "ruff", "check", "--fix", "backend", "scripts"], ROOT),
             ("Prettier", [npm, "run", "format"], FRONTEND),
             ("ESLint", [npm, "run", "lint", "--", "--fix"], FRONTEND),
-            ("clang-format", [clang_format, "-i", *cpp_sources()], DATA_STRUCTURES),
         ]
 
     return [
@@ -47,11 +34,6 @@ def steps(fix: bool) -> list[tuple[str, list[str], Path]]:
         ("Ruff lint", [python, "-m", "ruff", "check", "backend", "scripts"], ROOT),
         ("Prettier", [npm, "run", "format:check"], FRONTEND),
         ("ESLint", [npm, "run", "lint"], FRONTEND),
-        (
-            "clang-format",
-            [clang_format, "--dry-run", "--Werror", *cpp_sources()],
-            DATA_STRUCTURES,
-        ),
     ]
 
 

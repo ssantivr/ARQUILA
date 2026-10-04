@@ -3,7 +3,7 @@
 Objetivo: el proyecto queda solo con backend en Python (FastAPI) y frontend en TypeScript (React). Se elimina C++ por completo.
 
 - [x] Fase 1 - Verificar que Python cubre todo antes de borrar nada
-- [ ] Fase 2 - Eliminar C++
+- [x] Fase 2 - Eliminar C++
 - [ ] Fase 3 - Configuración y arranque
 - [ ] Fase 4 - README
 - [ ] Fase 5 - Documentación

@@ -2,7 +2,7 @@ name: CI
 
 on:
   push:
-    branches: [santiago, main]
+    branches: [main]
   pull_request:
 
 jobs:
@@ -27,24 +27,6 @@ jobs:
           npm ci --prefix frontend
       - name: Check lint and formatting
         run: python scripts/quality.py
-
-  data-structures:
-    name: Data structures (C++)
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Build with sanitizers
-        run: |
-          cmake -S data_structures -B build -DCMAKE_BUILD_TYPE=Debug -DARQUILA_SANITIZE=ON
-          cmake --build build --parallel
-      - name: Run the tests
-        run: ctest --test-dir build --output-on-failure
-      - name: Run each example program
-        run: |
-          set -e
-          for program in ArrayExamples Stack Queue SinglyLinkedList DoublyLinkedList; do
-            "build/$program" > /dev/null
-          done
 
   backend:
     name: Backend (pytest)

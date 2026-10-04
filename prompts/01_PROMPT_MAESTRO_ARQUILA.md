@@ -17,7 +17,7 @@ El contenido de Estructuras de Datos debe limitarse a:
 
 ## Organización
 
-- `data_structures/`: implementaciones académicas en C++.
+- `backend/app/data_structures/`: estructuras de datos, implementadas en Python.
 - `backend/`: API básica en Python.
 - `frontend/`: interfaz en TypeScript.
 - `docs/`: documentación en español.

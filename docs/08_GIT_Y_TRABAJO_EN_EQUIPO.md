@@ -40,16 +40,16 @@ feat: add a flat roof option saved per project and visible floor slabs
 fix: correct linked list removal
 docs: record the browser check of the password reset link
 test: cover password hashing, the HTTP client, openings and the remaining structure operations
-ci: run the C++ structures, backend tests and frontend build on GitHub Actions
+chore: ignore local SQLite databases
 ```
 
 ## Formato y hooks
 
 El formato no se discute en la revisión: lo aplican las herramientas. `python scripts/quality.py` lo comprueba y `python scripts/quality.py --fix` lo corrige (ver «Calidad del código» en el `README.md`).
 
-El archivo `.pre-commit-config.yaml` define hooks que formatean los archivos modificados antes de cada commit: Ruff para Python, Prettier para TypeScript y clang-format para C++. Se activan una vez por clon con `pre-commit install`. Si un hook cambia un archivo, el commit se detiene: basta con añadir el archivo corregido y repetirlo.
+El archivo `.pre-commit-config.yaml` define hooks que formatean los archivos modificados antes de cada commit: Ruff para Python y Prettier para TypeScript. Se activan una vez por clon con `pre-commit install`. Si un hook cambia un archivo, el commit se detiene: basta con añadir el archivo corregido y repetirlo.
 
-GitHub ejecuta la misma comprobación en cada subida, así que un cambio mal formateado no pasa inadvertido aunque no se hayan activado los hooks.
+GitHub ejecuta la misma comprobación en cada subida a `main` y en cada pull request, así que un cambio mal formateado no pasa inadvertido aunque no se hayan activado los hooks.
 
 ## Pull requests
 

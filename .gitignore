@@ -5,11 +5,7 @@ venv/
 .env
 .vscode/
 .idea/
-build/
-build-sanitize/
 dist/
-*.exe
-*.out
 node_modules/
 .pytest_cache/
 *.db
