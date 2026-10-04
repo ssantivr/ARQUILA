@@ -92,6 +92,8 @@ Todo lo que pertenece a un proyecto exige sesión y que el proyecto sea del usua
 
 Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % o más) y no sustituyen un estudio técnico. Los textos están en español porque se muestran al usuario.
 
+Cada recomendación lleva una prioridad: `high`, `medium` o `low`. Cada regla fija la suya (una pendiente fuerte o un suelo arcilloso son de prioridad alta; un material con cantidad cero, baja) y las manuales la eligen al crearse, con `medium` por defecto. La pantalla las ordena de mayor a menor prioridad. La prioridad la validan el esquema (422) y la base de datos (`CHECK`).
+
 ## Asistente de IA
 
 - Hay dos proveedores, cada uno con su adaptador. El backend elige uno en cada pregunta:
@@ -99,6 +101,7 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
   - Si no, usa un modelo local servido por [Ollama](https://ollama.com), que es gratuito y no necesita clave.
 - `GET /assistant/status` dice quién responderá ahora: `claude`, `ollama` (con el nombre del modelo) o `rules` si no hay IA disponible. La pestaña Asistente lo muestra en la línea «Ahora responde». Se comprueba al abrir la pestaña; si Ollama se enciende o se apaga después, la línea no cambia hasta volver a entrar, aunque cada respuesta sigue llevando su origen real.
 - En cada pregunta se envían los datos del proyecto y el historial completo de la conversación. Los totales de costo van ya calculados, para que el modelo los cite en lugar de calcularlos.
+- La pestaña ofrece cuatro preguntas sugeridas que se envían con un clic. Son texto fijo del frontend y siguen el mismo camino que una pregunta escrita.
 - La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado y un servidor de Ollama simulado.
 
 ### Modelo local con Ollama
@@ -237,6 +240,19 @@ En el frontend, `frontend/src/three/structureViewer.ts` contiene toda la escena 
 - Los paneles flotantes (vistas, niveles, inspector y barra inferior) usan `backdrop-filter: blur` y acentos cian `#00F0FF` y magenta `#FF007F`. Ese estilo se limita al visor (clases `.structure-stage` y `.hud` en `styles.css`); el resto de la aplicación conserva su paleta. En pantallas estrechas los paneles pasan debajo del modelo.
 
 Simplificaciones: la pendiente del terreno no se representa. En un lote con vértices no se dibuja el volumen de un plano sin cuartos, igual que en el plano de implantación; los cuartos sí se dibujan siempre.
+
+## Plantas generadas y ocupación del lote
+
+La pestaña Planos muestra, entre la lista de planos y el plano de implantación, dos paneles que se calculan en el frontend con la respuesta de `GET /projects/{id}/structure`. No guardan nada ni añaden rutas.
+
+- **Plantas generadas** (`frontend/src/components/FloorPlan.tsx`): una planta en SVG por cada nivel del modelo, con los cuartos a escala, su nombre y su área, las columnas y los muros, las vigas en línea discontinua y las cotas totales de ancho y fondo. El frente del lote queda abajo, igual que en el plano de implantación. Cada planta se descarga en SVG con sus colores dentro.
+- **Ocupación del lote**: huella construida, área construida, área libre, COS y CUS (`buildingIndicators` en `frontend/src/utils/building.ts`).
+  - COS = área de la planta baja ÷ área del lote. CUS = área de todos los niveles ÷ área del lote.
+  - El área del lote es la del contorno del primer terreno del modelo, calculada con la fórmula de Gauss; es el mismo terreno sobre el que se colocan los cuartos.
+  - Agrupar los cuartos por nivel y sumar sus áreas es un recorrido de la lista: O(n).
+  - Los máximos de COS y CUS se escriben en la pantalla, con 0,6 y 1,8 como valores iniciales, y no se guardan, igual que el retiro del plano de implantación: el proyecto no tiene la norma del municipio.
+
+Simplificaciones: el área de un nivel es la suma de las áreas de sus cuartos, así que dos cuartos solapados contarían dos veces. Las plantas no dibujan puertas, ventanas ni cotas interiores. Mientras el proyecto no tiene cuartos, los volúmenes de relleno cuentan como área construida.
 
 ## Datos numéricos
 

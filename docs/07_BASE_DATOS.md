@@ -18,7 +18,8 @@ database/
 │   ├── 003_terrain_points.sql
 │   ├── 004_ai_message_source.sql
 │   ├── 005_rooms.sql
-│   └── 006_structural_components.sql
+│   ├── 006_structural_components.sql
+│   └── 007_recommendation_priority.sql
 └── seed.sql
 ```
 
