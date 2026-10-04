@@ -61,6 +61,9 @@ Cubren:
 - Crear, listar, actualizar y eliminar proyectos, terrenos, materiales, planos y elevaciones, con sus validaciones.
 - Subida de archivos: tipos admitidos, tamaño máximo y adjuntarlos a planos y elevaciones.
 - Recomendaciones automáticas y deshacer eliminaciones.
+- Cuartos: crear, listar, actualizar y eliminar, que las medidas sean mayores que cero, que el plano sea del mismo proyecto y que se eliminen con su plano o su proyecto.
+- El modelo 3D (`/projects/{id}/structure`): colocación de los terrenos, qué planos cuentan como nivel, cuartos frente a volumen del nivel y altura de cada nivel.
+- CORS: que se admita el origen de la aplicación con credenciales, que se responda la petición previa y que se ignoren otros orígenes.
 - Conversaciones con el asistente, usando un asistente simulado, y la respuesta por reglas cuando la IA falla o no está configurada.
 - Los adaptadores de correo y de IA (`test_adapters.py`), sustituyendo `smtplib` y el SDK de Anthropic por objetos simulados: qué adaptador de correo se elige según la configuración, las llamadas SMTP que hace, y cómo el adaptador de IA extrae el texto, trata las negativas y las respuestas vacías y convierte los errores del SDK en el error de la aplicación. El adaptador del modelo local se prueba contra un servidor de Ollama simulado: qué modelo elige, qué envía, y qué hace si Ollama no responde, no tiene modelos o contesta algo inesperado.
 
@@ -74,9 +77,9 @@ Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen p
 
 Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12, Node 24 y PostgreSQL:
 
-- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 175 pruebas pasan.
+- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 195 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las cuatro migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
+- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las cinco migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
 - Estructuras en C++: los cinco programas de `data_structures/` compilan con GCC 16.2 (`g++ -std=c++17 -static -Wall -Wextra -Wpedantic`) sin ningún aviso, y al ejecutarlos su salida coincide con los casos de este documento: la pila devuelve 30, 20, 10; la cola 10, 20, 30 y sigue funcionando después de dar la vuelta; las listas insertan, eliminan y se recorren en los dos sentidos. No se analizó el uso de memoria con una herramienta, porque GCC para Windows no incluye ese análisis.
