@@ -47,6 +47,7 @@ ARQUILA/
 ├── docs/                Documentación en español
 ├── prompts/             Instrucciones dadas al asistente de IA
 ├── .agentes/            Reglas del asistente
+├── .github/             Comprobaciones automáticas en GitHub
 └── docker-compose.yml   PostgreSQL en un contenedor (opcional)
 ```
 
@@ -158,7 +159,9 @@ npm test
 npm run build
 ```
 
-`npm run build` también comprueba los tipos de TypeScript. Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
+`npm run build` también comprueba los tipos de TypeScript.
+
+GitHub ejecuta estas mismas comprobaciones, y además compila las estructuras en C++, en cada subida a `santiago` o a `main` (`.github/workflows/ci.yml`). Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
 
 ## Documentación
 

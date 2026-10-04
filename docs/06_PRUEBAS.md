@@ -91,6 +91,16 @@ No se comprobó el arranque con `docker-compose.yml`, porque el equipo no tiene 
 
 En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
 
+### Integración continua
+
+El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `santiago` o a `main` y en cada pull request. Son tres trabajos independientes:
+
+- **Estructuras en C++:** compila con `g++ -std=c++17 -Wall` y ejecuta cada programa de `data_structures/`.
+- **Backend:** instala `requirements-dev.txt` con Python 3.12 y ejecuta `pytest` dos veces, con SQLite y contra un PostgreSQL 16 que se levanta solo para esa ejecución.
+- **Frontend:** `npm ci`, `npm test` y `npm run build` con Node 24.
+
+El resultado se ve en la pestaña «Actions» del repositorio en GitHub. No despliega nada: solo avisa si un cambio rompe algo.
+
 ### Sin cobertura automática
 
 La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `12_BACKEND_Y_API.md`).
