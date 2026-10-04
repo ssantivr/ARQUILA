@@ -61,7 +61,8 @@ Cubren:
 - Crear, listar, actualizar y eliminar proyectos, terrenos, materiales, planos y elevaciones, con sus validaciones.
 - Subida de archivos: tipos admitidos, tamaño máximo y adjuntarlos a planos y elevaciones.
 - Recomendaciones automáticas y deshacer eliminaciones.
-- Conversaciones con el asistente, usando un asistente simulado.
+- Conversaciones con el asistente, usando un asistente simulado, y la respuesta por reglas cuando la IA falla o no está configurada.
+- Los adaptadores de correo y de IA (`test_adapters.py`), sustituyendo `smtplib` y el SDK de Anthropic por objetos simulados: qué adaptador de correo se elige según la configuración, las llamadas SMTP que hace, y cómo el adaptador de IA extrae el texto, trata las negativas y las respuestas vacías y convierte los errores del SDK en el error de la aplicación.
 
 ### Frontend
 
@@ -71,4 +72,4 @@ Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen p
 
 ### Sin cobertura automática
 
-La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend.
+La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `10_BACKEND_Y_API.md`).

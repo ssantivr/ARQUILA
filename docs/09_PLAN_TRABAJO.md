@@ -14,5 +14,7 @@ El avance de la aplicación, semana por semana, está en `06_EVOLUCION_POR_SEMAN
 
 ## Pendiente
 
-- Probar el asistente de IA con una clave real.
-- Configurar un servicio de correo para la recuperación de contraseña.
+- Probar el asistente de IA con una clave real: escribir `ANTHROPIC_API_KEY` en `backend/.env` y ejecutar `python -m app.check`.
+- Configurar un servicio de correo para la recuperación de contraseña: escribir las variables `SMTP_*` en `backend/.env` y ejecutar `python -m app.check correo@ejemplo.com`.
+
+El comando está explicado en `10_BACKEND_Y_API.md`. Las dos tareas necesitan credenciales que no se guardan en el repositorio. Mientras no haya clave, el asistente responde con reglas fijas.

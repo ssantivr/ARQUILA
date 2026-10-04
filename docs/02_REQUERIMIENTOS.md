@@ -33,6 +33,7 @@ El proyecto tiene dos partes: un núcleo académico, que es lo que evalúa la as
 - Identificadores de código en inglés.
 - Documentación externa al código en español.
 - Backend en Python y frontend en TypeScript.
+- Uso de un patrón estructural en el backend: Adapter, para los servicios externos (ver `10_BACKEND_Y_API.md`).
 - Separación clara entre presentación, lógica, persistencia y estructuras de datos.
 - La complejidad de las operaciones críticas está documentada en `05_COMPLEJIDAD.md`.
 - Las credenciales y secretos no se guardan en el repositorio.

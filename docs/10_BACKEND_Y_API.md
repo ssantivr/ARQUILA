@@ -23,7 +23,23 @@ Los errores de negocio son excepciones propias (`errors.py`) que `main.py` convi
 | 400 | El enlace de recuperación de contraseña no es válido o caducó. |
 | 422 | Los datos enviados no son válidos. |
 | 429 | Demasiados intentos fallidos de inicio de sesión. |
-| 503 | El asistente de IA no está disponible. |
+
+## Patrón Adapter
+
+El backend habla con dos servicios externos: el de IA y el de correo. Cada uno tiene su propia forma de llamarse, distinta de lo que la aplicación necesita. Para que los servicios de la aplicación no dependan de esas librerías, cada servicio externo se usa a través de un adaptador: una clase que ofrece la interfaz que la aplicación espera y la traduce a las llamadas de la librería.
+
+| Interfaz que usa la aplicación | Adaptador | Qué adapta |
+|---|---|---|
+| `Assistant.reply(system, messages)` devuelve un texto | `ClaudeAssistant` en `app/ai.py` | El SDK de Anthropic: arma la petición, extrae el texto de la respuesta y convierte los errores del SDK en `AIUnavailableError`. |
+| `Mailer.send(recipient, subject, body)` | `SmtpMailer` en `app/mailer.py` | La librería `smtplib`: construye el mensaje, abre la conexión cifrada, se identifica y envía. |
+| `Mailer.send(recipient, subject, body)` | `ConsoleMailer` en `app/mailer.py` | La consola del servidor, para desarrollo sin correo configurado. |
+
+`AuthService` y `ConversationService` solo conocen las interfaces `Mailer` y `Assistant`. Gracias a eso:
+
+- cambiar de proveedor de IA o de correo significa escribir otro adaptador, sin tocar los servicios;
+- las pruebas sustituyen el adaptador por uno simulado y no llaman a ningún servicio real.
+
+Las interfaces se declaran con `typing.Protocol`: cualquier clase que tenga el método con esa forma sirve, sin necesidad de heredar. Los adaptadores tienen sus pruebas en `backend/tests/test_adapters.py`.
 
 ## Autenticación
 
@@ -76,10 +92,18 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 
 ## Asistente de IA
 
-- Usa Claude mediante el SDK oficial de Anthropic. La clave se toma de la variable de entorno `ANTHROPIC_API_KEY`; sin ella, los endpoints responden 503.
+- Usa Claude mediante el SDK oficial de Anthropic. La clave se toma de la variable de entorno `ANTHROPIC_API_KEY`.
 - En cada pregunta se envían los datos del proyecto y el historial completo de la conversación.
-- Si la IA falla no se guarda nada, para que el historial no quede con preguntas sin respuesta.
 - La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado.
+
+### Respaldo por reglas
+
+Si no hay clave configurada, o la llamada a la IA falla (clave rechazada, límite de uso, error del servicio o de red), el asistente no devuelve un error: contesta con reglas fijas (`services/assistant_rules.py`) sobre los datos del proyecto.
+
+- Las reglas buscan palabras clave en la pregunta y reconocen tres temas: terreno (área, pendiente, desnivel, suelo), materiales y costos, y planos y elevaciones. Una pregunta puede tocar varios temas. Si no reconoce ninguno, resume el proyecto y dice sobre qué puede responder.
+- Reutilizan los avisos de `services/recommendation_rules.py`, para que el asistente y las recomendaciones automáticas digan lo mismo.
+- Cada mensaje del asistente guarda su origen en el campo `source`: `ai` si lo escribió la IA, `rules` si salió de las reglas. Los mensajes del usuario lo tienen vacío. La interfaz marca las respuestas por reglas con la etiqueta «Respuesta por reglas».
+- No entienden el lenguaje: solo comparan palabras. Sirven para que el asistente sea útil sin IA, no para sustituirla.
 
 ## Esquemas del terreno
 
@@ -116,6 +140,19 @@ Se pueden definir en la terminal o en el archivo `backend/.env`, que `python -m 
 | `UPLOAD_DIR` | Carpeta de archivos subidos (por defecto `uploads`). |
 | `COOKIE_SECURE` | `1` para exigir HTTPS en la cookie de sesión. |
 | `ANTHROPIC_API_KEY` | Activa el asistente de IA. |
+| `APP_URL` | Dirección de la aplicación, para el enlace del correo de recuperación. |
+| `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Servidor de correo para la recuperación de contraseña. |
+
+### Comprobar los servicios externos
+
+Después de escribir la clave de IA o los datos del correo en `backend/.env`, este comando comprueba que funcionan de verdad, sin arrancar el servidor:
+
+```bash
+cd backend
+python -m app.check correo@ejemplo.com
+```
+
+Hace una pregunta corta al asistente y envía un mensaje de prueba a la dirección indicada. Por cada servicio escribe `OK` o `FAILED` con el motivo (falta la variable, la clave fue rechazada, no se pudo conectar). Sin dirección, solo comprueba el asistente. La pregunta al asistente es una llamada real y consume una cantidad pequeña de crédito.
 
 ## Frontend
 

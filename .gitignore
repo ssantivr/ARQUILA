@@ -13,3 +13,5 @@ node_modules/
 .pytest_cache/
 *.db
 uploads/
+architecture-ai-platform/
+ARQUILA_PROMPTS_CLAUDE_CODE/
