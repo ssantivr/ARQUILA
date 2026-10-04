@@ -132,6 +132,7 @@ El backend no guarda el modelo: lo calcula cada vez que se pide, con los terreno
 - Los niveles se apilan con un acumulador: la base de cada nivel es la suma de las alturas de los anteriores. Es un recorrido de la lista de planos, O(n).
 - Mientras el proyecto no tiene cuartos, cada nivel se dibuja como un volumen de 3 m dentro del retiro del lote.
 - Las ventanas, la puerta, el techo y los árboles no son datos: el visor los añade al dibujar para que el modelo se lea como una edificación.
+- Con esos mismos cuartos se generan las plantas con ejes y cotas, las cuatro fachadas y un corte. Los ejes de una planta salen de ordenar los bordes de los cuartos y quitar los repetidos: un recorrido y un ordenamiento de un array.
 
 Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `docs/10_BACKEND_Y_API.md`.
 

@@ -230,7 +230,7 @@ En el frontend, `frontend/src/three/structureViewer.ts` contiene toda la escena 
 - **Selección**: un clic sobre un cuarto lo selecciona con un rayo desde la cámara (`Raycaster`). Si el puntero se movió más de 4 px entre pulsar y soltar se considera un giro de cámara y no una selección. El cuarto seleccionado lo guarda React, no la escena, así que la lista de niveles y el inspector muestran siempre lo mismo que el modelo; la lista permite además seleccionar con el teclado.
 - **Materiales**: los cuartos usan `MeshPhysicalMaterial` en color ladrillo con una capa de barniz (`clearcoat`) muy suave; los volúmenes y los componentes usan `MeshStandardMaterial`, los componentes con la rugosidad alta del hormigón. El terreno es verde.
 - **Elementos decorativos**: para que el modelo se lea como una edificación, el visor añade ventanas, una puerta, un techo a dos aguas y árboles. No son datos del proyecto: se calculan al dibujar y no se guardan ni se pueden seleccionar.
-  - Ventanas: en las caras de un cuarto que dan al exterior de su nivel (las que coinciden con el borde del rectángulo que envuelve el nivel), una cada 3 m. La puerta reemplaza la primera ventana del frente en la planta baja.
+  - Ventanas: en las caras de un cuarto que dan al exterior de su nivel (las que coinciden con el borde del rectángulo que envuelve el nivel), una cada 3 m. La puerta reemplaza la primera ventana del frente en la planta baja. La regla está en `frontend/src/utils/openings.ts` y la comparten las plantas y las fachadas generadas.
   - Techo: a dos aguas sobre el nivel más alto, con la cumbrera a lo largo del lado mayor.
   - Árboles: en el fondo y en un costado de cada terreno, donde no haya cuartos ni componentes.
 - **Cámara**: cuatro vistas (isométrica, frontal, lateral y superior), botones para acercar y alejar, el porcentaje de zoom y pantalla completa. El zoom se calcula comparando la distancia de la cámara con la distancia de encuadre.
@@ -245,14 +245,28 @@ Simplificaciones: la pendiente del terreno no se representa. En un lote con vér
 
 La pestaña Planos muestra, entre la lista de planos y el plano de implantación, dos paneles que se calculan en el frontend con la respuesta de `GET /projects/{id}/structure`. No guardan nada ni añaden rutas.
 
-- **Plantas generadas** (`frontend/src/components/FloorPlan.tsx`): una planta en SVG por cada nivel del modelo, con los cuartos a escala, su nombre y su área, las columnas y los muros, las vigas en línea discontinua y las cotas totales de ancho y fondo. El frente del lote queda abajo, igual que en el plano de implantación. Cada planta se descarga en SVG con sus colores dentro.
+- **Plantas generadas** (`frontend/src/components/FloorPlan.tsx`): una planta en SVG por cada nivel del modelo, sobre una retícula, con los cuartos a escala, su nombre y su área. El frente del lote queda abajo, igual que en el plano de implantación. Cada planta se descarga en SVG con sus colores dentro. Lleva:
+  - **Ejes**: una línea por cada borde de cuarto, con burbujas de letras (A, B, C…) arriba y de números (1, 2, 3…) a la izquierda. Los ejes salen de ordenar las coordenadas de los bordes y quitar las repetidas.
+  - **Cotas**: la distancia entre cada par de ejes seguidos y, encima, la medida total. Una cota de un tramo muy corto no se escribe para que los textos no se monten.
+  - **Muros**: línea gruesa en las caras exteriores y fina en las interiores.
+  - **Ventanas y puerta**: las mismas del modelo 3D, con el arco de apertura de la puerta.
+  - Columnas y muros estructurales en blanco, vigas en línea discontinua, peldaños en los cuartos cuyo nombre contiene «escalera», el nivel (`N+2.80`) y una escala gráfica.
 - **Ocupación del lote**: huella construida, área construida, área libre, COS y CUS (`buildingIndicators` en `frontend/src/utils/building.ts`).
   - COS = área de la planta baja ÷ área del lote. CUS = área de todos los niveles ÷ área del lote.
   - El área del lote es la del contorno del primer terreno del modelo, calculada con la fórmula de Gauss; es el mismo terreno sobre el que se colocan los cuartos.
   - Agrupar los cuartos por nivel y sumar sus áreas es un recorrido de la lista: O(n).
   - Los máximos de COS y CUS se escriben en la pantalla, con 0,6 y 1,8 como valores iniciales, y no se guardan, igual que el retiro del plano de implantación: el proyecto no tiene la norma del municipio.
 
-Simplificaciones: el área de un nivel es la suma de las áreas de sus cuartos, así que dos cuartos solapados contarían dos veces. Las plantas no dibujan puertas, ventanas ni cotas interiores. Mientras el proyecto no tiene cuartos, los volúmenes de relleno cuentan como área construida.
+La pestaña Elevaciones añade el panel **Fachadas y corte generados** (`frontend/src/components/ElevationDrawing.tsx`), con cinco dibujos: fachada frontal, posterior, lateral izquierda, lateral derecha y un corte esquemático.
+
+- Una fachada dibuja cada nivel como un rectángulo con su altura, las ventanas y la puerta de ese lado, el techo y las cotas de nivel. En las fachadas posterior e izquierda el eje horizontal se invierte, porque se miran desde el otro lado.
+- El techo se ve como un triángulo cuando se mira de frente a la cumbrera y como un rectángulo cuando se mira de costado.
+- El corte pasa por la mitad del ancho de la edificación y muestra, con su nombre, los cuartos que atraviesa.
+- El cálculo está en `frontend/src/utils/elevations.ts` y devuelve una lista de rectángulos en metros; el componente solo los pasa a píxeles.
+
+Las ventanas, la puerta y el techo se calculan en un solo lugar, `frontend/src/utils/openings.ts`, que usan el modelo 3D, las plantas y las fachadas. Por eso los tres dibujos coinciden: una ventana que se ve en el modelo está en el mismo sitio en la planta y en la fachada.
+
+Simplificaciones: el área de un nivel es la suma de las áreas de sus cuartos, así que dos cuartos solapados contarían dos veces. Las plantas no dibujan mobiliario ni puertas interiores, y solo hay una puerta, la de entrada. Los ejes pasan por los bordes de los cuartos, no por las columnas. El corte no dibuja el terreno inclinado ni la cimentación. Mientras el proyecto no tiene cuartos, los volúmenes de relleno cuentan como área construida.
 
 ## Datos numéricos
 
