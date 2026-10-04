@@ -132,7 +132,7 @@ Simplificaciones: la superficie es un plano inclinado y se asume que la pendient
 La pestaña Planos dibuja, debajo de la lista de planos, un plano de implantación en SVG por cada terreno (`frontend/src/components/SitePlan.tsx`). Usa solo los datos del terreno:
 
 - **Límite del terreno**: el contorno del lote a escala, con una cota en cada lado. La longitud de cada lado y hacia dónde queda el exterior se calculan recorriendo los vértices una vez: O(n) (`edges` en `frontend/src/utils/geometry.ts`).
-- **Área edificable**: el rectángulo que queda al descontar un retiro igual en los cuatro lados. El retiro se elige con un control (de 0 a 10 m, 3 m al abrir) y el plano muestra el área resultante.
+- **Área edificable**: el rectángulo que queda al descontar un retiro igual en los cuatro lados. El retiro se elige con un control (de 0 a 10 m; al abrir vale 3 m, o menos si el lote es estrecho, para que siempre quede área edificable) y el plano muestra el área resultante.
 - **Acceso**: una marca en el frente del lote.
 - **Norte**: una flecha cuya dirección se elige con un control.
 - **Leyenda** y botón **Descargar plano (SVG)**. El archivo descargado lleva sus colores dentro, así que se ve igual fuera de la aplicación.
