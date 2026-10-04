@@ -12,7 +12,7 @@
 
 El avance de la aplicación, semana por semana, está en `13_EVOLUCION_POR_SEMANAS.md`, junto con los hitos propuestos para después de la entrega. Los cambios agrupados por semana están en `CHANGELOG.md`, en la raíz del repositorio.
 
-Después de la fase 7 se hicieron dos rondas de mejoras, registradas en `PLAN_MEJORAS.md` y `PLAN_MEJORAS_2.md`: uso de todas las estructuras en la aplicación, integración continua, contraseñas con Argon2, registro de eventos, diseño para pantallas pequeñas, herramientas de formato, diagramas, guion de la demostración y mediciones.
+Después de la fase 7 se hicieron dos rondas de mejoras: uso de todas las estructuras en la aplicación, integración continua, contraseñas con Argon2, registro de eventos, diseño para pantallas pequeñas, herramientas de formato, diagramas, guion de la demostración y mediciones.
 
 En la segunda ronda las estructuras también se compilaban y probaban en C++ con CMake. Esa versión se retiró después: la aplicación nunca la llamó y el proyecto quedó solo en Python y TypeScript. Los casos borde que solo se probaban ahí se pasaron a `pytest`.
 
