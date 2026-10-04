@@ -53,7 +53,7 @@ Las decisiones de cada parte están explicadas en `12_BACKEND_Y_API.md`.
 
 Las estructuras estudiadas existen en dos versiones:
 
-- En C++, dentro de `data_structures/`, como material de estudio. Cada archivo es un programa que se compila y se ejecuta solo.
+- En C++, dentro de `data_structures/`, como material de estudio. Cada estructura es una plantilla en un `.hpp`, con un programa de ejemplo en el `.cpp` del mismo nombre.
 - En Python, dentro de `backend/app/data_structures/`, que son las que usa la aplicación.
 
 Esta separación permite estudiar la materia sin mezclar la implementación académica con la interfaz.

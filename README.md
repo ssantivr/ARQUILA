@@ -60,24 +60,31 @@ El proyecto mantiene una complejidad adecuada para cuarto semestre. Se prioriza 
 - Python 3 con `pip`.
 - Node.js con `npm`.
 - PostgreSQL, con una base de datos vacía llamada `arquila`.
-- Un compilador de C++17 (`g++`), solo para ejecutar las estructuras en C++.
+- Un compilador de C++17 (`g++`), CMake 3.25 o posterior y Ninja, solo para las estructuras en C++.
 
 La instalación desde cero está comprobada en Windows 11 con Python 3.12 y Node 24, y las pruebas pasan con PostgreSQL 16 y 18 (ver `docs/06_PRUEBAS.md`).
 
-## Ejecución de una estructura
+## Estructuras en C++
+
+Se compilan con CMake (3.25 o posterior) y Ninja. Un solo comando configura, compila los cinco programas y ejecuta las pruebas:
 
 ```bash
-g++ -std=c++17 data_structures/stack/Stack.cpp -o stack
-./stack
+cd data_structures
+cmake --workflow --preset default
 ```
 
-En Windows conviene añadir `-static`:
+Los ejecutables quedan en `data_structures/build/`, por ejemplo `build/Stack`. La primera vez CMake descarga Catch2, la librería de pruebas, así que necesita conexión a internet.
+
+En Linux o macOS, `cmake --workflow --preset sanitize` hace lo mismo con AddressSanitizer, que detecta fugas de memoria y accesos inválidos. GCC para Windows no lo incluye.
+
+En Windows, CMake enlaza con `-static`. Sin esa opción, un programa puede cerrarse sin escribir nada si otro programa instalado (por ejemplo PostgreSQL) tiene en el `PATH` una versión distinta de las bibliotecas de GCC. Con `-static` el ejecutable no depende de ellas.
+
+Un programa suelto también se puede compilar sin CMake:
 
 ```bash
 g++ -std=c++17 -static data_structures/stack/Stack.cpp -o stack
+./stack
 ```
-
-Sin esa opción, el programa puede cerrarse sin escribir nada si otro programa instalado (por ejemplo PostgreSQL) tiene en el `PATH` una versión distinta de las bibliotecas de GCC. Con `-static` el ejecutable no depende de ellas.
 
 ## Ejecución del backend
 
@@ -161,7 +168,7 @@ npm run build
 
 `npm run build` también comprueba los tipos de TypeScript.
 
-GitHub ejecuta estas mismas comprobaciones, y además compila las estructuras en C++, en cada subida a `santiago` o a `main` (`.github/workflows/ci.yml`). Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
+GitHub ejecuta estas mismas comprobaciones, y además las pruebas de las estructuras en C++, en cada subida a `santiago` o a `main` (`.github/workflows/ci.yml`). Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
 
 ## Documentación
 

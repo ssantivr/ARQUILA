@@ -77,6 +77,14 @@ Las cinco están escritas a mano, sin `collections.deque`, `queue` ni otra libre
 
 La complejidad de cada operación y el uso de estas estructuras dentro de la aplicación están en `05_COMPLEJIDAD.md`.
 
+### Organización del código en C++
+
+Cada estructura tiene dos archivos en su carpeta: un `.hpp` con la implementación y un `.cpp` con un programa de ejemplo que la usa. La tabla anterior indica el `.cpp`; el `.hpp` tiene el mismo nombre.
+
+- Las cinco son plantillas (`template <typename T>`): `Stack<int>`, `Queue<std::string>` o una lista de cualquier tipo que se pueda copiar y comparar. La pila y la cola conservan su capacidad fija de 100 elementos.
+- Las listas enlazadas liberan todos sus nodos en el destructor y no se pueden copiar, para que dos listas nunca compartan nodos ni los liberen dos veces.
+- Se compilan con CMake (`data_structures/CMakeLists.txt`) y sus pruebas, escritas con Catch2, están en `data_structures/tests/`. Los comandos están en el `README.md` y lo que cubren las pruebas en `06_PRUEBAS.md`.
+
 ## Objetivo académico
 
 El objetivo es comprender cómo funcionan estas estructuras y poder explicar sus operaciones, referencias y costos antes de avanzar a estructuras más complejas.

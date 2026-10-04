@@ -86,12 +86,12 @@ El límite de intentos de inicio de sesión usa una cola (`backend/app/services/
 
 Con pruebas automatizadas en `backend/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.
 
-Las estructuras en C++ se validan ejecutando cada programa y comparando su salida con la esperada.
+Las estructuras en C++ tienen sus propias pruebas con Catch2 en `data_structures/tests/`, que se ejecutan con `cmake --workflow --preset default`.
 
 ## 13. Qué decisiones se tomaron para mantener el proyecto dentro del alcance de la asignatura
 
 - Solo se usan las estructuras estudiadas: arrays, pila, cola y listas enlazadas. No hay árboles, grafos ni tablas hash propias.
-- Las estructuras tienen capacidad fija o enlaces simples, sin plantillas ni optimizaciones avanzadas en C++.
+- Las estructuras tienen capacidad fija o enlaces simples. En C++ son plantillas sencillas, sin optimizaciones avanzadas.
 - La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA, modelo 3D). Siguen el plan de `13_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
 
 ## 14. Qué patrón de diseño se usa y por qué

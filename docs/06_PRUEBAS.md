@@ -33,6 +33,23 @@ El proyecto utiliza pruebas sencillas porque el objetivo es validar los concepto
 - Recorrer hacia adelante.
 - Recorrer hacia atrás.
 
+### Estructuras en C++
+
+Los casos anteriores, y los de los arrays, están automatizados con Catch2 en `data_structures/tests/`. Se ejecutan con un solo comando, que también compila:
+
+```bash
+cd data_structures
+cmake --workflow --preset default
+```
+
+Además de los casos de cada estructura, las pruebas comprueban:
+
+- La pila y la cola llenas (100 elementos) y vacías, y que la cola mantiene el orden después de dar la vuelta al array.
+- Que cada estructura funciona con un tipo distinto de `int` (`std::string`).
+- La memoria de las listas: con un tipo que cuenta cuántos valores existen, se verifica que insertar, eliminar, vaciar y destruir la lista deja el contador en cero, es decir, que cada nodo se libera una sola vez.
+
+En GitHub las mismas pruebas y los cinco programas se ejecutan compilados con AddressSanitizer y UndefinedBehaviorSanitizer, que fallan ante una fuga, una doble liberación o un acceso fuera de rango. En Windows no se pueden usar porque GCC para Windows no los incluye.
+
 ### Backend
 
 Las pruebas automatizadas están en `backend/tests/` y se ejecutan con `pytest`. Por defecto usan una base SQLite en memoria, así que no necesitan PostgreSQL.
@@ -122,7 +139,7 @@ coverage report -m
 
 El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `santiago` o a `main` y en cada pull request. Son tres trabajos independientes:
 
-- **Estructuras en C++:** compila con `g++ -std=c++17 -Wall` y ejecuta cada programa de `data_structures/`.
+- **Estructuras en C++:** compila `data_structures/` con CMake, con AddressSanitizer y UndefinedBehaviorSanitizer activados, ejecuta las pruebas de Catch2 y después cada programa de ejemplo.
 - **Backend:** instala `requirements-dev.txt` con Python 3.12 y ejecuta `pytest` dos veces, con SQLite y contra un PostgreSQL 16 que se levanta solo para esa ejecución.
 - **Frontend:** `npm ci`, `npm test` y `npm run build` con Node 24.
 

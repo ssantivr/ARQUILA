@@ -11,13 +11,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Compile and run each structure
+      - name: Build with sanitizers
+        run: |
+          cmake -S data_structures -B build -DCMAKE_BUILD_TYPE=Debug -DARQUILA_SANITIZE=ON
+          cmake --build build --parallel
+      - name: Run the tests
+        run: ctest --test-dir build --output-on-failure
+      - name: Run each example program
         run: |
           set -e
-          for source in data_structures/*/*.cpp; do
-            binary="/tmp/$(basename "$source" .cpp)"
-            g++ -std=c++17 -Wall "$source" -o "$binary"
-            "$binary" > /dev/null
+          for program in ArrayExamples Stack Queue SinglyLinkedList DoublyLinkedList; do
+            "build/$program" > /dev/null
           done
 
   backend:
