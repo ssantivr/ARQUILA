@@ -178,6 +178,6 @@ GitHub ejecuta estas mismas comprobaciones, y además compila las estructuras en
 | `docs/09_GUIA_DEFENSA.md` | Preguntas de la defensa con sus respuestas. |
 | `docs/10_CONCLUSIONES.md` | Conclusiones. |
 | `docs/11_PLAN_TRABAJO.md` | Fases del trabajo y su estado. |
-| `docs/12_BACKEND_Y_API.md` | Decisiones del backend: autenticación, archivos, terreno e IA. |
+| `docs/12_BACKEND_Y_API.md` | Decisiones del backend: autenticación, seguridad, archivos, terreno e IA. |
 | `docs/13_EVOLUCION_POR_SEMANAS.md` | Evolución de la aplicación y estado real de cada semana. |
 | `prompts/README.md` | Índice de los prompts usados con el asistente de IA. |

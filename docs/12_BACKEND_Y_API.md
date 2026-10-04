@@ -299,6 +299,41 @@ Revisión hecha el 3 de octubre de 2026: se contó cuántas consultas a la base 
 
 Las medidas se hicieron con una base SQLite en memoria; cuentan consultas, no tiempos reales contra PostgreSQL.
 
+## Seguridad
+
+Lo que protege cada parte está explicado en su sección: contraseñas, sesiones y límite de intentos en «Autenticación», acceso a los datos en «Permisos» y subida de archivos en «Archivos». Esta sección reúne lo que es común a toda la API y el resultado de la revisión del 4 de octubre de 2026.
+
+### Cabeceras de respuesta
+
+Todas las respuestas llevan estas cabeceras, que añade un middleware en `app/main.py`:
+
+| Cabecera | Para qué |
+|---|---|
+| `X-Content-Type-Options: nosniff` | El navegador respeta el tipo declarado y no intenta adivinar otro. |
+| `Referrer-Policy: no-referrer` | Al seguir un enlace no se envía la dirección de origen. |
+| `Cache-Control: no-store` | Los datos de un usuario no quedan guardados en la caché del navegador ni de un intermediario. |
+| `Content-Security-Policy: frame-ancestors` | Solo la propia aplicación (los orígenes de `CORS_ORIGINS` o `APP_URL`) puede mostrar una respuesta dentro de un marco. |
+
+### Enlace de recuperación
+
+El enlace de recuperación lleva su identificador en la dirección. La aplicación lo lee al abrir y lo quita de la barra de direcciones enseguida, para que no quede en el historial del navegador, y la página declara `referrer` `no-referrer` para que no viaje a otros sitios. Si se recarga la página antes de cambiar la contraseña hay que volver a abrir el enlace del correo.
+
+### Tamaño de los datos
+
+Todos los textos que recibe la API tienen una longitud máxima, las listas de vértices un número máximo de puntos y los archivos un tamaño máximo. La descripción de un proyecto admite hasta 2000 caracteres.
+
+### Dependencias
+
+Revisadas el 4 de octubre de 2026 con `npm audit` (frontend) y `pip-audit` (backend): sin vulnerabilidades conocidas. `pip-audit` señaló una en `pytest` 8, que solo se usa para las pruebas; `requirements-dev.txt` exige ahora `pytest` 9.0.3 o posterior.
+
+### Limitaciones conocidas
+
+- El límite de intentos de inicio de sesión se cuenta por correo, no por dirección IP, y vive en memoria: se reinicia al reiniciar el servidor y no se comparte entre varios procesos.
+- El registro no tiene límite de solicitudes y responde que un correo ya está registrado, así que permite averiguar si un correo tiene cuenta.
+- La documentación automática de la API (`/docs`) queda accesible sin sesión. No muestra datos, solo la lista de operaciones.
+- No hay un límite de archivos por proyecto, solo de tamaño por archivo.
+- La aplicación no fuerza HTTPS: en un despliegue real debe ir detrás de un servidor que lo haga, con `COOKIE_SECURE=1`.
+
 ## Variables de entorno
 
 Se pueden definir en la terminal o en el archivo `backend/.env`, que `python -m app.dev` lee al arrancar. Una variable ya definida en la terminal tiene prioridad sobre el archivo. `backend/.env` está excluido del repositorio porque contiene contraseñas.

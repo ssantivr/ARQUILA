@@ -66,7 +66,7 @@ Cubren:
 - Componentes estructurales: crear, listar y filtrar por tipo, actualizar y eliminar, que el tipo sea columna, viga o muro, que las medidas sean mayores que cero, que el plano sea del mismo proyecto y que se eliminen con su plano o su proyecto.
 - El modelo 3D (`/projects/{id}/structure`): colocación de los terrenos, qué planos cuentan como nivel, cuartos frente a volumen del nivel, altura de cada nivel, y posición de los componentes, con las vigas colgadas del techo del nivel. También el material de superficie de cada elemento: que se guarde en un cuarto, en un componente y en el plano de un volumen, que se rechace un material o un tipo desconocido, que el elemento sea de ese tipo y de ese proyecto, y que otro usuario no pueda cambiarlo. Y el tipo de cubierta del proyecto: a dos aguas por defecto, que se guarde la plana, que se rechace otro valor y que otro usuario no pueda cambiarla.
 - Proyectos de ejemplo: la lista, la creación de un proyecto completo desde un ejemplo, el nombre libre al repetirlo, los permisos, y que los cuartos de cada ejemplo caben en su lote sin solaparse.
-- CORS: que se admita el origen de la aplicación con credenciales, que se responda la petición previa y que se ignoren otros orígenes.
+- CORS: que se admita el origen de la aplicación con credenciales, que se responda la petición previa y que se ignoren otros orígenes. También que todas las respuestas, incluidas las de error, lleven las cabeceras de seguridad (ver «Seguridad» en `12_BACKEND_Y_API.md`).
 - Conversaciones con el asistente, usando un asistente simulado, y la respuesta por reglas cuando la IA falla o no está configurada.
 - Los adaptadores de correo y de IA (`test_adapters.py`), sustituyendo `smtplib` y el SDK de Anthropic por objetos simulados: qué adaptador de correo se elige según la configuración, las llamadas SMTP que hace, y cómo el adaptador de IA extrae el texto, trata las negativas y las respuestas vacías y convierte los errores del SDK en el error de la aplicación. El adaptador del modelo local se prueba contra un servidor de Ollama simulado: qué modelo elige, qué envía, y qué hace si Ollama no responde, no tiene modelos o contesta algo inesperado.
 
@@ -84,7 +84,7 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 94 y `pytest` 250, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
+  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 94 y `pytest` 252, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 

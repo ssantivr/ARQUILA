@@ -5,4 +5,4 @@
 - [x] Fase 3 - README
 - [x] Fase 4 - Automatización
 - [x] Fase 5 - Pruebas
-- [ ] Fase 6 - Seguridad
+- [x] Fase 6 - Seguridad
