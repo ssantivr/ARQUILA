@@ -137,13 +137,14 @@ La pestaña Planos dibuja, debajo de la lista de planos, un plano de implantaci�
 - **Acceso**: una marca en el frente del lote.
 - **Norte**: una flecha cuya dirección se elige con un control.
 - **Leyenda** y botón **Descargar plano (SVG)**. El archivo descargado lleva sus colores dentro, así que se ve igual fuera de la aplicación.
+- Botón **Imprimir o guardar como PDF**: abre la impresión del navegador con el plano solo, en una hoja A4 horizontal. Para obtener el PDF se elige «Guardar como PDF» como impresora. No usa ninguna librería.
 
 Simplificaciones:
 
 - El retiro y el norte no se guardan: el proyecto no tiene esos datos y vuelven a su valor inicial al recargar.
 - El acceso se asume por el frente, el lado más bajo, igual que en la vista frontal del terreno.
 - El área edificable solo se calcula en lotes rectangulares. En un lote con vértices se dibujan el contorno y las cotas, sin área edificable.
-- No se dibujan vivienda, áreas verdes, andenes ni parqueadero, porque el proyecto no guarda esos datos. Tampoco hay descarga en PDF.
+- No se dibujan vivienda, áreas verdes, andenes ni parqueadero, porque el proyecto no guarda esos datos.
 
 ## Datos numéricos
 
