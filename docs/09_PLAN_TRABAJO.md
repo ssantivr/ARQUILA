@@ -14,7 +14,7 @@ El avance de la aplicación, semana por semana, está en `06_EVOLUCION_POR_SEMAN
 
 ## Pendiente
 
-- Probar el asistente de IA con una clave real: escribir `ANTHROPIC_API_KEY` en `backend/.env` y ejecutar `python -m app.check`.
+- Probar el asistente de IA con un modelo real. Hay dos caminos: instalar Ollama y descargar un modelo (gratuito, sin clave), o escribir `ANTHROPIC_API_KEY` en `backend/.env` (de pago). Después, ejecutar `python -m app.check`.
 - Configurar un servicio de correo para la recuperación de contraseña: escribir las variables `SMTP_*` en `backend/.env` y ejecutar `python -m app.check correo@ejemplo.com`.
 
-El comando está explicado en `10_BACKEND_Y_API.md`. Las dos tareas necesitan credenciales que no se guardan en el repositorio. Mientras no haya clave, el asistente responde con reglas fijas.
+El comando está explicado en `10_BACKEND_Y_API.md`. El correo necesita credenciales que no se guardan en el repositorio; mientras no las haya, el enlace de recuperación se escribe en la consola del servidor. Mientras no haya un modelo disponible, el asistente responde con reglas fijas.

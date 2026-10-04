@@ -31,6 +31,7 @@ El backend habla con dos servicios externos: el de IA y el de correo. Cada uno t
 | Interfaz que usa la aplicación | Adaptador | Qué adapta |
 |---|---|---|
 | `Assistant.reply(system, messages)` devuelve un texto | `ClaudeAssistant` en `app/ai.py` | El SDK de Anthropic: arma la petición, extrae el texto de la respuesta y convierte los errores del SDK en `AIUnavailableError`. |
+| `Assistant.reply(system, messages)` devuelve un texto | `OllamaAssistant` en `app/ai.py` | Un modelo local servido por Ollama, por HTTP: elige el modelo, envía la conversación, limpia la respuesta y convierte los fallos en `AIUnavailableError`. |
 | `Mailer.send(recipient, subject, body)` | `SmtpMailer` en `app/mailer.py` | La librería `smtplib`: construye el mensaje, abre la conexión cifrada, se identifica y envía. |
 | `Mailer.send(recipient, subject, body)` | `ConsoleMailer` en `app/mailer.py` | La consola del servidor, para desarrollo sin correo configurado. |
 
@@ -93,13 +94,28 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 
 ## Asistente de IA
 
-- Usa Claude mediante el SDK oficial de Anthropic. La clave se toma de la variable de entorno `ANTHROPIC_API_KEY`.
+- Hay dos proveedores, cada uno con su adaptador. El backend elige uno en cada pregunta:
+  - Si está definida `ANTHROPIC_API_KEY`, usa Claude mediante el SDK oficial de Anthropic. Es de pago.
+  - Si no, usa un modelo local servido por [Ollama](https://ollama.com), que es gratuito y no necesita clave.
 - En cada pregunta se envían los datos del proyecto y el historial completo de la conversación.
-- La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado.
+- La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado y un servidor de Ollama simulado.
+
+### Modelo local con Ollama
+
+No hay que configurar nada en `backend/.env`. Pasos, una sola vez:
+
+1. Instalar Ollama desde https://ollama.com.
+2. Descargar un modelo, por ejemplo `ollama pull llama3.2` (unos 2 GB).
+
+Con Ollama encendido, el asistente lo encuentra en `http://127.0.0.1:11434` y usa el primer modelo instalado. Dos variables opcionales cambian eso: `OLLAMA_MODEL` fija el modelo y `OLLAMA_URL` la dirección.
+
+- La velocidad y la calidad de las respuestas dependen del equipo y del modelo; un modelo pequeño responde peor que Claude.
+- Si Ollama no está encendido o no tiene modelos, el backend lo detecta en un segundo como máximo y contesta con las reglas.
+- Algunos modelos escriben su razonamiento entre etiquetas `<think>`; el adaptador lo quita de la respuesta.
 
 ### Respaldo por reglas
 
-Si no hay clave configurada, o la llamada a la IA falla (clave rechazada, límite de uso, error del servicio o de red), el asistente no devuelve un error: contesta con reglas fijas (`services/assistant_rules.py`) sobre los datos del proyecto.
+Si no hay ningún proveedor disponible (ni clave de Anthropic ni Ollama encendido), o la llamada a la IA falla (clave rechazada, límite de uso, error del servicio o de red), el asistente no devuelve un error: contesta con reglas fijas (`services/assistant_rules.py`) sobre los datos del proyecto.
 
 - Las reglas buscan palabras clave en la pregunta y reconocen tres temas: terreno (área, pendiente, desnivel, suelo), materiales y costos, y planos y elevaciones. Una pregunta puede tocar varios temas. Si no reconoce ninguno, resume el proyecto y dice sobre qué puede responder.
 - Reutilizan los avisos de `services/recommendation_rules.py`, para que el asistente y las recomendaciones automáticas digan lo mismo.
@@ -159,7 +175,9 @@ Se pueden definir en la terminal o en el archivo `backend/.env`, que `python -m 
 | `DATABASE_URL` | Conexión a la base de datos (obligatoria). |
 | `UPLOAD_DIR` | Carpeta de archivos subidos (por defecto `uploads`). |
 | `COOKIE_SECURE` | `1` para exigir HTTPS en la cookie de sesión. |
-| `ANTHROPIC_API_KEY` | Activa el asistente de IA. |
+| `ANTHROPIC_API_KEY` | Usa Claude como asistente de IA. Sin ella se usa el modelo local de Ollama. |
+| `OLLAMA_MODEL` | Modelo local que usa el asistente (por defecto, el primero instalado). |
+| `OLLAMA_URL` | Dirección de Ollama (por defecto `http://127.0.0.1:11434`). |
 | `APP_URL` | Dirección de la aplicación, para el enlace del correo de recuperación. |
 | `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASSWORD`, `SMTP_FROM` | Servidor de correo para la recuperación de contraseña. |
 
@@ -172,7 +190,7 @@ cd backend
 python -m app.check correo@ejemplo.com
 ```
 
-Hace una pregunta corta al asistente y envía un mensaje de prueba a la dirección indicada. Por cada servicio escribe `OK` o `FAILED` con el motivo (falta la variable, la clave fue rechazada, no se pudo conectar). Sin dirección, solo comprueba el asistente. La pregunta al asistente es una llamada real y consume una cantidad pequeña de crédito.
+Hace una pregunta corta al asistente y envía un mensaje de prueba a la dirección indicada. Por cada servicio escribe `OK` o `FAILED` con el motivo (falta la variable, la clave fue rechazada, no se pudo conectar). Sin dirección, solo comprueba el asistente. La pregunta al asistente es una llamada real al proveedor que esté activo: con Claude consume una cantidad pequeña de crédito; con Ollama no cuesta nada.
 
 ## Frontend
 
