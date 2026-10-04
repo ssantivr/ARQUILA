@@ -61,6 +61,8 @@ python -m venv .venv
 pip install -r requirements-dev.txt
 ```
 
+En Windows conviene clonar el proyecto en una ruta corta: en una carpeta con una ruta muy larga, `pip install` puede fallar.
+
 La configuración se guarda en `backend/.env`, que no se sube al repositorio. La primera vez:
 
 1. Copiar `backend/.env.example` a `backend/.env`.

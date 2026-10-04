@@ -70,6 +70,19 @@ Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/sr
 
 Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
 
+### Instalación desde cero
+
+Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12, Node 24 y PostgreSQL:
+
+- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 175 pruebas pasan.
+- Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
+- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las cuatro migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
+- Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
+
+No se comprobó la compilación de las estructuras en C++, porque el equipo no tiene `g++`, ni el arranque con `docker-compose.yml`.
+
+En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
+
 ### Sin cobertura automática
 
 La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `10_BACKEND_Y_API.md`).
