@@ -57,6 +57,7 @@ Cubren:
 - El endpoint `/health`.
 - Las estructuras de datos en Python: orden LIFO y FIFO, estructura vacía y llena, reutilización de posiciones en la cola circular, inserción y eliminación en las listas, y búsquedas.
 - Registro, inicio y cierre de sesión, y que cada endpoint exija sesión.
+- El resumen de las contraseñas (`test_security.py`): que solo verifique la contraseña correcta, que cambie en cada cálculo y que un valor guardado con otro formato nunca se dé por válido.
 - Que un usuario no pueda ver ni modificar los datos de otro.
 - Crear, listar, actualizar y eliminar proyectos, terrenos, materiales, planos y elevaciones, con sus validaciones.
 - Subida de archivos: tipos admitidos, tamaño máximo y adjuntarlos a planos y elevaciones.
@@ -71,7 +72,9 @@ Cubren:
 
 ### Frontend
 
-Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, `frontend/src/state/*.test.ts` y `frontend/src/three/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, curvas de nivel, cotas de cada lado, área edificable y lectura de los vértices de un lote, agrupación de cuartos por nivel e indicadores de ocupación (huella, área construida, COS y CUS), colocación de ventanas y puerta, forma del techo (a dos aguas o plano), fachadas y corte generados con cada cubierta, geometría de un cuarto en el modelo 3D (muros dentro de su medida, vidrio, hoja de puerta, líneas de cada vano y coordenadas de textura en metros), colores del modelo 3D (por tipo, por coste estimado y por alertas), materiales de superficie (el elegido o el predeterminado de cada tipo, y la lectura de los guardados), el estado compartido `appState` (avisos a los suscriptores, cambio de proyecto, material de superficie por elemento y recarga con peticiones simuladas), traducción de los mensajes de error y formato de números.
+Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, `frontend/src/state/*.test.ts`, `frontend/src/three/*.test.ts` y `frontend/src/services/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, curvas de nivel, cotas de cada lado, área edificable y lectura de los vértices de un lote, agrupación de cuartos por nivel e indicadores de ocupación (huella, área construida, COS y CUS), colocación de ventanas y puerta, forma del techo (a dos aguas o plano), fachadas y corte generados con cada cubierta, geometría de un cuarto en el modelo 3D (muros dentro de su medida, vidrio, hoja de puerta, líneas de cada vano y coordenadas de textura en metros), colores del modelo 3D (por tipo, por coste estimado y por alertas), materiales de superficie (el elegido o el predeterminado de cada tipo, y la lectura de los guardados), el estado compartido `appState` (avisos a los suscriptores, cambio de proyecto, material de superficie por elemento y recarga con peticiones simuladas), traducción de los mensajes de error y formato de números.
+
+También están probados la colocación de puertas y ventanas y la forma del techo del modelo 3D (`openings.test.ts`), y el cliente HTTP (`http.test.ts`) con un `fetch` simulado: la dirección y el cuerpo de cada petición, los mensajes de error que devuelve el backend y el aviso de sesión terminada.
 
 Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
 
@@ -81,7 +84,7 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 70 y `pytest` 225, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
+  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 94 y `pytest` 250, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
@@ -90,6 +93,16 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 No se comprobó el arranque con `docker-compose.yml`, porque el equipo no tiene Docker.
 
 En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
+
+### Cobertura del backend
+
+Medida el 4 de octubre de 2026 con `coverage`: las pruebas ejecutan el 98 % de las líneas de `backend/app/`, y el 100 % de `app/data_structures/`. Lo que queda sin ejecutar son sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:
+
+```bash
+pip install coverage
+coverage run --source=app -m pytest
+coverage report -m
+```
 
 ### Integración continua
 
