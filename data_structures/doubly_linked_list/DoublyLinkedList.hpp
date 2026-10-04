@@ -12,8 +12,7 @@ private:
         Node* previous;
         Node* next;
 
-        Node(const T& value)
-            : data(value), previous(nullptr), next(nullptr) {}
+        Node(const T& value) : data(value), previous(nullptr), next(nullptr) {}
     };
 
     Node* head;

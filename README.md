@@ -47,7 +47,8 @@ ARQUILA/
 ├── docs/                Documentación en español
 ├── prompts/             Instrucciones dadas al asistente de IA
 ├── .agentes/            Reglas del asistente
-├── .github/             Comprobaciones automáticas en GitHub
+├── .github/             Comprobaciones automáticas y plantilla de pull request
+├── scripts/             Comando de calidad del código
 └── docker-compose.yml   PostgreSQL en un contenedor (opcional)
 ```
 
@@ -177,6 +178,36 @@ npm run build
 `npm run build` también comprueba los tipos de TypeScript.
 
 GitHub ejecuta estas mismas comprobaciones, y además las pruebas de las estructuras en C++, en cada subida a `santiago` o a `main` (`.github/workflows/ci.yml`). Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
+
+## Calidad del código
+
+Un solo comando revisa el formato y los errores comunes de todo el repositorio. Se ejecuta desde la raíz, con el entorno virtual del backend activado y las dependencias del frontend instaladas:
+
+```bash
+python scripts/quality.py
+```
+
+Con `--fix` corrige lo que se puede corregir solo:
+
+```bash
+python scripts/quality.py --fix
+```
+
+| Lenguaje | Herramientas | Configuración |
+|---|---|---|
+| Python | Ruff (formato y reglas) | `ruff.toml` |
+| TypeScript | Prettier (formato) y ESLint (reglas) | `frontend/.prettierrc.json`, `frontend/eslint.config.js` |
+| C++ | clang-format (formato) | `data_structures/.clang-format` |
+
+Todas se instalan con `pip install -r requirements-dev.txt` y `npm install`; no hay que instalar nada aparte.
+
+Para que el formato se aplique solo antes de cada commit, activar los hooks una vez:
+
+```bash
+pre-commit install
+```
+
+Las versiones de las dependencias están fijadas: exactas en `backend/requirements.txt`, `backend/requirements-dev.txt` y `frontend/package.json`, y con todo el árbol en `frontend/package-lock.json`.
 
 ## Documentación
 

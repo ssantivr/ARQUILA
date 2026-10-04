@@ -1,0 +1,14 @@
+line-length = 100
+src = ["backend"]
+target-version = "py312"
+
+[lint]
+select = ["E", "F", "I", "B", "UP"]
+ignore = ["B008", "UP046", "UP047"]
+
+[lint.isort]
+known-first-party = ["app", "tests"]
+
+[lint.per-file-ignores]
+"backend/app/services/project_templates.py" = ["E501"]
+"backend/tests/test_templates.py" = ["E501"]

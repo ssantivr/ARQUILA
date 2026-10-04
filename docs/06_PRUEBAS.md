@@ -146,8 +146,9 @@ coverage report -m
 
 ### Integración continua
 
-El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `santiago` o a `main` y en cada pull request. Son tres trabajos independientes:
+El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `santiago` o a `main` y en cada pull request. Son cuatro trabajos independientes:
 
+- **Formato y reglas:** ejecuta `python scripts/quality.py` (Ruff, Prettier, ESLint y clang-format) y falla si algún archivo no cumple.
 - **Estructuras en C++:** compila `data_structures/` con CMake, con AddressSanitizer y UndefinedBehaviorSanitizer activados, ejecuta las pruebas de Catch2 y después cada programa de ejemplo.
 - **Backend:** instala `requirements-dev.txt` con Python 3.12 y ejecuta `pytest` dos veces, con SQLite y contra un PostgreSQL 16 que se levanta solo para esa ejecución.
 - **Frontend:** `npm ci`, `npm test` y `npm run build` con Node 24.
