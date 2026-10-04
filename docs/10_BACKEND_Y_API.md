@@ -196,6 +196,18 @@ Simplificaciones:
 - No hay cálculo estructural (cargas, secciones, materiales): los componentes se registran y se dibujan, nada más.
 - No entran en el historial de deshacer, igual que los cuartos.
 
+## Proyectos de ejemplo
+
+La página Proyectos ofrece cuatro ejemplos: Casa Familiar Andina, Vivienda compacta, Edificio multifamiliar y Oficina profesional. `GET /templates` los lista y `POST /templates/{id}/projects` crea un proyecto del usuario con su terreno, un plano por nivel, los cuartos de cada nivel y cuatro columnas en las esquinas de cada planta. El frontend abre el proyecto recién creado en la pestaña Modelo 3D.
+
+- Los ejemplos están definidos en el código (`backend/app/services/project_templates.py`), no en la base de datos: son pocos, fijos e iguales para todos los usuarios. Cada fila de cuartos se escribe con una función que los coloca uno a continuación del otro, así que no hay coordenadas repetidas a mano.
+- El proyecto se crea en una sola transacción: si algo falla, no queda un proyecto a medias.
+- Como el nombre de un proyecto es único por usuario, si ya existe se añade un número: «Vivienda compacta (2)».
+- El proyecto creado es uno normal: se edita, se borra y se consulta igual que los demás.
+- Una prueba comprueba, para cada ejemplo, que los cuartos caben en el lote y no se solapan.
+
+Simplificaciones: los ejemplos no traen materiales, elevaciones ni archivos, y las distribuciones son esquemáticas (filas de cuartos rectangulares), no planos de una obra real.
+
 ## Modelo 3D
 
 La pestaña Modelo 3D muestra el proyecto en tres dimensiones con Three.js. Los datos salen de `GET /projects/{id}/structure` (`backend/app/services/structure_service.py`), que no guarda nada: arma la respuesta con los terrenos, los planos, los cuartos y los componentes estructurales del proyecto, en metros.
