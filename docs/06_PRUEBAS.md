@@ -71,7 +71,7 @@ Cubren:
 
 ### Frontend
 
-Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, `frontend/src/state/*.test.ts` y `frontend/src/three/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, curvas de nivel, cotas de cada lado, área edificable y lectura de los vértices de un lote, agrupación de cuartos por nivel e indicadores de ocupación (huella, área construida, COS y CUS), colocación de ventanas y puerta, forma del techo, fachadas y corte generados, geometría de un cuarto en el modelo 3D (muros dentro de su medida, vidrio, hoja de puerta y líneas de cada vano), colores del modelo 3D (por tipo, por coste estimado y por alertas), materiales de superficie (el elegido o el predeterminado de cada tipo, y la lectura de los guardados), el estado compartido `appState` (avisos a los suscriptores, cambio de proyecto, material de superficie por elemento y recarga con peticiones simuladas), traducción de los mensajes de error y formato de números.
+Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, `frontend/src/state/*.test.ts` y `frontend/src/three/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, curvas de nivel, cotas de cada lado, área edificable y lectura de los vértices de un lote, agrupación de cuartos por nivel e indicadores de ocupación (huella, área construida, COS y CUS), colocación de ventanas y puerta, forma del techo, fachadas y corte generados, geometría de un cuarto en el modelo 3D (muros dentro de su medida, vidrio, hoja de puerta, líneas de cada vano y coordenadas de textura en metros), colores del modelo 3D (por tipo, por coste estimado y por alertas), materiales de superficie (el elegido o el predeterminado de cada tipo, y la lectura de los guardados), el estado compartido `appState` (avisos a los suscriptores, cambio de proyecto, material de superficie por elemento y recarga con peticiones simuladas), traducción de los mensajes de error y formato de números.
 
 Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
 
@@ -81,7 +81,7 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 66 y `pytest` 222, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
+  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 67 y `pytest` 222, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
