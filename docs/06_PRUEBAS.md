@@ -142,7 +142,7 @@ Ejecutados el 4 de octubre de 2026 en el equipo de desarrollo (Windows 11, Pytho
 | `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
 | `pytest` (en `backend/`, con SQLite) | 283 pruebas pasan |
 | `pytest` (en `backend/`, con `TEST_DATABASE_URL` hacia PostgreSQL 18.6) | 283 pruebas pasan |
-| `npm test` (en `frontend/`) | 118 pruebas pasan en 15 archivos |
+| `npm test` (en `frontend/`) | 120 pruebas pasan en 15 archivos |
 | `npm run build` (en `frontend/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |
 
 La integración continua de GitHub ejecutó el commit `eff7118` en `main` ese mismo día y sus tres trabajos terminaron bien: formato y reglas, backend (`pytest` con SQLite y con PostgreSQL 16) y frontend. Se consultó el estado de cada trabajo, no sus registros, así que el número de pruebas que corrió allí no se confirmó.
