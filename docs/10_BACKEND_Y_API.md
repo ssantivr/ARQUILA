@@ -107,10 +107,11 @@ Si no hay clave configurada, o la llamada a la IA falla (clave rechazada, límit
 
 ## Esquemas del terreno
 
-La pestaña Terreno dibuja tres esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx` y `Terrain3D.tsx`), sin librerías adicionales:
+La pestaña Terreno dibuja cuatro esquemas en SVG por cada terreno (`frontend/src/components/TerrainDiagrams.tsx` y `Terrain3D.tsx`), sin librerías adicionales:
 
 - **Vista superior**: el contorno del lote a escala.
-- **Perfil**: una línea con la pendiente real. El desnivel se calcula como `largo × pendiente / 100`.
+- **Vista frontal**: el lote visto desde el frente, que es su lado más bajo. Conserva el ancho y convierte la profundidad de cada vértice en altura (`profundidad × pendiente / 100`), así que un lote rectangular se ve como una franja de ancho por desnivel.
+- **Vista lateral**: el perfil del terreno, una línea con la pendiente real. El desnivel se calcula como `largo × pendiente / 100`.
 - **Vista 3D**: el lote como una superficie inclinada según la pendiente, que se puede girar con un control. Es una proyección calculada a mano: cada vértice se rota alrededor del eje vertical y se proyecta con una inclinación fija de 30°.
 
 La vista 3D tiene cuatro capas que se pueden mostrar u ocultar: superficie, plano base (el nivel de referencia), límites (contorno y aristas verticales) y medidas. No hay capas de construcción, vegetación ni vías, porque el proyecto no guarda esos datos.
