@@ -78,6 +78,20 @@ También están probados la colocación de puertas y ventanas y la forma del tec
 
 Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
 
+### Enlace de recuperación en el navegador
+
+Comprobado a mano el 4 de octubre de 2026 con Chrome sin ventana, manejado por su protocolo de depuración, sobre la versión `v1.0.10`. Se usó una copia temporal de la aplicación contra la base de pruebas, con un usuario creado para la ocasión, y se repitió con el frontend en modo desarrollo (`npm run dev`) y compilado (`npm run build`, servido con `vite preview`). En los dos casos:
+
+- El enlace abre el formulario «Elegir contraseña nueva».
+- Nada más cargar, la barra de direcciones queda sin `reset_token` y no se añade ninguna entrada al historial.
+- Al enviar la contraseña nueva se vuelve al inicio de sesión con el aviso «Contraseña cambiada». Después, la contraseña anterior responde 401 y la nueva 200.
+- Usar el mismo enlace por segunda vez responde 400.
+- Las peticiones a la API salen sin la cabecera `Referer`.
+
+En la versión compilada ninguna petición lleva el identificador del enlace en `Referer`. En modo desarrollo lo lleva una sola: la del script que Vite inyecta al principio de la página (`/@vite/client`), que va al propio servidor de desarrollo, el mismo que ya recibió el enlace completo. Ese script no existe en la versión compilada.
+
+No se guardó como prueba automática: el repositorio no incluye ninguna herramienta para manejar un navegador. Tampoco se comprobó en un despliegue real, con HTTPS y detrás de otro servidor, ni con el envío real del correo: el enlace se tomó de la consola del backend (ver «Seguridad» en `12_BACKEND_Y_API.md`).
+
 ### Instalación desde cero
 
 Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12, Node 24 y PostgreSQL:
