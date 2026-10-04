@@ -130,8 +130,6 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Estructuras en C++: los cinco programas de `data_structures/` compilan con GCC 16.2 (`g++ -std=c++17 -static -Wall -Wextra -Wpedantic`) sin ningún aviso, y al ejecutarlos su salida coincide con los casos de este documento: la pila devuelve 30, 20, 10; la cola 10, 20, 30 y sigue funcionando después de dar la vuelta; las listas insertan, eliminan y se recorren en los dos sentidos. Entonces no se analizó el uso de memoria con una herramienta, porque GCC para Windows no incluye ese análisis; desde el 4 de octubre lo hace GitHub con AddressSanitizer, y los programas se compilan con CMake (ver «Estructuras en C++» más arriba).
 
-No se comprobó el arranque con `docker-compose.yml`, porque el equipo no tiene Docker.
-
 En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
 
 ### Cobertura del backend

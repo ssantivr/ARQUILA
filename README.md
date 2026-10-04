@@ -52,8 +52,7 @@ ARQUILA/
 ├── .agents/             Reglas del asistente
 ├── .github/             Comprobaciones automáticas y plantilla de pull request
 ├── scripts/             Comando de calidad del código
-├── CHANGELOG.md         Cambios agrupados por semana
-└── docker-compose.yml   PostgreSQL en un contenedor (opcional)
+└── CHANGELOG.md         Cambios agrupados por semana
 ```
 
 ## Qué se añadió y cómo está implementado
@@ -190,16 +189,6 @@ Con el backend arrancado:
 - `http://localhost:8000/docs` muestra la documentación interactiva de la API, que FastAPI genera a partir del código. Desde ahí se puede probar cada operación.
 - `http://localhost:8000/health` responde `{"status": "ok"}` si el servidor está en marcha.
 - La terminal muestra una línea en formato JSON por cada petición (ver «Registro de eventos» en `docs/12_BACKEND_Y_API.md`).
-
-### PostgreSQL con Docker (opcional)
-
-Quien no tenga PostgreSQL instalado puede levantarlo con Docker desde la raíz del repositorio:
-
-```bash
-docker compose up -d
-```
-
-El contenedor crea la base `arquila` con usuario y contraseña `arquila`, así que el valor de `DATABASE_URL` en `backend/.env` es `postgresql+psycopg://arquila:arquila@localhost:5432/arquila`, el mismo que trae `backend/.env.example`. Este arranque no está comprobado, porque el equipo de desarrollo no tiene Docker.
 
 ## Ejecución del frontend
 

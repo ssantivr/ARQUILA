@@ -4,7 +4,7 @@ Objetivo: el proyecto queda solo con backend en Python (FastAPI) y frontend en T
 
 - [x] Fase 1 - Verificar que Python cubre todo antes de borrar nada
 - [x] Fase 2 - Eliminar C++
-- [ ] Fase 3 - Configuración y arranque
+- [x] Fase 3 - Configuración y arranque
 - [ ] Fase 4 - README
 - [ ] Fase 5 - Documentación
 - [ ] Fase 6 - Comprobación final
@@ -51,3 +51,21 @@ No se trasladaron las pruebas de C++ sobre liberación de memoria (cada nodo des
 | `python scripts/quality.py` | todas las comprobaciones pasan |
 
 No hubo fallos que corregir. `pytest` contra PostgreSQL no se ejecutó en esta fase.
+
+## Fase 3: resultado
+
+Comprobado el 4 de octubre de 2026 en un clon nuevo del repositorio (Windows 11, Python 3.12.10, Node 24.21.0, PostgreSQL 18.6), sobre una base de datos vacía creada para la prueba y borrada al terminar.
+
+| Paso | Resultado |
+|---|---|
+| `python -m venv .venv` y `pip install -r requirements-dev.txt` | instala sin errores en una ruta corta; en una ruta muy larga falla, como ya avisa el README |
+| `python -m app.migrate` y `python -m app.dev` sin `backend/.env` | terminan con el mensaje «DATABASE_URL is not set. Copy backend/.env.example to backend/.env and fill it in.» |
+| `python -m app.migrate` (con `backend/.env`, sin `DATABASE_URL` en la terminal) | aplica las 9 migraciones; quedan 0 usuarios y 0 proyectos |
+| `python -m app.migrate --seed` | carga 1 usuario y 3 proyectos; una segunda ejecución no duplica nada |
+| `python -m app.check` | lee `backend/.env`; el asistente respondió con Ollama |
+| `python -m app.dev` | `/health` responde `{"status":"ok"}` y `/docs` responde 200 |
+| `npm install` y `npm run dev` | la interfaz responde 200; el usuario de demostración inicia sesión a través de `/api` y ve sus 3 proyectos |
+
+`npm run dev` se probó en el puerto 5183 porque el 5173 estaba ocupado en el equipo. No se abrió la interfaz en un navegador en esta fase: se comprobó con peticiones HTTP.
+
+Cambios: Docker no está instalado en el equipo, así que se eliminó `docker-compose.yml` y sus menciones. `backend/.env.example` traía el usuario y la contraseña de ese contenedor; ahora trae el marcador `CHANGE_ME`.
