@@ -64,7 +64,7 @@ En ese modo las tablas se crean aplicando las migraciones de `database/migration
 
 Antes de cada prueba se vacían todas las tablas de esa base. Por seguridad, las pruebas se niegan a ejecutarse si el nombre de la base no termina en `test`. Nunca se debe apuntar a una base con datos reales.
 
-Verificado el 3 de octubre de 2026 con PostgreSQL 16.2 y 18.6: todas las pruebas pasan.
+Ejecutado el 4 de octubre de 2026 con PostgreSQL 18.6: las 283 pruebas pasan (ver «Resultados de la última ejecución»).
 
 Cubren:
 
@@ -117,19 +117,39 @@ No se guardó como prueba automática: el repositorio no incluye ninguna herrami
 
 ### Instalación desde cero
 
-Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12, Node 24 y PostgreSQL:
+Comprobada el 4 de octubre de 2026 con un clon nuevo del repositorio, siguiendo los pasos del `README.md` en Windows 11 con Python 3.12.10, Node 24.21.0 y PostgreSQL 18.6, sobre una base de datos vacía creada para la prueba:
 
-- Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
-- Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 118 y `pytest` 269, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
-- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones que había entonces (hoy son nueve) y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
-- Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
+| Paso | Resultado |
+|---|---|
+| `python -m venv .venv` y `pip install -r requirements-dev.txt` | instala sin errores en una ruta corta |
+| `python -m app.migrate` y `python -m app.dev` sin `backend/.env` | terminan con el mensaje «DATABASE_URL is not set. Copy backend/.env.example to backend/.env and fill it in.» |
+| `python -m app.migrate` (con `backend/.env`, sin `DATABASE_URL` en la terminal) | aplica las 9 migraciones; quedan 0 usuarios y 0 proyectos |
+| `python -m app.migrate --seed` | carga 1 usuario y 3 proyectos; una segunda ejecución no duplica nada |
+| `python -m app.check` | lee `backend/.env`; el asistente respondió con Ollama |
+| `python -m app.dev` | `/health` responde `{"status":"ok"}` y `/docs` responde 200 |
+| `npm install` y `npm run dev` | la interfaz responde 200; el usuario de demostración inicia sesión a través de `/api` y ve sus 3 proyectos |
+
+`npm run dev` se probó en el puerto 5183 porque el 5173 estaba ocupado en el equipo. La interfaz no se abrió en un navegador en esa comprobación: se usaron peticiones HTTP.
 
 En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
 
+### Resultados de la última ejecución
+
+Ejecutados el 4 de octubre de 2026 en el equipo de desarrollo (Windows 11, Python 3.12.10, Node 24.21.0, PostgreSQL 18.6), después de retirar C++ y CMake:
+
+| Comando | Resultado |
+|---|---|
+| `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
+| `pytest` (en `backend/`, con SQLite) | 283 pruebas pasan |
+| `pytest` (en `backend/`, con `TEST_DATABASE_URL` hacia PostgreSQL 18.6) | 283 pruebas pasan |
+| `npm test` (en `frontend/`) | 118 pruebas pasan en 15 archivos |
+| `npm run build` (en `frontend/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |
+
+No se comprobó en esta ejecución: `pytest` contra PostgreSQL 16, que es la versión que usa la integración continua; el resultado de la integración continua en GitHub; y las comprobaciones manuales con fecha de este documento (el enlace de recuperación en el navegador y la cobertura), que son anteriores y no se repitieron.
+
 ### Cobertura del backend
 
-Medida el 4 de octubre de 2026 con `coverage`: las pruebas ejecutan el 98 % de las líneas de `backend/app/`, y el 100 % de `app/data_structures/`. Lo que queda sin ejecutar son sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:
+Medida el 4 de octubre de 2026 con `coverage` y no repetida desde entonces: las pruebas ejecutaban el 98 % de las líneas de `backend/app/`, y el 100 % de `app/data_structures/`. Lo que quedaba sin ejecutar eran sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:
 
 ```bash
 pip install coverage
