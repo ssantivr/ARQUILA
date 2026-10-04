@@ -2,7 +2,7 @@
 
 Lista ordenada por urgencia. Cada punto dice qué falta, por qué importa y por dónde empezar. Lo que no se hizo está descrito en «Limitaciones y trabajo futuro» de `10_CONCLUSIONES.md`; aquí está lo que conviene hacer con eso.
 
-Estado al 4 de octubre de 2026: `pytest` (283 pruebas), `npm test` (120 pruebas), `npm run build` y `python scripts/quality.py` pasan, y la integración continua pasa en `main`.
+Estado al 4 de octubre de 2026: `pytest` (285 pruebas), `npm test` (120 pruebas), `npm run build` y `python scripts/quality.py` pasan, y la integración continua pasa en `main`.
 
 ## 1. Antes de la entrega
 
@@ -64,8 +64,8 @@ Revisado el 4 de octubre de 2026 con el usuario de demostración: las siete pant
 Los datos son de la base local, no del repositorio.
 
 - **Ya corregido.** Había un proyecto antiguo, «Demo House», con datos en inglés, que hacía aparecer «Estructura» y «structure» como categorías distintas, y dos copias de «Casa Familiar Andina». Se borraron los tres. `database/seed.sql` no crea ninguno de ellos.
-- **Ejemplos sin ubicación.** Quedan tres proyectos creados desde los ejemplos («Vivienda compacta», «Edificio multifamiliar», «Oficina profesional») con «Sin ubicación» y en borrador. Completarlos o borrarlos antes de la demostración.
-- **Modelo 3D de los otros dos proyectos de ejemplo.** «Casa Los Arrayanes» ya trae cuartos y columnas en `database/seed.sql` y se dibuja como una casa de dos plantas. «Edificio Mirador» y «Cabaña Mindo» siguen sin cuartos.
+- **Ejemplos sin ubicación ni materiales.** «Vivienda compacta» ya trae ubicación y ocho materiales. «Edificio multifamiliar» y «Oficina profesional» siguen con «Sin ubicación» y sin materiales; «Casa Familiar Andina» tiene ubicación pero no materiales.
+- **Modelo 3D de «Cabaña Mindo».** «Casa Los Arrayanes» y «Edificio Mirador» ya traen cuartos y columnas en `database/seed.sql`. «Cabaña Mindo» sigue sin cuartos ni medidas del lote, así que no tiene modelo.
 
 ### Detalles visibles
 
@@ -75,7 +75,7 @@ Los datos son de la base local, no del repositorio.
 - **Barra de módulos en el móvil.** Se desplaza de lado y los últimos módulos quedan ocultos sin ninguna señal. Un degradado en el borde o solo iconos con texto debajo lo hacen evidente.
 - **Listas largas.** Proyectos, terrenos y materiales se muestran completos. Con muchos registros hace falta paginar o cargar por partes.
 
-Ya corregido tras esta revisión: el separador de miles ahora es igual en todos los números (`frontend/src/utils/format.ts`), la pestaña del navegador tiene icono (`frontend/public/favicon.svg`) y el primer panel de «Asistente IA» se llama «Proyecto».
+Ya corregido tras esta revisión: el visor 3D tiene cielo, suelo, niebla en el horizonte y árboles redondeados en lugar de cubos; el separador de miles ahora es igual en todos los números (`frontend/src/utils/format.ts`), la pestaña del navegador tiene icono (`frontend/public/favicon.svg`) y el primer panel de «Asistente IA» se llama «Proyecto».
 
 ### Para que se sienta terminada
 

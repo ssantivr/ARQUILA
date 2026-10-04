@@ -200,7 +200,7 @@ python -m app.migrate
 
 El comando lee `DATABASE_URL` de `backend/.env`, el mismo archivo que usa el arranque del backend, así que no hay que definirla en la terminal. Si se define en la terminal, ese valor tiene prioridad.
 
-Con `python -m app.migrate --seed` se cargan además los datos de ejemplo de `seed.sql`: un usuario de demostración con tres proyectos, sus terrenos, planos, elevaciones, materiales y notas. «Casa Los Arrayanes» trae además 17 cuartos y 16 columnas en sus dos plantas, para que el modelo 3D se vea completo sin cargar nada a mano. Se puede ejecutar varias veces sin duplicar nada.
+Con `python -m app.migrate --seed` se cargan además los datos de ejemplo de `seed.sql`: un usuario de demostración con tres proyectos, sus terrenos, planos, elevaciones, materiales y notas. «Casa Los Arrayanes» trae además 17 cuartos, 16 columnas y 8 vigas en sus dos plantas, y «Edificio Mirador» 16 cuartos y 24 columnas en cuatro pisos con cubierta plana, para que el modelo 3D se vea completo sin cargar nada a mano. «Cabaña Mindo» no tiene cuartos. Se puede ejecutar varias veces sin duplicar nada.
 
 El usuario de demostración es `demo@example.com` con contraseña `arquila-demo`. Es una credencial pública, pensada solo para desarrollo: no se debe cargar `seed.sql` en una base con datos reales ni en un servidor accesible desde internet.
 
