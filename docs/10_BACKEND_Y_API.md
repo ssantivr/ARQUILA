@@ -97,7 +97,7 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 - Hay dos proveedores, cada uno con su adaptador. El backend elige uno en cada pregunta:
   - Si está definida `ANTHROPIC_API_KEY`, usa Claude mediante el SDK oficial de Anthropic. Es de pago.
   - Si no, usa un modelo local servido por [Ollama](https://ollama.com), que es gratuito y no necesita clave.
-- En cada pregunta se envían los datos del proyecto y el historial completo de la conversación.
+- En cada pregunta se envían los datos del proyecto y el historial completo de la conversación. Los totales de costo van ya calculados, para que el modelo los cite en lugar de calcularlos.
 - La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado y un servidor de Ollama simulado.
 
 ### Modelo local con Ollama
@@ -111,7 +111,8 @@ Con Ollama encendido, el asistente lo encuentra en `http://127.0.0.1:11434` y us
 
 - La velocidad y la calidad de las respuestas dependen del equipo y del modelo; un modelo pequeño responde peor que Claude.
 - Probado el 3 de octubre de 2026 con Ollama 0.35.1 y `llama3.2:1b` (1,3 GB): la conexión funciona y las respuestas quedan guardadas con origen `ai`. La primera respuesta tardó cerca de un minuto, mientras se cargaba el modelo; las siguientes, unos dos segundos. Pero ese modelo no es fiable con los datos: acertó la pendiente del terreno y se inventó el costo total de los materiales y el nombre de un plano. Con un modelo tan pequeño, las reglas dan cifras más fiables.
-- Probado el mismo día con `llama3.2` (2 GB) y las mismas tres preguntas: acertó la pendiente, el costo total y el detalle de los materiales, y el plano registrado. Es el modelo recomendado; se fija con `OLLAMA_MODEL=llama3.2`. Sigue siendo un modelo pequeño: redacta con alguna imprecisión y puede equivocarse en preguntas más difíciles.
+- Probado el mismo día con `llama3.2` (2 GB) y las mismas tres preguntas: acertó la pendiente, el costo total y el detalle de los materiales, y el plano registrado. Es el modelo recomendado; se fija con `OLLAMA_MODEL=llama3.2`. Sigue siendo un modelo pequeño y redacta con alguna imprecisión.
+- Los modelos pequeños fallan al hacer cuentas: en un proyecto con ocho materiales, `llama3.2` dio bien el costo total pero señaló como más caro un material que no lo era, con una cifra mal multiplicada. Por eso el backend no le deja calcular: los datos que recibe llevan ya el costo de cada material, el total y el nombre del más caro, con los materiales ordenados de mayor a menor costo, y las instrucciones le piden citar esas cifras tal cual. Con ese cambio, la misma pregunta se respondió bien.
 - Si Ollama no está encendido o no tiene modelos, el backend lo detecta en un segundo como máximo y contesta con las reglas.
 - Algunos modelos escriben su razonamiento entre etiquetas `<think>`; el adaptador lo quita de la respuesta.
 
