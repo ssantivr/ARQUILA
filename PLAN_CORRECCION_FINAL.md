@@ -5,7 +5,7 @@ Objetivo: el proyecto queda solo con backend en Python (FastAPI) y frontend en T
 - [x] Fase 1 - Verificar que Python cubre todo antes de borrar nada
 - [x] Fase 2 - Eliminar C++
 - [x] Fase 3 - Configuración y arranque
-- [ ] Fase 4 - README
+- [x] Fase 4 - README
 - [ ] Fase 5 - Documentación
 - [ ] Fase 6 - Comprobación final
 
@@ -69,3 +69,9 @@ Comprobado el 4 de octubre de 2026 en un clon nuevo del repositorio (Windows 11,
 `npm run dev` se probó en el puerto 5183 porque el 5173 estaba ocupado en el equipo. No se abrió la interfaz en un navegador en esta fase: se comprobó con peticiones HTTP.
 
 Cambios: Docker no está instalado en el equipo, así que se eliminó `docker-compose.yml` y sus menciones. `backend/.env.example` traía el usuario y la contraseña de ese contenedor; ahora trae el marcador `CHANGE_ME`.
+
+## Fase 4: resultado
+
+No existía `README_corregido.md`, así que los cambios se aplicaron al `README.md` actual. Se comprobó con un script que todas las rutas citadas existen (`frontend/.env` no existe porque lo crea quien instala) y se contrastaron con el código los datos de la sección «Seguridad» (sesión de 7 días, cookie `HttpOnly`, 5 intentos en 60 segundos) y la ventana de 20 mensajes. No se volvieron a ejecutar los comandos de arranque: se comprobaron en la fase 3. El comando `psql` del «Inicio rápido» no se ejecutó en esta fase.
+
+Pendiente para la fase 5: añadir `docs/15_ESTUDIO_PARA_LA_DEFENSA.md` a la tabla «Documentación» del README cuando se cree.
