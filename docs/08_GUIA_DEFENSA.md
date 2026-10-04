@@ -179,4 +179,5 @@ Al seleccionar un elemento, el inspector muestra un selector «Material». Al el
 
 - El catálogo está en `frontend/src/utils/surfaceMaterials.ts`. Buscar el material de un elemento es una consulta O(1) en el diccionario; repintar recorre los n elementos, O(n).
 - El elemento seleccionado se marca con un contorno cian y no con un tinte, para que el material se vea tal cual.
+- El tipo de cubierta (a dos aguas o plana) sigue el mismo camino, pero es un dato del proyecto y no de un elemento: `appState.setRoof`, `PATCH /projects/{id}/structure/roof` y la columna `roof` de `projects`.
 - Límite que conviene decir: es un dato visual, distinto de los Materiales del proyecto, que son partidas de presupuesto; no cambia el coste estimado.

@@ -20,7 +20,8 @@ database/
 │   ├── 005_rooms.sql
 │   ├── 006_structural_components.sql
 │   ├── 007_recommendation_priority.sql
-│   └── 008_element_surfaces.sql
+│   ├── 008_element_surfaces.sql
+│   └── 009_project_roof.sql
 └── seed.sql
 ```
 
