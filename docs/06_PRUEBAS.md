@@ -125,10 +125,10 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
   - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 118 y `pytest` 269, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
-- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
+- Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones que había entonces (hoy son nueve) y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
-- Estructuras en C++: los cinco programas de `data_structures/` compilan con GCC 16.2 (`g++ -std=c++17 -static -Wall -Wextra -Wpedantic`) sin ningún aviso, y al ejecutarlos su salida coincide con los casos de este documento: la pila devuelve 30, 20, 10; la cola 10, 20, 30 y sigue funcionando después de dar la vuelta; las listas insertan, eliminan y se recorren en los dos sentidos. No se analizó el uso de memoria con una herramienta, porque GCC para Windows no incluye ese análisis.
+- Estructuras en C++: los cinco programas de `data_structures/` compilan con GCC 16.2 (`g++ -std=c++17 -static -Wall -Wextra -Wpedantic`) sin ningún aviso, y al ejecutarlos su salida coincide con los casos de este documento: la pila devuelve 30, 20, 10; la cola 10, 20, 30 y sigue funcionando después de dar la vuelta; las listas insertan, eliminan y se recorren en los dos sentidos. Entonces no se analizó el uso de memoria con una herramienta, porque GCC para Windows no incluye ese análisis; desde el 4 de octubre lo hace GitHub con AddressSanitizer, y los programas se compilan con CMake (ver «Estructuras en C++» más arriba).
 
 No se comprobó el arranque con `docker-compose.yml`, porque el equipo no tiene Docker.
 

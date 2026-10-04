@@ -21,7 +21,7 @@ El contenido de Estructuras de Datos debe limitarse a:
 - `backend/`: API básica en Python.
 - `frontend/`: interfaz en TypeScript.
 - `docs/`: documentación en español.
-- `.agentes/`: reglas del asistente.
+- `.agents/`: reglas del asistente.
 - `prompts/`: instrucciones dadas al asistente.
 
 ## Reglas de código

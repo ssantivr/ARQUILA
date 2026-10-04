@@ -32,9 +32,9 @@ El detalle está en `docs/04_ESTRUCTURAS_DATOS.md` y la complejidad de cada oper
 
 ## Regla de código
 
-Los identificadores del código están en inglés y el código no contiene comentarios ni documentación interna.
+Los identificadores del código están en inglés y el código no contiene comentarios ni documentación interna. La regla alcanza a todo lo que forma parte del código: variables, funciones, clases, tablas, rutas de la API, archivos de código y carpetas del repositorio.
 
-La explicación del proyecto está separada del código y está escrita en español.
+La explicación del proyecto está separada del código y está escrita en español. Por eso los documentos sí tienen nombre en español (`docs/01_PLANTEAMIENTO_PROBLEMA.md`, `PLAN_MEJORAS.md`): son documentación, no código. Los textos que ve el usuario en la interfaz también están en español.
 
 ## Organización
 
@@ -46,7 +46,7 @@ ARQUILA/
 ├── database/            Migraciones y datos de ejemplo
 ├── docs/                Documentación en español
 ├── prompts/             Instrucciones dadas al asistente de IA
-├── .agentes/            Reglas del asistente
+├── .agents/             Reglas del asistente
 ├── .github/             Comprobaciones automáticas y plantilla de pull request
 ├── scripts/             Comando de calidad del código
 └── docker-compose.yml   PostgreSQL en un contenedor (opcional)
@@ -89,6 +89,8 @@ g++ -std=c++17 -static data_structures/stack/Stack.cpp -o stack
 
 ## Ejecución del backend
 
+En Windows:
+
 ```bash
 cd backend
 python -m venv .venv
@@ -96,7 +98,14 @@ python -m venv .venv
 pip install -r requirements-dev.txt
 ```
 
-En Linux o macOS el entorno se activa con `source .venv/bin/activate`.
+En Linux o macOS solo cambia la activación del entorno virtual:
+
+```bash
+cd backend
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements-dev.txt
+```
 
 En Windows conviene clonar el proyecto en una ruta corta: en una carpeta con una ruta muy larga, `pip install` puede fallar.
 
@@ -175,7 +184,12 @@ npm test
 npm run build
 ```
 
-`npm run build` también comprueba los tipos de TypeScript.
+```bash
+cd data_structures
+cmake --workflow --preset default
+```
+
+`npm run build` también comprueba los tipos de TypeScript. El formato y las reglas de estilo se revisan aparte, con `python scripts/quality.py` (ver «Calidad del código»).
 
 GitHub ejecuta estas mismas comprobaciones, y además las pruebas de las estructuras en C++, en cada subida a `santiago` o a `main` (`.github/workflows/ci.yml`). Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
 

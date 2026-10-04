@@ -10,7 +10,9 @@
 | 6 | Realizar pruebas, corregir errores y preparar la presentación. | Pruebas hechas (ver `06_PRUEBAS.md`). La guía para la presentación está en `09_GUIA_DEFENSA.md`. |
 | 7 | Revisar documentación, control de versiones y entrega final. | Documentación revisada. La rama principal `main` tiene el mismo contenido que la rama de trabajo `santiago`. La instalación desde cero está comprobada (ver `06_PRUEBAS.md`) y las versiones de entrega están marcadas en Git con etiquetas `v1.0.x`; la más reciente es la que se entrega. Falta presentarla. |
 
-El avance de la aplicación, semana por semana, está en `13_EVOLUCION_POR_SEMANAS.md`, junto con los hitos propuestos para después de la entrega.
+El avance de la aplicación, semana por semana, está en `13_EVOLUCION_POR_SEMANAS.md`, junto con los hitos propuestos para después de la entrega. Los cambios agrupados por semana están en `CHANGELOG.md`, en la raíz del repositorio.
+
+Después de la fase 7 se hicieron dos rondas de mejoras, registradas en `PLAN_MEJORAS.md` y `PLAN_MEJORAS_2.md`: uso de todas las estructuras en la aplicación, integración continua, estructuras de C++ como plantillas con CMake y Catch2, contraseñas con Argon2, registro de eventos, diseño para pantallas pequeñas, herramientas de formato, diagramas, guion de la demostración y mediciones.
 
 ## Pendiente
 

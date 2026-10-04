@@ -44,6 +44,17 @@ npm test
 npm run build
 ```
 
+```bash
+cd data_structures
+cmake --workflow --preset default
+```
+
+Antes de entregar, también el formato y las reglas de estilo, desde la raíz y con el entorno virtual del backend activado:
+
+```bash
+python scripts/quality.py
+```
+
 Para ver una pantalla: `python -m app.dev` en `backend` y `npm run dev` en `frontend`, y entrar con el usuario de demostración. El visor 3D necesita un navegador con WebGL.
 
 ## Reglas que ahorran tokens
