@@ -170,3 +170,11 @@ El visor no calcula nada: recibe un diccionario de elemento a color y pinta. Los
 - El diccionario es un `Map`, así que pintar cada elemento es una búsqueda O(1).
 
 Los materiales, las recomendaciones, la selección y el modo de color viven en `appState.ts`: una variable con el estado, una lista de funciones suscritas y un aviso a todas cuando algo cambia. Es el patrón observador, sin librerías.
+
+## 22. Cómo se cambia el material de un elemento en el modelo
+
+Al seleccionar un elemento, el inspector muestra un selector «Material». Al elegir una opción se llama a `appState.setSurface`, que guarda la elección en un diccionario de elemento a material; el visor está suscrito, recibe el diccionario (`setSurfaces`) y cambia el color, la rugosidad, el brillo metálico y la opacidad del material de esa caja. No se reconstruye el modelo, por eso el cambio es inmediato.
+
+- El catálogo está en `frontend/src/utils/surfaceMaterials.ts`. Buscar el material de un elemento es una consulta O(1) en el diccionario; repintar recorre los n elementos, O(n).
+- El elemento seleccionado se marca con un contorno cian y no con un tinte, para que el material se vea tal cual.
+- Límite que conviene decir: la elección se guarda en el navegador (`localStorage`), no en la base de datos. Es una ayuda visual, distinta de los Materiales del proyecto, que son partidas de presupuesto.
