@@ -52,6 +52,14 @@ g++ -std=c++17 data_structures/stack/Stack.cpp -o stack
 ./stack
 ```
 
+En Windows conviene añadir `-static`:
+
+```bash
+g++ -std=c++17 -static data_structures/stack/Stack.cpp -o stack
+```
+
+Sin esa opción, el programa puede cerrarse sin escribir nada si otro programa instalado (por ejemplo PostgreSQL) tiene en el `PATH` una versión distinta de las bibliotecas de GCC. Con `-static` el ejecutable no depende de ellas.
+
 ## Ejecución del backend
 
 ```bash
