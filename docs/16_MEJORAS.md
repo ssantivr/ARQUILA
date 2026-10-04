@@ -65,7 +65,7 @@ Los datos son de la base local, no del repositorio.
 
 - **Ya corregido.** Había un proyecto antiguo, «Demo House», con datos en inglés, que hacía aparecer «Estructura» y «structure» como categorías distintas, y dos copias de «Casa Familiar Andina». Se borraron los tres. `database/seed.sql` no crea ninguno de ellos.
 - **Ejemplos sin ubicación.** Quedan tres proyectos creados desde los ejemplos («Vivienda compacta», «Edificio multifamiliar», «Oficina profesional») con «Sin ubicación» y en borrador. Completarlos o borrarlos antes de la demostración.
-- **El modelo 3D del primer proyecto son bloques.** «Casa Los Arrayanes», que crea `database/seed.sql`, no tiene cuartos: cada nivel se dibuja como un volumen, y el plano «Cubiertas» cuenta como un tercer nivel. La demostración debe abrir un proyecto con cuartos, columnas y ventanas, o hay que añadirlos a los datos de ejemplo.
+- **Modelo 3D de los otros dos proyectos de ejemplo.** «Casa Los Arrayanes» ya trae cuartos y columnas en `database/seed.sql` y se dibuja como una casa de dos plantas. «Edificio Mirador» y «Cabaña Mindo» siguen sin cuartos.
 
 ### Detalles visibles
 
