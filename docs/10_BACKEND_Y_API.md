@@ -97,6 +97,7 @@ Las reglas son orientativas (por ejemplo, avisar cuando la pendiente es de 15 % 
 - Hay dos proveedores, cada uno con su adaptador. El backend elige uno en cada pregunta:
   - Si está definida `ANTHROPIC_API_KEY`, usa Claude mediante el SDK oficial de Anthropic. Es de pago.
   - Si no, usa un modelo local servido por [Ollama](https://ollama.com), que es gratuito y no necesita clave.
+- `GET /assistant/status` dice quién responderá ahora: `claude`, `ollama` (con el nombre del modelo) o `rules` si no hay IA disponible. La pestaña Asistente lo muestra en la línea «Ahora responde». Se comprueba al abrir la pestaña; si Ollama se enciende o se apaga después, la línea no cambia hasta volver a entrar, aunque cada respuesta sigue llevando su origen real.
 - En cada pregunta se envían los datos del proyecto y el historial completo de la conversación. Los totales de costo van ya calculados, para que el modelo los cite en lugar de calcularlos.
 - La llamada real a la IA no está cubierta por pruebas automáticas: las pruebas usan un asistente simulado y un servidor de Ollama simulado.
 
