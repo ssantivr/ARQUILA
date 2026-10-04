@@ -145,7 +145,9 @@ Ejecutados el 4 de octubre de 2026 en el equipo de desarrollo (Windows 11, Pytho
 | `npm test` (en `frontend/`) | 118 pruebas pasan en 15 archivos |
 | `npm run build` (en `frontend/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |
 
-No se comprobó en esta ejecución: `pytest` contra PostgreSQL 16, que es la versión que usa la integración continua; el resultado de la integración continua en GitHub; y las comprobaciones manuales con fecha de este documento (el enlace de recuperación en el navegador y la cobertura), que son anteriores y no se repitieron.
+La integración continua de GitHub ejecutó el commit `eff7118` en `main` ese mismo día y sus tres trabajos terminaron bien: formato y reglas, backend (`pytest` con SQLite y con PostgreSQL 16) y frontend. Se consultó el estado de cada trabajo, no sus registros, así que el número de pruebas que corrió allí no se confirmó.
+
+No se repitieron las comprobaciones manuales con fecha de este documento (el enlace de recuperación en el navegador y la cobertura), que son anteriores.
 
 ### Cobertura del backend
 
