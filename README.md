@@ -87,6 +87,24 @@ npm run dev
 
 La interfaz queda en `http://localhost:5173` y se comunica con el backend en el puerto 8000.
 
+Si se cargaron los datos de ejemplo, se puede entrar con el usuario de demostración: `demo@example.com`, contraseña `arquila-demo`. Es una credencial pública, solo para desarrollo.
+
+## Asistente de IA
+
+El asistente funciona sin configurar nada: si no hay ninguna IA disponible, responde con reglas fijas sobre los datos del proyecto. Para que responda una IA hay dos opciones:
+
+- **Modelo local, gratuito y sin clave.** Instalar [Ollama](https://ollama.com) y ejecutar `ollama pull llama3.2`. El backend lo detecta solo.
+- **Claude, de pago.** Escribir `ANTHROPIC_API_KEY` en `backend/.env`.
+
+Para comprobar qué responde y si funciona:
+
+```bash
+cd backend
+python -m app.check
+```
+
+Ver `docs/10_BACKEND_Y_API.md`.
+
 ## Pruebas
 
 ```bash

@@ -13,4 +13,6 @@ La arquitectura separa frontend, API, lógica de negocio, estructuras de datos, 
 
 La aplicación incluye partes que van más allá del contenido de la asignatura, como el inicio de sesión, la subida de archivos y el asistente de IA. Son el contexto en el que se usan las estructuras, no el objeto de estudio.
 
+El asistente dejó dos lecciones. La primera, sobre diseño: como los servicios solo conocen una interfaz (patrón Adapter), se pudo añadir un modelo local gratuito sin tocar la lógica de las conversaciones. La segunda, sobre confiar en una IA: un modelo pequeño se equivoca al hacer cuentas, así que los cálculos los hace el backend y el modelo solo los explica; y cuando no hay IA, unas reglas fijas dan una respuesta peor redactada pero exacta.
+
 Las estructuras más avanzadas pueden incorporarse posteriormente cuando formen parte del contenido académico de la asignatura.

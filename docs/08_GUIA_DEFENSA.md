@@ -93,3 +93,32 @@ Las estructuras en C++ se validan ejecutando cada programa y comparando su salid
 - Solo se usan las estructuras estudiadas: arrays, pila, cola y listas enlazadas. No hay árboles, grafos ni tablas hash propias.
 - Las estructuras tienen capacidad fija o enlaces simples, sin plantillas ni optimizaciones avanzadas en C++.
 - La aplicación sí incluye partes que van más allá de la asignatura (inicio de sesión, subida de archivos, asistente de IA). Siguen el plan de `06_EVOLUCION_POR_SEMANAS.md`, pero no son el centro de la defensa: conviene presentarlas como contexto y concentrar la explicación en las estructuras y en el punto 11.
+
+## 14. Qué patrón de diseño se usa y por qué
+
+El patrón Adapter, en los servicios externos del backend. El asistente necesita «dame una respuesta para esta conversación», pero cada proveedor se llama de una forma distinta. Un adaptador es una clase que ofrece la forma que la aplicación espera y la traduce a la del proveedor.
+
+- La interfaz es `Assistant`, con un solo método: `reply(system, messages)`.
+- `ClaudeAssistant` la traduce a las llamadas del SDK de Anthropic.
+- `OllamaAssistant` la traduce a peticiones HTTP a un modelo local.
+
+`ConversationService` solo conoce la interfaz. Por eso se añadió el modelo local sin tocar ese servicio, y las pruebas usan un asistente simulado en lugar de uno real. El correo sigue la misma idea con `SmtpMailer` y `ConsoleMailer`.
+
+Mostrar `backend/app/ai.py`. Ver la tabla de `docs/10_BACKEND_Y_API.md`.
+
+## 15. Qué pasa si la IA no está disponible o se equivoca
+
+- Si no hay ningún proveedor, o la llamada falla, el asistente contesta con reglas fijas sobre los datos del proyecto (`backend/app/services/assistant_rules.py`). Cada respuesta guarda su origen, `ai` o `rules`, y la pantalla lo indica.
+- Un modelo pequeño se equivoca al hacer cuentas. Se comprobó: señaló como más caro un material que no lo era. La corrección fue no dejarle calcular: el backend le entrega los costos y el total ya calculados.
+
+Para demostrarlo en vivo: hacer una pregunta con Ollama encendido, cerrarlo, y repetir la pregunta; la segunda respuesta lleva la etiqueta «Respuesta por reglas».
+
+## 16. Qué algoritmos hay en los esquemas del terreno
+
+Todos recorren los vértices del lote una sola vez, O(n), sobre un array de puntos (`frontend/src/utils/geometry.ts`):
+
+- El área usa la fórmula de Gauss: suma un producto por cada par de vértices consecutivos.
+- Las cotas del plano de implantación calculan la longitud de cada lado y hacia dónde queda el exterior.
+- La vista frontal convierte la profundidad de cada vértice en altura según la pendiente.
+
+Es un ejemplo de recorrido de array con acceso por índice, incluido el paso del último elemento al primero con el operador módulo, igual que en la cola circular.
