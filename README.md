@@ -1,6 +1,8 @@
-# ARQUILA PROJECT
+# ARQUILA
 
 Proyecto académico de cuarto semestre de Ingeniería de Software.
+
+ARQUILA es una aplicación web para organizar proyectos de arquitectura: reúne en un mismo lugar el terreno, los cuartos, los materiales, los componentes estructurales y un modelo 3D de cada proyecto, con un asistente de IA que responde sobre esos datos.
 
 ## Objetivo
 
@@ -8,18 +10,24 @@ Aplicar los conceptos de estructuras de datos vistos en clase dentro de un proye
 
 ## Alcance académico
 
-- Arrays unidimensionales.
-- Arrays dinámicos.
-- Stack con LIFO.
-- Queue con FIFO.
-- Lista simplemente enlazada.
-- Lista doblemente enlazada.
+Las estructuras estudiadas están implementadas dos veces: en C++, como ejercicio académico independiente, y en Python, dentro del backend, donde la aplicación las usa.
+
+| Estructura | Uso en la aplicación |
+|---|---|
+| Array unidimensional | Cálculo del área de un lote recorriendo sus vértices. |
+| Array dinámico | Orden de los materiales por precio para el asistente. |
+| Stack (LIFO) | «Rehacer» una eliminación deshecha. |
+| Queue (FIFO) | Límite de intentos fallidos de inicio de sesión. |
+| Lista simplemente enlazada | Ventana con los últimos mensajes enviados a la IA. |
+| Lista doblemente enlazada | Historial de eliminaciones para «Deshacer». |
+
+El detalle está en `docs/04_ESTRUCTURAS_DATOS.md` y la complejidad de cada operación en `docs/05_COMPLEJIDAD.md`.
 
 ## Tecnologías
 
 - C++ para las implementaciones académicas de estructuras de datos.
 - Python y FastAPI para el backend, con SQLAlchemy y PostgreSQL.
-- TypeScript, React y Vite para el frontend.
+- TypeScript, React y Vite para el frontend, con Three.js para el modelo 3D.
 - Git para control de versiones.
 
 ## Regla de código
@@ -32,18 +40,28 @@ La explicación del proyecto está separada del código y está escrita en espa�
 
 ```text
 ARQUILA/
-├── data_structures/   Estructuras de datos en C++
-├── backend/           API en Python (FastAPI)
-├── frontend/          Interfaz en TypeScript (React)
-├── database/          Esquema y datos de ejemplo
-├── docs/              Documentación en español
-├── prompts/           Instrucciones dadas al asistente de IA
-└── .agentes/          Reglas del asistente
+├── data_structures/     Estructuras de datos en C++
+├── backend/             API en Python (FastAPI)
+├── frontend/            Interfaz en TypeScript (React)
+├── database/            Migraciones y datos de ejemplo
+├── docs/                Documentación en español
+├── prompts/             Instrucciones dadas al asistente de IA
+├── .agentes/            Reglas del asistente
+└── docker-compose.yml   PostgreSQL en un contenedor (opcional)
 ```
 
 ## Principio de diseño
 
 El proyecto mantiene una complejidad adecuada para cuarto semestre. Se prioriza comprender y defender correctamente las estructuras estudiadas antes de incorporar estructuras más avanzadas.
+
+## Requisitos
+
+- Python 3 con `pip`.
+- Node.js con `npm`.
+- PostgreSQL, con una base de datos vacía llamada `arquila`.
+- Un compilador de C++17 (`g++`), solo para ejecutar las estructuras en C++.
+
+La instalación desde cero está comprobada en Windows 11 con Python 3.12 y Node 24, y las pruebas pasan con PostgreSQL 16 y 18 (ver `docs/06_PRUEBAS.md`).
 
 ## Ejecución de una estructura
 
@@ -69,6 +87,8 @@ python -m venv .venv
 pip install -r requirements-dev.txt
 ```
 
+En Linux o macOS el entorno se activa con `source .venv/bin/activate`.
+
 En Windows conviene clonar el proyecto en una ruta corta: en una carpeta con una ruta muy larga, `pip install` puede fallar.
 
 La configuración se guarda en `backend/.env`, que no se sube al repositorio. La primera vez:
@@ -86,6 +106,16 @@ python -m app.dev
 Ese comando lee `backend/.env`, crea o actualiza las tablas con las migraciones pendientes y arranca el servidor en el puerto 8000. Ver `docs/07_BASE_DATOS.md`.
 
 Las demás variables están en `backend/.env.example` y se explican en `docs/12_BACKEND_Y_API.md`.
+
+### PostgreSQL con Docker (opcional)
+
+Quien no tenga PostgreSQL instalado puede levantarlo con Docker desde la raíz del repositorio:
+
+```bash
+docker compose up -d
+```
+
+El contenedor crea la base `arquila` con usuario y contraseña `arquila`, así que la conexión es `postgresql+psycopg://arquila:arquila@localhost:5432/arquila`. Este arranque no está comprobado, porque el equipo de desarrollo no tiene Docker.
 
 ## Ejecución del frontend
 
@@ -127,6 +157,8 @@ cd frontend
 npm test
 npm run build
 ```
+
+`npm run build` también comprueba los tipos de TypeScript. Lo que cubren las pruebas y lo que no está en `docs/06_PRUEBAS.md`.
 
 ## Documentación
 
