@@ -180,14 +180,30 @@ Simplificaciones:
 
 - Los cuartos no entran en el historial de deshacer; por eso la interfaz pide confirmación antes de eliminar uno. Al deshacer la eliminación de un plano se recupera el plano, pero no sus cuartos.
 - No se comprueba que un cuarto quede dentro del terreno ni que dos cuartos no se solapen.
-- No hay puertas, ventanas ni componentes estructurales (columnas, vigas, muros).
+- No hay puertas ni ventanas.
+
+## Componentes estructurales
+
+Las columnas, vigas y muros se gestionan en la pestaña Modelo 3D (`frontend/src/components/ComponentsPanel.tsx`), con las rutas `POST` y `GET /projects/{id}/components` (con filtro opcional `?kind=`) y `GET`, `PATCH` y `DELETE /components/{id}`.
+
+- Un componente es una caja, igual que un cuarto, más un tipo (`kind`): `column`, `beam` o `wall`. Reutiliza la posición y las medidas del cuarto, así que no hay una tabla ni un formulario distinto por tipo. El formulario propone medidas habituales al elegir el tipo (columna de 0,3 × 0,3 × 3 m, viga de 4 × 0,3 × 0,4 m, muro de 4 × 0,2 × 3 m).
+- El tipo lo validan el esquema (422) y la base de datos (`CHECK`).
+- Valen las mismas reglas que en los cuartos: el plano debe ser del proyecto, las medidas deben ser mayores que cero y los componentes se eliminan con su plano o su proyecto.
+
+Simplificaciones:
+
+- Una caja solo puede ir alineada con los ejes: no hay muros ni vigas en diagonal. Un muro a lo largo de `y` se escribe con el ancho pequeño y el largo grande.
+- No hay cálculo estructural (cargas, secciones, materiales): los componentes se registran y se dibujan, nada más.
+- No entran en el historial de deshacer, igual que los cuartos.
 
 ## Modelo 3D
 
-La pestaña Modelo 3D muestra el proyecto en tres dimensiones con Three.js. Los datos salen de `GET /projects/{id}/structure` (`backend/app/services/structure_service.py`), que no guarda nada: arma la respuesta con los terrenos, los planos y los cuartos del proyecto, en metros.
+La pestaña Modelo 3D muestra el proyecto en tres dimensiones con Three.js. Los datos salen de `GET /projects/{id}/structure` (`backend/app/services/structure_service.py`), que no guarda nada: arma la respuesta con los terrenos, los planos, los cuartos y los componentes estructurales del proyecto, en metros.
 
 - **Terrenos**: cada terreno con contorno (vértices, o ancho y largo) es una losa. Los terrenos se colocan uno al lado del otro sobre el eje `x`, separados 5 m, porque cada uno guarda sus coordenadas desde su propio origen.
-- **Niveles**: un plano es un nivel si tiene cuartos o si su campo Nivel es un número (`0`, `1`, `-1`, `0.5`). Así un plano de implantación o de detalles, con el nivel vacío o con texto, no se apila como si fuera un piso. Los niveles se apilan en el orden en que se crearon los planos, no por el número. Un plano con cuartos muestra sus cuartos (`kind: "room"`) y el nivel mide lo que su cuarto más alto. Un plano sin cuartos se dibuja como un volumen de 3 m (`kind: "volume"`) sobre el área edificable del primer terreno rectangular, con el mismo retiro inicial del plano de implantación (3 m, o menos si el lote es estrecho).
+- **Niveles**: un plano es un nivel si tiene cuartos o componentes, o si su campo Nivel es un número (`0`, `1`, `-1`, `0.5`). Así un plano de implantación o de detalles, con el nivel vacío o con texto, no se apila como si fuera un piso. Los niveles se apilan en el orden en que se crearon los planos, no por el número. Un plano con cuartos muestra sus cuartos (`kind: "room"`). El nivel mide lo que su cuarto, columna o muro más alto, o 3 m si no tiene ninguno. Un plano sin cuartos ni componentes se dibuja como un volumen de 3 m (`kind: "volume"`) sobre el área edificable del primer terreno rectangular, con el mismo retiro inicial del plano de implantación (3 m, o menos si el lote es estrecho).
+
+- **Componentes**: las columnas y los muros se apoyan en el piso de su nivel. Una viga se cuelga del techo: su base es la altura del nivel menos el alto de la viga.
 
 En el frontend, `frontend/src/three/structureViewer.ts` contiene toda la escena y no depende de React; `StructureViewer.tsx` la crea al montar, la destruye al desmontar y dibuja encima los paneles flotantes. Decisiones del visor:
 
@@ -197,6 +213,7 @@ En el frontend, `frontend/src/three/structureViewer.ts` contiene toda la escena 
 - Los planos `near` y `far` de la cámara y la cámara de sombras de la luz se ajustan al tamaño del modelo. Junto con `polygonOffset` en los materiales evita el parpadeo entre caras que coinciden (z-fighting) y las sombras recortadas.
 - La cámara se encuadra solo la primera vez y con el botón «Restablecer vista». Al agregar o editar un cuarto el modelo se reconstruye, pero la cámara se queda donde el usuario la dejó.
 - **Selección**: un clic sobre un cuarto lo selecciona con un rayo desde la cámara (`Raycaster`). Si el puntero se movió más de 4 px entre pulsar y soltar se considera un giro de cámara y no una selección. El cuarto seleccionado lo guarda React, no la escena, así que la lista de niveles y el inspector muestran siempre lo mismo que el modelo; la lista permite además seleccionar con el teclado.
+- **Materiales**: los cuartos usan `MeshPhysicalMaterial` con una capa de barniz (`clearcoat`) que da un brillo sutil; los volúmenes y los componentes usan `MeshStandardMaterial`, los componentes con la rugosidad alta del hormigón. La casilla «Mostrar cuartos» oculta cuartos y volúmenes para dejar a la vista la estructura; un elemento oculto tampoco se puede seleccionar con un clic.
 - Al cambiar de modelo o salir de la pestaña se liberan geometrías, materiales, el mapa de sombras, los eventos y el contexto WebGL (`dispose`).
 - Three.js se carga solo al abrir la pestaña (`lazy` en `ProjectDetailPage.tsx`), para no aumentar la carga inicial.
 - Los paneles flotantes (niveles, inspector y barra inferior) usan `backdrop-filter: blur` y acentos cian `#00F0FF` y magenta `#FF007F`. Ese estilo se limita al visor (clases `.structure-stage` y `.hud` en `styles.css`); el resto de la aplicación conserva su paleta. En pantallas estrechas los paneles pasan debajo del modelo.

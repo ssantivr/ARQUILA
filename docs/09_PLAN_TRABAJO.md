@@ -6,11 +6,11 @@
 | 2 | Implementar y probar arrays. | Hecho. |
 | 3 | Implementar Stack y Queue. | Hecho. |
 | 4 | Implementar listas simples y dobles. | Hecho. |
-| 5 | Integrar una API y una interfaz. | Hecho, con más alcance que el previsto: la API y la interfaz cubren proyectos, terrenos, planos, elevaciones, materiales, archivos y recomendaciones. |
+| 5 | Integrar una API y una interfaz. | Hecho, con más alcance que el previsto: la API y la interfaz cubren proyectos, terrenos, planos, elevaciones, materiales, archivos y recomendaciones, además de cuartos, componentes estructurales y un modelo 3D del proyecto. |
 | 6 | Realizar pruebas, corregir errores y preparar la presentación. | Pruebas hechas (ver `06_PRUEBAS.md`). La guía para la presentación está en `08_GUIA_DEFENSA.md`. |
 | 7 | Revisar documentación, control de versiones y entrega final. | Documentación revisada. La rama principal `main` tiene el mismo contenido que la rama de trabajo `santiago`. La instalación desde cero está comprobada (ver `06_PRUEBAS.md`) y las versiones de entrega están marcadas en Git con etiquetas `v1.0.x`; la más reciente es la que se entrega. Falta presentarla. |
 
-El avance de la aplicación, semana por semana, está en `06_EVOLUCION_POR_SEMANAS.md`, en la raíz del repositorio.
+El avance de la aplicación, semana por semana, está en `06_EVOLUCION_POR_SEMANAS.md`, en la raíz del repositorio, junto con los hitos propuestos para después de la entrega.
 
 ## Pendiente
 

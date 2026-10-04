@@ -536,14 +536,32 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 | Semana | Hecho | Falta |
 |---|---|---|
 | 2 — Sistema visual | Paleta de la Semana 2 aplicada en todo el frontend y adoptada como única (ver `prompts/02_PROMPT_UI_VISUAL.md`). | Tipografía propia, iconos y animaciones. |
-| 3 — Arquitectura UI | Sidebar, página de inicio con métricas, páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. Ventana superpuesta (Modal) y visor de archivos. | Módulos de Visualización 3D y Configuración, y los componentes TerrainViewer y LayerPanel como piezas separadas (las capas existen dentro de la vista 3D del terreno). |
+| 3 — Arquitectura UI | Sidebar, página de inicio con métricas, páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. Ventana superpuesta (Modal) y visor de archivos. | Módulo de Configuración, y los componentes TerrainViewer y LayerPanel como piezas separadas (las capas existen dentro de la vista 3D del terreno). La visualización 3D es una pestaña del proyecto, no un módulo del menú. |
 | 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Lotes rectangulares o con forma libre por vértices. Esquemas de vista superior, curvas de nivel, frontal, lateral (perfil de pendiente) y vista 3D giratoria con capas. | Mapa de análisis con insolación u otros datos (no los hay), y capas de construcción, vegetación y vías (no hay datos de eso). El terreno se modela como un plano inclinado, sin relieve. |
-| 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). Plano de implantación con límite, cotas, área edificable según un retiro, acceso, norte, leyenda, descarga en SVG e impresión a PDF. Visor para ver dentro de la aplicación el PDF o la imagen adjunta. | En la implantación: vivienda, áreas verdes, andenes y parqueadero (no hay datos de eso). |
+| 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). Cuartos y componentes estructurales (columnas, vigas y muros) por plano, como cajas con posición y medidas. Plano de implantación con límite, cotas, área edificable según un retiro, acceso, norte, leyenda, descarga en SVG e impresión a PDF. Visor para ver dentro de la aplicación el PDF o la imagen adjunta. | En la implantación: vivienda, áreas verdes, andenes y parqueadero (no hay datos de eso). En los cuartos: puertas, ventanas y formas que no sean rectangulares. |
 | 6 — IA contextual | Asistente por proyecto con conversaciones guardadas; recomendaciones automáticas por reglas; si la IA no está disponible, el asistente responde con reglas e indica el origen. Dos proveedores de IA: Claude (con clave) o un modelo local con Ollama (gratuito, sin clave). | Probado con el modelo local `llama3.2`, que responde bien con los datos del proyecto (`llama3.2:1b` se inventa cifras). Falta probar Claude con una clave real. |
 | 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Las pruebas pasan contra PostgreSQL 16 y 18 (ver `docs/06_PRUEBAS.md`) y hay migraciones (ver `docs/07_BASE_DATOS.md`). Falta desplegarlo fuera del equipo local. |
-| 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. | Vista 3D. |
-| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, recuperación de contraseña, estados de carga, vacío y error. Revisión de rendimiento de la API, con dos correcciones (ver `docs/10_BACKEND_Y_API.md`). | Configurar un servicio de correo real para la recuperación de contraseña. |
+| 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. Pestaña Modelo 3D con Three.js: terrenos, niveles, cuartos y componentes del proyecto, con selección por clic, inspector y paneles flotantes. | En el modelo 3D: la pendiente del terreno, y que el asistente de IA y las recomendaciones usen los cuartos y componentes. |
+| 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, recuperación de contraseña, estados de carga, vacío y error. Revisión de rendimiento de la API, con dos correcciones (ver `docs/10_BACKEND_Y_API.md`). CORS limitado a los orígenes configurados. El visor 3D libera sus recursos al salir y Three.js se carga solo al abrir la pestaña. | Configurar un servicio de correo real para la recuperación de contraseña. |
 | 10 — Versión profesional | — | Todo. |
+
+## Nota sobre el estilo del visor 3D
+
+En la Semana 2 se descartó una estética gamer o cyberpunk. Los paneles flotantes del visor 3D usan cristal esmerilado y acentos neón (cian `#00F0FF` y magenta `#FF007F`) porque así se pidió después, pero ese estilo se limita al visor: el resto de la aplicación conserva la paleta de la Semana 2.
+
+## Hitos siguientes
+
+Propuesta, en orden. Cada hito se entrega con sus pruebas pasando, el build del frontend y una etiqueta `v1.0.x`; ninguno está empezado.
+
+| Hito | Contenido | Se da por cerrado cuando |
+|---|---|---|
+| A — Modelo más fiel | Pendiente del terreno en el modelo 3D. Validar que cuartos y componentes queden dentro del lote y avisar de solapes. Ordenar los niveles por su número. | Las pruebas del backend cubren las validaciones y el modelo de los proyectos de ejemplo coincide con sus datos. |
+| B — IA con el modelo | El asistente y las recomendaciones reciben los cuartos y componentes del proyecto (áreas por nivel, número de columnas). | Una pregunta sobre áreas se responde con las cifras reales, comprobado con el modelo local. |
+| C — Deshacer y datos de ejemplo | Cuartos y componentes en el historial de deshacer. Cuartos y componentes en `seed.sql` para los proyectos de demostración. | Deshacer restaura un cuarto eliminado y una base nueva muestra un modelo con cuartos sin cargar nada a mano. |
+| D — Despliegue | Backend y frontend fuera del equipo local, con `CORS_ORIGINS`, `COOKIE_SECURE=1` y correo real. | La aplicación desplegada pasa la comprobación de `docs/06_PRUEBAS.md` desde otro equipo. |
+| E — Semana 10 | Tipografía, iconos y pruebas automáticas de las pantallas. | Queda decidido con el curso qué exige la «versión profesional». |
+
+En cada hito hay que comprobar en el navegador que al salir de la pestaña Modelo 3D no queda ningún lienzo y que la consola no muestra avisos de WebGL.
 
 ---
 

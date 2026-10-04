@@ -11,6 +11,7 @@ Instrucciones que se dieron al asistente de IA durante el desarrollo de ARQUILA.
 | `03_PROMPT_ARQUITECTURA_FRONTEND.md` | Organización del frontend en TypeScript. |
 | `04_PROMPT_EJECUCION_EFICIENTE.md` | Forma de trabajar para gastar pocos tokens. |
 | `05_PROMPT_IA_BASE_DATOS.md` | Directrices del backend en Python. |
+| `09_PROMPT_FLUJO_DE_TRABAJO.md` | Flujo de trabajo concreto: qué leer, orden de un cambio por capas, comandos de comprobación y entrega. |
 
 Las reglas del asistente también están en `.agentes/claude_solver.md`.
 
