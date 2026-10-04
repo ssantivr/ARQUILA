@@ -95,7 +95,14 @@ Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/sr
 
 También están probados la colocación de puertas y ventanas y la forma del techo del modelo 3D (`openings.test.ts`), y el cliente HTTP (`http.test.ts`) con un `fetch` simulado: la dirección y el cuerpo de cada petición, los mensajes de error que devuelve el backend y el aviso de sesión terminada.
 
-Las pantallas se revisaron a mano en un navegador automatizado, pero no tienen pruebas automáticas guardadas en el repositorio.
+Los componentes principales tienen pruebas con Testing Library (`*.test.tsx`), que los dibujan en un navegador simulado (jsdom) con la API sustituida por funciones simuladas:
+
+- `AsyncStatus.test.tsx`: los estados de carga, lista vacía y error, y el botón «Reintentar».
+- `Sidebar.test.tsx`: los siete módulos, el módulo actual y la navegación con ratón y solo con teclado.
+- `LoginPage.test.tsx`: las etiquetas de los campos, el inicio de sesión (también solo con teclado), el botón bloqueado mientras se envía, el error traducido, el registro y la recuperación de contraseña.
+- `ProjectsPage.test.tsx`: la carga y la lista de proyectos, abrir un proyecto, el error de carga con su reintento, y crear un proyecto con y sin error.
+
+`npm test` ejecuta estas pruebas junto con las de cálculo. Las demás pantallas se revisaron a mano en un navegador automatizado (diseño en pantallas pequeñas, etiquetas y contraste; ver «Frontend» en `12_BACKEND_Y_API.md`), pero no tienen pruebas automáticas guardadas en el repositorio.
 
 ### Enlace de recuperación en el navegador
 
@@ -117,7 +124,7 @@ Comprobada el 3 de octubre de 2026 con un clon nuevo de la rama `main`, siguiend
 
 - Backend: entorno virtual, `pip install -r requirements-dev.txt` y `pytest`. Las 216 pruebas pasan.
 - Frontend: `npm install`, `npm test` (29 pruebas) y `npm run build`.
-  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 94 y `pytest` 266, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
+  - Desde entonces se añadieron pruebas: al 4 de octubre de 2026 `npm test` ejecuta 118 y `pytest` 266, y todas pasan (el backend, tanto con SQLite como con PostgreSQL). Ese dato es del equipo de desarrollo; la instalación desde un clon nuevo no se repitió.
 - Base de datos: sobre una base vacía, `python -m app.migrate --seed` aplicó las seis migraciones y cargó los datos de ejemplo. Una segunda ejecución no aplicó ni duplicó nada.
 - Aplicación: con esa base, el usuario de demostración inicia sesión y ve sus tres proyectos con sus datos; generar recomendaciones y preguntar al asistente funcionan.
 
@@ -149,4 +156,4 @@ El resultado se ve en la pestaña «Actions» del repositorio en GitHub. No desp
 
 ### Sin cobertura automática
 
-La llamada real al servicio de IA, el envío real de correo y las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `12_BACKEND_Y_API.md`).
+La llamada real al servicio de IA, el envío real de correo y la mayoría de las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `12_BACKEND_Y_API.md`).

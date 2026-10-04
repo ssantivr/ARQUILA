@@ -141,6 +141,8 @@ npm run dev
 
 La interfaz queda en `http://localhost:5173` y se comunica con el backend en el puerto 8000.
 
+La dirección de la API viene de la variable `VITE_API_URL`. Por defecto vale `/api`, que Vite reenvía al backend, así que en desarrollo no hay que definirla. Para apuntar a otro backend, copiar `frontend/.env.example` a `frontend/.env` y cambiar su valor.
+
 Si se cargaron los datos de ejemplo, se puede entrar con el usuario de demostración: `demo@example.com`, contraseña `arquila-demo`. Es una credencial pública, solo para desarrollo.
 
 ## Asistente de IA
