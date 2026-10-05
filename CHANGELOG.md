@@ -22,6 +22,7 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - Los planos de planta y la ocupación del lote se recargan al crear, renombrar o eliminar un plano (`625956c`).
 - La subida de archivos se bloquea mientras otra acción se guarda, y hay pruebas de la recarga de los planos y de que la base de datos queda libre mientras responde el asistente (`effad61`).
 - Modelo 3D en tema oscuro con escena neón y resplandor en los acentos, cámara que vuela entre vistas y hasta el elemento elegido (doble clic o «Enfocar») y árboles instanciados (`e27206f`).
+- Módulo «Recorrido interior»: un loft de doble altura de muestra, con entrepiso, escalera, ciudad al atardecer y líneas de neón, que se recorre sin salir de sus paredes ni atravesar sus muebles (`923558f`).
 
 ## Semana 9 — Calidad, seguridad y rendimiento
 
