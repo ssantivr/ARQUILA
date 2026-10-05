@@ -20,6 +20,7 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - Modelo 3D dibujado solo cuando cambia, sin parpadeo al redimensionar ni en las losas, con el contexto WebGL liberado al salir; el inspector y el asistente ya no pierden ni duplican cambios (`8b95fcc`).
 - Deshacer devuelve los vértices de un terreno y los cuartos y componentes de un plano; los nombres repetidos a la vez y los fallos del correo ya no responden con un error 500 (`5f4c9d7`).
 - Los planos de planta y la ocupación del lote se recargan al crear, renombrar o eliminar un plano (`625956c`).
+- La subida de archivos se bloquea mientras otra acción se guarda, y hay pruebas de la recarga de los planos y de que la base de datos queda libre mientras responde el asistente (`effad61`).
 
 ## Semana 9 — Calidad, seguridad y rendimiento
 
