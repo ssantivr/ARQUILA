@@ -2,7 +2,7 @@
 
 Lista ordenada por urgencia. Cada punto dice qué falta, por qué importa y por dónde empezar. Lo que no se hizo está descrito en «Limitaciones y trabajo futuro» de `10_CONCLUSIONES.md`; aquí está lo que conviene hacer con eso.
 
-Estado al 5 de octubre de 2026: `pytest` (291 pruebas), `npm test` (124 pruebas), `npm run build` y `python scripts/quality.py` pasan, y la integración continua pasa en `main`.
+Estado al 5 de octubre de 2026: `pytest` (286 pruebas), `npm test` (124 pruebas), `npm run build` y `python scripts/quality.py` pasan, y la integración continua pasa en `main`.
 
 ## 1. Antes de la entrega
 
@@ -40,7 +40,7 @@ Es la parte que evalúa la asignatura, así que es donde más rinde el esfuerzo.
 - **Frontend.** Solo 4 componentes tienen pruebas (`AsyncStatus`, `Sidebar`, `LoginPage`, `ProjectsPage`), y de las 9 páginas solo 2. Las siguientes en importancia son `MaterialsPage` y `TerrainsPage`, porque son las que activan las estructuras.
 - **Cobertura.** El 98 % que cita `06_PRUEBAS.md` se midió antes de la comprobación final y no se repitió. `coverage` no está en `requirements-dev.txt`: añadirlo y medirlo en la integración continua evita que el dato quede viejo.
 - **Navegador.** No hay ninguna prueba automática que abra la aplicación completa. El enlace de recuperación de contraseña se comprobó a mano una vez.
-- **Servicios reales.** No se probó el asistente con Claude ni el envío real de correo.
+- **Servicios reales.** No se probó el envío real de correo.
 
 ## 5. Aplicación
 

@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Este documento resume cómo fue evolucionando la idea del proyecto y cómo se propone organizar su implementación. Debe servir como contexto para Claude Code y también como memoria técnica del proyecto.
+Este documento resume cómo fue evolucionando la idea del proyecto y cómo se propone organizar su implementación. Debe servir como contexto para el asistente de IA y también como memoria técnica del proyecto.
 
 > Importante: las primeras semanas describen decisiones y trabajo que sí fueron definidos durante el desarrollo de la idea. Las semanas futuras son una propuesta de implementación y evolución, no tareas ya ejecutadas.
 
@@ -512,7 +512,7 @@ Base de datos
 
 # ESTADO DE IMPLEMENTACIÓN
 
-Usar esta sección para que Claude Code marque el progreso real.
+Usar esta sección para que el asistente de IA marque el progreso real.
 
 ```text
 [ ] Semana 1 — Idea y alcance
@@ -539,7 +539,7 @@ Ninguna semana está marcada porque ninguna está completa. Lo que existe de cad
 | 3 — Arquitectura UI | Sidebar con los siete módulos previstos (Inicio, Proyectos, Terrenos, Materiales, Visualización 3D, Asistente IA y Configuración), página de inicio con métricas y accesos a los módulos, cuatro proyectos de ejemplo que se crean ya armados desde la página Proyectos, páginas de inicio de sesión, proyectos y detalle de proyecto con cabecera, pestañas por sección y paneles. Ventana superpuesta (Modal) y visor de archivos. | Los componentes TerrainViewer y LayerPanel como piezas separadas (las capas existen dentro de la vista 3D del terreno). En Configuración no se puede cambiar el nombre ni el correo, ni guardar preferencias: la API no tiene rutas para eso. Terrenos y Materiales son listados de consulta; se editan dentro de cada proyecto. |
 | 4 — Terrenos y visualización | Registro de terrenos (ancho, largo, área, pendiente, suelo, coordenadas). Lotes rectangulares o con forma libre por vértices. Esquemas de vista superior, curvas de nivel, frontal, lateral (perfil de pendiente) y vista 3D giratoria con capas. | Mapa de análisis con insolación u otros datos (no los hay), y capas de construcción, vegetación y vías (no hay datos de eso). El terreno se modela como un plano inclinado, sin relieve. |
 | 5 — Planos y elevaciones | Registro de planos y elevaciones, con archivos adjuntos (PDF o imagen). Cuartos y componentes estructurales (columnas, vigas y muros) por plano, como cajas con posición y medidas. Plantas generadas en SVG a partir de los cuartos, con ejes, cotas entre ejes, muros, ventanas, puerta y descarga; fachadas de los cuatro lados y un corte esquemático generados; y panel de ocupación del lote con COS y CUS. Plano de implantación con límite, cotas, área edificable según un retiro, acceso, norte, leyenda, descarga en SVG e impresión a PDF. Visor para ver dentro de la aplicación el PDF o la imagen adjunta. | En la implantación: vivienda, áreas verdes, andenes y parqueadero (no hay datos de eso). En los cuartos: puertas y ventanas propias (las que se dibujan son decorativas), mobiliario y formas que no sean rectangulares. |
-| 6 — IA contextual | Asistente por proyecto con conversaciones guardadas y preguntas sugeridas; recomendaciones automáticas por reglas, ordenadas por prioridad; si la IA no está disponible, el asistente responde con reglas e indica el origen. Dos proveedores de IA: Claude (con clave) o un modelo local con Ollama (gratuito, sin clave). | Probado con el modelo local `llama3.2`, que responde bien con los datos del proyecto (`llama3.2:1b` se inventa cifras). Falta probar Claude con una clave real. |
+| 6 — IA contextual | Asistente por proyecto con conversaciones guardadas y preguntas sugeridas; recomendaciones automáticas por reglas, ordenadas por prioridad; si la IA no está disponible, el asistente responde con reglas e indica el origen. El proveedor de IA es un modelo local con Ollama (gratuito, sin clave). | Probado con el modelo local `llama3.2`, que responde bien con los datos del proyecto (`llama3.2:1b` se inventa cifras). |
 | 7 — Backend y PostgreSQL | API completa para todas las entidades, con pruebas automatizadas. | Las pruebas pasan contra PostgreSQL 16 y 18 (ver `docs/06_PRUEBAS.md`) y hay migraciones (ver `docs/07_BASE_DATOS.md`). Falta desplegarlo fuera del equipo local. |
 | 8 — Integración completa | Login, proyectos y módulos de terreno, planos, elevaciones, materiales, análisis e IA usando datos reales del proyecto. Pestaña Modelo 3D con Three.js: terrenos, niveles, cuartos y componentes del proyecto, con selección por clic, inspector, paneles flotantes, vistas de cámara, zoom, pantalla completa y capas. El modelo se dibuja como una edificación: los cuartos tienen muros con espesor y vanos reales con marco y vidrio, se ve el canto de la losa de cada nivel, y hay puerta, árboles decorativos y una cubierta a dos aguas o plana que se elige por proyecto y se guarda en el backend; el vidrio y el metal reflejan un mapa de entorno. Desde el inspector se elige el material de superficie de cada elemento (concreto, ladrillo, revoque, vidrio arquitectónico, acero, madera o piedra) y el modelo cambia al instante; la elección se guarda en el backend. Se puede colorear por tipo de elemento, por coste estimado o por alertas, y comparte su selección y sus datos con Materiales, Análisis y el asistente mediante un estado común (`appState`). | En el modelo 3D: la pendiente del terreno, y que el asistente de IA y las recomendaciones reciban los cuartos y componentes desde el backend. Hoy el coste por elemento es un reparto por volumen y las alertas se enlazan por el nombre del elemento, porque materiales y recomendaciones no guardan a qué elemento pertenecen. |
 | 9 — Seguridad y rendimiento | Autenticación, permisos por dueño, validación de datos, manejo de errores, secretos fuera del código, límite de intentos de inicio de sesión, recuperación de contraseña, estados de carga, vacío y error. Revisión de rendimiento de la API, con dos correcciones (ver `docs/12_BACKEND_Y_API.md`). CORS limitado a los orígenes configurados. El visor 3D libera sus recursos al salir y Three.js se carga solo al abrir la pestaña. Contraseñas con Argon2id, cabeceras de seguridad, registro de eventos en JSON, integración continua en GitHub, herramientas de formato con un solo comando, diseño para pantallas pequeñas, botón de reintento en los errores y pruebas de componentes (ver `CHANGELOG.md`). | Configurar un servicio de correo real para la recuperación de contraseña. |
@@ -569,7 +569,7 @@ En cada hito hay que comprobar en el navegador que al salir de la pestaña Model
 
 ---
 
-# INSTRUCCIÓN PARA CLAUDE CODE
+# INSTRUCCIÓN PARA EL ASISTENTE DE IA
 
 Utiliza este documento como contexto de evolución del producto.
 

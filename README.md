@@ -185,10 +185,7 @@ Si se cargaron los datos de ejemplo, se puede entrar con el usuario de demostrac
 
 ## Asistente de IA
 
-El asistente funciona sin configurar nada: si no hay ninguna IA disponible, responde con reglas fijas sobre los datos del proyecto. Para que responda una IA hay dos opciones:
-
-- **Modelo local, gratuito y sin clave.** Instalar [Ollama](https://ollama.com) y ejecutar `ollama pull llama3.2`. El backend lo detecta solo.
-- **Claude, de pago.** Escribir `ANTHROPIC_API_KEY` en `backend/.env`. En ese caso los datos del proyecto y las preguntas se envían a Anthropic, un tercero (ver «Privacidad» en `docs/12_BACKEND_Y_API.md`).
+El asistente funciona sin configurar nada: si no hay ninguna IA disponible, responde con reglas fijas sobre los datos del proyecto. Para que responda una IA se usa un modelo local, gratuito y sin clave: instalar [Ollama](https://ollama.com) y ejecutar `ollama pull llama3.2`. El backend lo detecta solo.
 
 Para comprobar qué responde y si funciona:
 
@@ -263,7 +260,7 @@ Las versiones de las dependencias están fijadas: exactas en `backend/requiremen
 
 ## Uso de herramientas de IA
 
-Durante el desarrollo se usó un asistente de IA. Las instrucciones que se le dieron están en `prompts/` (índice en `prompts/README.md`) y sus reglas de trabajo en `.agents/claude_solver.md`.
+Durante el desarrollo se usó un asistente de IA. Las instrucciones que se le dieron están en `prompts/` (índice en `prompts/README.md`) y sus reglas de trabajo en `.agents/solver.md`.
 
 [Completar según la política del curso]
 

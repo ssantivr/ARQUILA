@@ -1,4 +1,4 @@
-# AGENTE CLAUDE SOLVER
+# AGENTE SOLVER
 
 ## Propósito
 

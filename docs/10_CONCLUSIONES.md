@@ -29,7 +29,7 @@ Lo que no se hizo, sin orden de importancia:
 - **Mediciones.** Llegan a 100 000 elementos y se hicieron en un solo equipo. No se midió el uso de memoria.
 - **Memoria manual.** Al retirar la versión en C++, el proyecto ya no muestra la reserva y liberación manual de memoria.
 - **Deshacer.** Solo cubre terrenos, planos, elevaciones y materiales; los cuartos y los componentes estructurales no. El historial vive en la memoria del servidor: se pierde al reiniciarlo. Lo mismo ocurre con el límite de intentos de inicio de sesión.
-- **Asistente.** No se probó con Claude, porque necesita una clave de pago; solo con el modelo local de Ollama y con las reglas fijas.
+- **Asistente.** Solo se probó con el modelo local de Ollama y con las reglas fijas; no hay un proveedor de IA en la nube.
 - **Correo.** No hay un servicio de correo configurado: el enlace de recuperación de contraseña se escribe en la consola del servidor.
 - **Despliegue.** La aplicación solo se ejecutó en el equipo local. No se desplegó en un servidor.
 - **Modelo 3D.** No representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. No hay cálculo estructural.

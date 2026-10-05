@@ -13,7 +13,7 @@ Instrucciones que se dieron al asistente de IA durante el desarrollo de ARQUILA.
 | `05_PROMPT_IA_BASE_DATOS.md` | Directrices del backend en Python. |
 | `09_PROMPT_FLUJO_DE_TRABAJO.md` | Flujo de trabajo concreto: qué leer, orden de un cambio por capas, comandos de comprobación y entrega. |
 
-Las reglas del asistente también están en `.agents/claude_solver.md`.
+Las reglas del asistente también están en `.agents/solver.md`.
 
 ## Prompts de trabajo
 

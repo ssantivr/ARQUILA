@@ -56,7 +56,7 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - Recomendaciones automáticas por reglas (`154ec13`, `1855371`), con prioridad (`f48e331`).
 - Asistente con conversaciones guardadas por proyecto (`c9f1da5`, `37e583c`).
 - Respuesta por reglas cuando la IA no está disponible (`e3ff0cd`, `a6543fb`).
-- Modelo local con Ollama cuando no hay clave de Anthropic (`a3bf771`).
+- Modelo local con Ollama (`a3bf771`).
 - Costos de materiales ya calculados para que la IA no los invente (`1c6721e`) e indicador de quién responde (`aa96ab9`).
 
 ## Semana 5 — Planos, vistas y arquitectura

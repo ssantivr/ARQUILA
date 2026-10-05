@@ -2,7 +2,7 @@
 
 ## Propósito
 
-Describe cómo trabajar en ARQUILA con Claude Code gastando pocos tokens: qué leer, en qué orden hacer un cambio y qué comandos correr para comprobarlo. Concreta las ideas de `04_PROMPT_EJECUCION_EFICIENTE.md` con las rutas y los comandos reales del repositorio.
+Describe cómo trabajar en ARQUILA con el asistente de IA gastando pocos tokens: qué leer, en qué orden hacer un cambio y qué comandos correr para comprobarlo. Concreta las ideas de `04_PROMPT_EJECUCION_EFICIENTE.md` con las rutas y los comandos reales del repositorio.
 
 ## Qué leer antes de tocar nada
 

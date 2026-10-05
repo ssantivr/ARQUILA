@@ -84,7 +84,7 @@ Cubren:
 - Proyectos de ejemplo: la lista, la creación de un proyecto completo desde un ejemplo, los materiales del ejemplo que los trae, el nombre libre al repetirlo, los permisos, y que los cuartos de cada ejemplo caben en su lote sin solaparse.
 - CORS: que se admita el origen de la aplicación con credenciales, que se responda la petición previa y que se ignoren otros orígenes. También que todas las respuestas, incluidas las de error, lleven las cabeceras de seguridad (ver «Seguridad» en `12_BACKEND_Y_API.md`).
 - Conversaciones con el asistente, usando un asistente simulado, y la respuesta por reglas cuando la IA falla o no está configurada.
-- Los adaptadores de correo y de IA (`test_adapters.py`), sustituyendo `smtplib` y el SDK de Anthropic por objetos simulados: qué adaptador de correo se elige según la configuración, las llamadas SMTP que hace, y cómo el adaptador de IA extrae el texto, trata las negativas y las respuestas vacías y convierte los errores del SDK en el error de la aplicación. El adaptador del modelo local se prueba contra un servidor de Ollama simulado: qué modelo elige, qué envía, y qué hace si Ollama no responde, no tiene modelos o contesta algo inesperado.
+- Los adaptadores de correo y de IA (`test_adapters.py`), sustituyendo `smtplib` por un objeto simulado: qué adaptador de correo se elige según la configuración y las llamadas SMTP que hace. El adaptador del modelo local se prueba contra un servidor de Ollama simulado: qué modelo elige, qué envía, y qué hace si Ollama no responde, no tiene modelos o contesta algo inesperado.
 
 ### Frontend
 
@@ -131,8 +131,6 @@ Comprobada el 4 de octubre de 2026 con un clon nuevo del repositorio, siguiendo 
 
 `npm run dev` se probó en el puerto 5183 porque el 5173 estaba ocupado en el equipo. La interfaz no se abrió en un navegador en esa comprobación: se usaron peticiones HTTP.
 
-En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install` puede fallar con el error «No such file or directory» en un archivo del paquete `anthropic`. Se resuelve clonando el proyecto en una ruta corta.
-
 ### Resultados de la última ejecución
 
 Ejecutados el 5 de octubre de 2026 en el equipo de desarrollo (Windows 11, Python 3.12, Node 24.21.0), después de la auditoría y de las mejoras del modelo 3D. Ese día no se repitió la ejecución local contra PostgreSQL 18.6 (la última, del 4 de octubre, pasó con 285 pruebas); la integración continua sí la corre, con PostgreSQL 16:
@@ -140,7 +138,7 @@ Ejecutados el 5 de octubre de 2026 en el equipo de desarrollo (Windows 11, Pytho
 | Comando | Resultado |
 |---|---|
 | `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
-| `pytest` (en `backend/`, con SQLite) | 291 pruebas pasan |
+| `pytest` (en `backend/`, con SQLite) | 286 pruebas pasan |
 | `pytest` con PostgreSQL 16 (integración continua, commit `e40975d`) | pasa |
 | `npm test` (en `frontend/`) | 124 pruebas pasan en 17 archivos |
 | `npm run build` (en `frontend/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |

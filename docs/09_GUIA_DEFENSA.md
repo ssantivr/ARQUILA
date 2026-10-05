@@ -101,7 +101,6 @@ Las pruebas de las estructuras están en `backend/tests/test_data_structures.py`
 El patrón Adapter, en los servicios externos del backend. El asistente necesita «dame una respuesta para esta conversación», pero cada proveedor se llama de una forma distinta. Un adaptador es una clase que ofrece la forma que la aplicación espera y la traduce a la del proveedor.
 
 - La interfaz es `Assistant`, con un solo método: `reply(system, messages)`.
-- `ClaudeAssistant` la traduce a las llamadas del SDK de Anthropic.
 - `OllamaAssistant` la traduce a peticiones HTTP a un modelo local.
 
 `ConversationService` solo conoce la interfaz. Por eso se añadió el modelo local sin tocar ese servicio, y las pruebas usan un asistente simulado en lugar de uno real. El correo sigue la misma idea con `SmtpMailer` y `ConsoleMailer`.

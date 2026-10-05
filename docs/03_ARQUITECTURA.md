@@ -50,7 +50,6 @@ flowchart TD
 
     database[("PostgreSQL")]
     files[("Archivos en disco")]
-    claude["Claude · API de Anthropic"]
     ollama["Ollama · modelo local"]
     smtp["Servidor de correo"]
 
@@ -58,7 +57,6 @@ flowchart TD
     client -- "HTTP y cookie de sesión" --> api
     repositories --> database
     services --> files
-    adapters -.-> claude
     adapters -.-> ollama
     adapters -.-> smtp
 ```

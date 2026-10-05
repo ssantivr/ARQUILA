@@ -79,8 +79,6 @@ Para dejar el proyecto como estaba, volver a la aplicación y pulsar «Deshacer�
 | **Estructura** | Array dinámico, en `backend/app/services/material_ranking.py`, y lista simplemente enlazada, en `backend/app/services/conversation_context.py`. |
 | **Qué decir** | «Antes de preguntar a la IA, el backend ordena los materiales del más caro al más barato insertando cada uno en su posición dentro de un array dinámico, que duplica su capacidad cuando se llena. Así la IA recibe las cifras ya calculadas y no las inventa. Y el historial de la conversación que se le envía es una lista simplemente enlazada que funciona como ventana: se agrega al final y, al pasar de veinte mensajes, se quita el del inicio. Las dos operaciones son O(1) con punteros a la cabeza y a la cola.» |
 
-Si se usa Claude en lugar de Ollama, mencionar que en ese caso los datos del proyecto salen hacia un tercero y que está documentado.
-
 ### 7. El modelo 3D
 
 | | |
