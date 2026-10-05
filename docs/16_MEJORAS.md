@@ -2,7 +2,7 @@
 
 Lista ordenada por urgencia. Cada punto dice qué falta, por qué importa y por dónde empezar. Lo que no se hizo está descrito en «Limitaciones y trabajo futuro» de `10_CONCLUSIONES.md`; aquí está lo que conviene hacer con eso.
 
-Estado al 4 de octubre de 2026: `pytest` (285 pruebas), `npm test` (120 pruebas), `npm run build` y `python scripts/quality.py` pasan, y la integración continua pasa en `main`.
+Estado al 5 de octubre de 2026: `pytest` (291 pruebas), `npm test` (124 pruebas), `npm run build` y `python scripts/quality.py` pasan, y la integración continua pasa en `main`.
 
 ## 1. Antes de la entrega
 

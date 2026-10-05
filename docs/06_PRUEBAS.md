@@ -95,7 +95,7 @@ También están probados la colocación de puertas y ventanas y la forma del tec
 Los componentes principales tienen pruebas con Testing Library (`*.test.tsx`), que los dibujan en un navegador simulado (jsdom) con la API sustituida por funciones simuladas:
 
 - `AsyncStatus.test.tsx`: los estados de carga, lista vacía y error, y el botón «Reintentar».
-- `Sidebar.test.tsx`: los siete módulos, el módulo actual y la navegación con ratón y solo con teclado.
+- `Sidebar.test.tsx`: todos los módulos del menú, el módulo actual y la navegación con ratón y solo con teclado.
 - `LoginPage.test.tsx`: las etiquetas de los campos, el inicio de sesión (también solo con teclado), el botón bloqueado mientras se envía, el error traducido, el registro y la recuperación de contraseña.
 - `ProjectsPage.test.tsx`: la carga y la lista de proyectos, abrir un proyecto, el error de carga con su reintento, y crear un proyecto con y sin error.
 
@@ -135,14 +135,14 @@ En Windows, si la carpeta del proyecto está en una ruta muy larga, `pip install
 
 ### Resultados de la última ejecución
 
-Ejecutados el 4 de octubre de 2026 en el equipo de desarrollo (Windows 11, Python 3.12.10, Node 24.21.0, PostgreSQL 18.6), después de retirar C++ y CMake:
+Ejecutados el 5 de octubre de 2026 en el equipo de desarrollo (Windows 11, Python 3.12, Node 24.21.0), después de la auditoría y de las mejoras del modelo 3D. Ese día no se repitió la ejecución local contra PostgreSQL 18.6 (la última, del 4 de octubre, pasó con 285 pruebas); la integración continua sí la corre, con PostgreSQL 16:
 
 | Comando | Resultado |
 |---|---|
 | `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
-| `pytest` (en `backend/`, con SQLite) | 285 pruebas pasan |
-| `pytest` (en `backend/`, con `TEST_DATABASE_URL` hacia PostgreSQL 18.6) | 285 pruebas pasan |
-| `npm test` (en `frontend/`) | 120 pruebas pasan en 15 archivos |
+| `pytest` (en `backend/`, con SQLite) | 291 pruebas pasan |
+| `pytest` con PostgreSQL 16 (integración continua, commit `e40975d`) | pasa |
+| `npm test` (en `frontend/`) | 124 pruebas pasan en 17 archivos |
 | `npm run build` (en `frontend/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |
 
 La integración continua de GitHub ejecutó el commit `eff7118` en `main` ese mismo día y sus tres trabajos terminaron bien: formato y reglas, backend (`pytest` con SQLite y con PostgreSQL 16) y frontend. Se consultó el estado de cada trabajo, no sus registros, así que el número de pruebas que corrió allí no se confirmó.
