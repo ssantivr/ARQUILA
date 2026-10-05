@@ -17,6 +17,9 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - C++, CMake, Catch2 y clang-format retirados: la aplicación nunca llamó a esa versión de las estructuras y el proyecto queda solo en Python y TypeScript (`84a5943`). Las entradas de este archivo que los mencionan se conservan como registro histórico.
 - Instalación comprobada desde un clon nuevo (`43b87b4`).
 - `README.md` reescrito para un proyecto solo en Python y TypeScript (`e9c9106`).
+- Modelo 3D dibujado solo cuando cambia, sin parpadeo al redimensionar ni en las losas, con el contexto WebGL liberado al salir; el inspector y el asistente ya no pierden ni duplican cambios (`8b95fcc`).
+- Deshacer devuelve los vértices de un terreno y los cuartos y componentes de un plano; los nombres repetidos a la vez y los fallos del correo ya no responden con un error 500 (`5f4c9d7`).
+- Los planos de planta y la ocupación del lote se recargan al crear, renombrar o eliminar un plano (`625956c`).
 
 ## Semana 9 — Calidad, seguridad y rendimiento
 
