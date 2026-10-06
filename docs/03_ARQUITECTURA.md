@@ -63,7 +63,7 @@ flowchart TD
 
 ## Frontend
 
-Está en `frontend/`, escrito en TypeScript con React. Muestra la información y envía peticiones; no guarda datos ni decide permisos.
+Está en `FRONTEND-ARQUILA/`, escrito en TypeScript con React. Muestra la información y envía peticiones; no guarda datos ni decide permisos.
 
 ```text
 src/pages/        Pantallas: inicio de sesión, inicio, proyectos y detalle de proyecto
@@ -77,7 +77,7 @@ src/utils/        Cálculo, formato y traducción de mensajes
 
 ## Backend
 
-Está en `backend/`, escrito en Python con FastAPI.
+Está en `BACKEND-ARGUILA-/`, escrito en Python con FastAPI.
 
 ```text
 app/api/              Recibe la petición HTTP
@@ -88,14 +88,14 @@ app/models.py         Tablas
 app/data_structures/  Pila, cola, listas y array dinámico
 ```
 
-Las decisiones de cada parte están explicadas en `12_BACKEND_Y_API.md`.
+Las decisiones de cada parte están explicadas en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
 
 ## Estructuras de datos
 
-Las estructuras estudiadas están implementadas desde cero en Python, dentro de `backend/app/data_structures/`, un archivo por estructura. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos. Por eso se pueden leer, probar y explicar por separado.
+Las estructuras estudiadas están implementadas desde cero en Python, dentro de `BACKEND-ARGUILA-/app/data_structures/`, un archivo por estructura. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos. Por eso se pueden leer, probar y explicar por separado.
 
 Qué servicio usa cada una está en `04_ESTRUCTURAS_DATOS.md`.
 
 ## Base de datos
 
-PostgreSQL. El esquema se define con migraciones numeradas en `database/migrations/` (ver `07_BASE_DATOS.md`).
+PostgreSQL. El esquema se define con migraciones numeradas en `BASE-DE-DATOS-ARQUILA/migrations/` (ver `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md`).

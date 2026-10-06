@@ -13,7 +13,7 @@ Son cambios pequeños que se notan a primera vista.
 | Completar `[UNIVERSIDAD]`, `[MATERIA]`, `[DOCENTE]`, `[INTEGRANTES]` y `[FECHA]` | Portada de `README.md` | Es lo primero que lee quien abre el repositorio. |
 | Completar `[INTEGRANTES]` | `15_ESTUDIO_PARA_LA_DEFENSA.md` | La lista de archivos por integrante no sirve sin nombres. |
 | Completar `[Completar según la política del curso]` | Sección «Uso de herramientas de IA» de `README.md` | El uso de IA es visible en `prompts/` y en los commits; hay que declararlo como pida el docente. |
-| Abrir `04_ESTRUCTURAS_DATOS.md`, `03_ARQUITECTURA.md` y `07_BASE_DATOS.md` en GitHub | Diagramas Mermaid | Su sintaxis se revisó a mano, pero no se comprobó que GitHub los dibuje. |
+| Abrir `04_ESTRUCTURAS_DATOS.md`, `03_ARQUITECTURA.md` y `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md` en GitHub | Diagramas Mermaid | Su sintaxis se revisó a mano, pero no se comprobó que GitHub los dibuje. |
 | Recorrer todas las pantallas en el navegador siguiendo `14_GUION_DEMO.md` | Aplicación en marcha | En la comprobación final solo se vio la pantalla de inicio de sesión; el resto se probó con peticiones HTTP. |
 
 ## 2. Antes de la defensa
@@ -63,9 +63,9 @@ Revisado el 4 de octubre de 2026 con el usuario de demostración: las siete pant
 
 Los datos son de la base local, no del repositorio.
 
-- **Ya corregido.** Había un proyecto antiguo, «Demo House», con datos en inglés, que hacía aparecer «Estructura» y «structure» como categorías distintas, y dos copias de «Casa Familiar Andina». Se borraron los tres. `database/seed.sql` no crea ninguno de ellos.
+- **Ya corregido.** Había un proyecto antiguo, «Demo House», con datos en inglés, que hacía aparecer «Estructura» y «structure» como categorías distintas, y dos copias de «Casa Familiar Andina». Se borraron los tres. `BASE-DE-DATOS-ARQUILA/seed.sql` no crea ninguno de ellos.
 - **Ejemplos sin ubicación ni materiales.** «Vivienda compacta» ya trae ubicación y ocho materiales. «Edificio multifamiliar» y «Oficina profesional» siguen con «Sin ubicación» y sin materiales; «Casa Familiar Andina» tiene ubicación pero no materiales.
-- **Modelo 3D de «Cabaña Mindo».** «Casa Los Arrayanes» y «Edificio Mirador» ya traen cuartos y columnas en `database/seed.sql`. «Cabaña Mindo» sigue sin cuartos ni medidas del lote, así que no tiene modelo.
+- **Modelo 3D de «Cabaña Mindo».** «Casa Los Arrayanes» y «Edificio Mirador» ya traen cuartos y columnas en `BASE-DE-DATOS-ARQUILA/seed.sql`. «Cabaña Mindo» sigue sin cuartos ni medidas del lote, así que no tiene modelo.
 
 ### Detalles visibles
 
@@ -75,7 +75,7 @@ Los datos son de la base local, no del repositorio.
 - **Barra de módulos en el móvil.** Se desplaza de lado y los últimos módulos quedan ocultos sin ninguna señal. Un degradado en el borde o solo iconos con texto debajo lo hacen evidente.
 - **Listas largas.** Proyectos, terrenos y materiales se muestran completos. Con muchos registros hace falta paginar o cargar por partes.
 
-Ya corregido tras esta revisión: el visor 3D tiene cielo, suelo, niebla en el horizonte y árboles redondeados en lugar de cubos; el separador de miles ahora es igual en todos los números (`frontend/src/utils/format.ts`), la pestaña del navegador tiene icono (`frontend/public/favicon.svg`) y el primer panel de «Asistente IA» se llama «Proyecto».
+Ya corregido tras esta revisión: el visor 3D tiene cielo, suelo, niebla en el horizonte y árboles redondeados en lugar de cubos; el separador de miles ahora es igual en todos los números (`FRONTEND-ARQUILA/src/utils/format.ts`), la pestaña del navegador tiene icono (`FRONTEND-ARQUILA/public/favicon.svg`) y el primer panel de «Asistente IA» se llama «Proyecto».
 
 ### Para que se sienta terminada
 

@@ -2,7 +2,7 @@
 
 ARQUILA se concentra en las estructuras de datos estudiadas actualmente: arrays, pilas, colas, listas simples y listas dobles. El proyecto prioriza comprenderlas correctamente.
 
-Las estructuras están implementadas desde cero en Python, en `backend/app/data_structures/`, sin librerías que las reemplacen. Es la única versión: la que usa la aplicación es la misma que se prueba y se explica.
+Las estructuras están implementadas desde cero en Python, en `BACKEND-ARGUILA-/app/data_structures/`, sin librerías que las reemplacen. Es la única versión: la que usa la aplicación es la misma que se prueba y se explica.
 
 Una estructura no se elige solo por saber implementarla, sino por lo que el sistema necesita. La aplicación lo muestra en cinco casos:
 

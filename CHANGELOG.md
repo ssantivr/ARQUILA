@@ -24,6 +24,7 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - Modelo 3D en tema oscuro con escena neón y resplandor en los acentos, cámara que vuela entre vistas y hasta el elemento elegido (doble clic o «Enfocar») y árboles instanciados (`769927f`).
 - Módulo «Recorrido interior»: un loft de doble altura de muestra, con entrepiso, escalera, ciudad al atardecer y líneas de neón, que se recorre sin salir de sus paredes ni atravesar sus muebles (`696d30b`) ni su escalera (`ea59ada`).
 - El asistente usa solo el modelo local de Ollama, con las reglas fijas como respaldo: se retira el proveedor de IA en la nube y su dependencia (`be38614`).
+- Proyecto separado en tres repositorios: `BACKEND-ARGUILA-`, `FRONTEND-ARQUILA` y `BASE-DE-DATOS-ARQUILA`, cada uno con el historial de su carpeta. Este repositorio conserva la documentación general; `docs/07_BASE_DATOS.md` y `docs/12_BACKEND_Y_API.md` pasan al repositorio de su capa.
 
 ## Semana 9 — Calidad, seguridad y rendimiento
 

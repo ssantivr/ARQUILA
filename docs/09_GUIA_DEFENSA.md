@@ -14,17 +14,17 @@ Ver `docs/01_PLANTEAMIENTO_PROBLEMA.md`.
 
 Cada parte tiene una sola responsabilidad y se puede probar y cambiar sin tocar las otras:
 
-- `frontend/` muestra la información y envía peticiones; no guarda datos ni decide permisos.
-- `backend/` valida, aplica las reglas y guarda en la base de datos.
-- `backend/app/data_structures/` contiene las estructuras, escritas en Python. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos.
+- `FRONTEND-ARQUILA/` muestra la información y envía peticiones; no guarda datos ni decide permisos.
+- `BACKEND-ARGUILA-/` valida, aplica las reglas y guarda en la base de datos.
+- `BACKEND-ARGUILA-/app/data_structures/` contiene las estructuras, escritas en Python. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos.
 
-Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `docs/12_BACKEND_Y_API.md`.
+Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
 
 ## 3. Cómo funciona un array
 
 Guarda los elementos en posiciones consecutivas de memoria. Por eso llegar a una posición por su índice es inmediato, O(1), pero insertar o eliminar en medio obliga a desplazar los elementos que siguen, O(n).
 
-Mostrar `insert_at` y `remove_at` de `DynamicArray` en `backend/app/data_structures/arrays.py`.
+Mostrar `insert_at` y `remove_at` de `DynamicArray` en `BACKEND-ARGUILA-/app/data_structures/arrays.py`.
 
 ## 4. Qué significa memoria dinámica
 
@@ -38,25 +38,25 @@ En Python el programa no libera la memoria a mano: el intérprete la recupera cu
 
 Porque solo se trabaja por un extremo, la cima: el último elemento que entra es el primero que sale. `push` y `pop` solo mueven el contador `_size`, que indica la cima, por eso son O(1).
 
-Mostrar `backend/app/data_structures/stack.py`. `pop` en una pila vacía produce `IndexError`, en lugar de devolver un valor especial como `None`, para que la pila pueda guardar cualquier valor.
+Mostrar `BACKEND-ARGUILA-/app/data_structures/stack.py`. `pop` en una pila vacía produce `IndexError`, en lugar de devolver un valor especial como `None`, para que la pila pueda guardar cualquier valor.
 
 ## 6. Por qué Queue utiliza FIFO
 
 Porque se inserta por un extremo y se retira por el otro: el primero que entra es el primero que sale.
 
-La cola es circular: el índice avanza con el operador módulo y reutiliza las posiciones que quedan libres al retirar elementos. Sin eso, después de tantas inserciones como su capacidad la cola se reportaría llena aunque estuviera vacía. Mostrar `enqueue` y `dequeue` en `backend/app/data_structures/queue.py`.
+La cola es circular: el índice avanza con el operador módulo y reutiliza las posiciones que quedan libres al retirar elementos. Sin eso, después de tantas inserciones como su capacidad la cola se reportaría llena aunque estuviera vacía. Mostrar `enqueue` y `dequeue` en `BACKEND-ARGUILA-/app/data_structures/queue.py`.
 
 ## 7. Cómo funciona la referencia `next` de una lista simple
 
 Cada nodo guarda un dato y una referencia al nodo siguiente; en el último, `next` es `None`. Para recorrer la lista se empieza en `head` y se sigue `next` hasta llegar a `None`.
 
-Solo se puede avanzar. Para eliminar un nodo hay que estar parado en el anterior, porque es su `next` el que se debe cambiar. Mostrar `remove` en `backend/app/data_structures/singly_linked_list.py`. El diagrama de nodos está en `docs/04_ESTRUCTURAS_DATOS.md`.
+Solo se puede avanzar. Para eliminar un nodo hay que estar parado en el anterior, porque es su `next` el que se debe cambiar. Mostrar `remove` en `BACKEND-ARGUILA-/app/data_structures/singly_linked_list.py`. El diagrama de nodos está en `docs/04_ESTRUCTURAS_DATOS.md`.
 
 ## 8. Cómo funcionan `previous` y `next` en una lista doble
 
 Cada nodo conoce a su vecino anterior y al siguiente, así que la lista se puede recorrer en los dos sentidos y se puede retirar un nodo teniendo solo ese nodo.
 
-El costo es más memoria por nodo y más referencias que mantener en cada operación. Mostrar `__iter__` y `__reversed__` en `backend/app/data_structures/doubly_linked_list.py`.
+El costo es más memoria por nodo y más referencias que mantener en cada operación. Mostrar `__iter__` y `__reversed__` en `BACKEND-ARGUILA-/app/data_structures/doubly_linked_list.py`.
 
 ## 9. Qué ocurre cuando se elimina un nodo
 
@@ -78,17 +78,17 @@ La tabla completa está en `docs/05_COMPLEJIDAD.md`, junto con las mediciones de
 
 ## 11. Dónde se usa una estructura de datos dentro de la aplicación
 
-El botón «Deshacer» del proyecto usa una lista doblemente enlazada (`backend/app/services/undo_history.py`). Cada eliminación se agrega al final; deshacer saca la última; y cuando hay más de 20 se descarta la más antigua por el inicio. Las tres operaciones son O(1).
+El botón «Deshacer» del proyecto usa una lista doblemente enlazada (`BACKEND-ARGUILA-/app/services/undo_history.py`). Cada eliminación se agrega al final; deshacer saca la última; y cuando hay más de 20 se descarta la más antigua por el inicio. Las tres operaciones son O(1).
 
 Una pila no alcanzaría, porque no permite quitar el elemento más antiguo.
 
-El límite de intentos de inicio de sesión usa una cola (`backend/app/services/login_limiter.py`). Cada intento fallido se encola con su hora; los que tienen más de un minuto se retiran por el frente, porque el más antiguo es siempre el primero en caducar (FIFO). Si la cola está llena, hay 5 fallos recientes y el inicio de sesión se bloquea.
+El límite de intentos de inicio de sesión usa una cola (`BACKEND-ARGUILA-/app/services/login_limiter.py`). Cada intento fallido se encola con su hora; los que tienen más de un minuto se retiran por el frente, porque el más antiguo es siempre el primero en caducar (FIFO). Si la cola está llena, hay 5 fallos recientes y el inicio de sesión se bloquea.
 
 ## 12. Cómo se validó el backend
 
-Con pruebas automatizadas en `backend/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.
+Con pruebas automatizadas en `BACKEND-ARGUILA-/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.
 
-Las pruebas de las estructuras están en `backend/tests/test_data_structures.py` y cubren los casos borde: vacía, llena, un solo elemento, y eliminar la cabeza y la cola.
+Las pruebas de las estructuras están en `BACKEND-ARGUILA-/tests/test_data_structures.py` y cubren los casos borde: vacía, llena, un solo elemento, y eliminar la cabeza y la cola.
 
 ## 13. Qué decisiones se tomaron para mantener el proyecto dentro del alcance de la asignatura
 
@@ -105,18 +105,18 @@ El patrón Adapter, en los servicios externos del backend. El asistente necesita
 
 `ConversationService` solo conoce la interfaz. Por eso se añadió el modelo local sin tocar ese servicio, y las pruebas usan un asistente simulado en lugar de uno real. El correo sigue la misma idea con `SmtpMailer` y `ConsoleMailer`.
 
-Mostrar `backend/app/ai.py`. Ver la tabla de `docs/12_BACKEND_Y_API.md`.
+Mostrar `BACKEND-ARGUILA-/app/ai.py`. Ver la tabla de `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
 
 ## 15. Qué pasa si la IA no está disponible o se equivoca
 
-- Si no hay ningún proveedor, o la llamada falla, el asistente contesta con reglas fijas sobre los datos del proyecto (`backend/app/services/assistant_rules.py`). Cada respuesta guarda su origen, `ai` o `rules`, y la pantalla lo indica.
+- Si no hay ningún proveedor, o la llamada falla, el asistente contesta con reglas fijas sobre los datos del proyecto (`BACKEND-ARGUILA-/app/services/assistant_rules.py`). Cada respuesta guarda su origen, `ai` o `rules`, y la pantalla lo indica.
 - Un modelo pequeño se equivoca al hacer cuentas. Se comprobó: señaló como más caro un material que no lo era. La corrección fue no dejarle calcular: el backend le entrega los costos y el total ya calculados.
 
 Para demostrarlo en vivo: hacer una pregunta con Ollama encendido, cerrarlo, y repetir la pregunta; la segunda respuesta lleva la etiqueta «Respuesta por reglas».
 
 ## 16. Qué algoritmos hay en los esquemas del terreno
 
-Todos recorren los vértices del lote una sola vez, O(n), sobre un array de puntos (`frontend/src/utils/geometry.ts`):
+Todos recorren los vértices del lote una sola vez, O(n), sobre un array de puntos (`FRONTEND-ARQUILA/src/utils/geometry.ts`):
 
 - El área usa la fórmula de Gauss: suma un producto por cada par de vértices consecutivos.
 - Las cotas del plano de implantación calculan la longitud de cada lado y hacia dónde queda el exterior.
@@ -126,7 +126,7 @@ Es un ejemplo de recorrido de array con acceso por índice, incluido el paso del
 
 ## 17. Cómo se arma el modelo 3D del proyecto
 
-El backend no guarda el modelo: lo calcula cada vez que se pide, con los terrenos, planos, cuartos y componentes del proyecto (`backend/app/services/structure_service.py`). Devuelve una lista de cajas en metros y el frontend solo las dibuja.
+El backend no guarda el modelo: lo calcula cada vez que se pide, con los terrenos, planos, cuartos y componentes del proyecto (`BACKEND-ARGUILA-/app/services/structure_service.py`). Devuelve una lista de cajas en metros y el frontend solo las dibuja.
 
 - Cada terreno es una losa. Como cada terreno guarda sus medidas desde su propio origen, se colocan uno al lado del otro.
 - Un plano es un nivel si tiene cuartos o componentes, o si su campo Nivel es un número. Así un plano de implantación no se apila como si fuera un piso.
@@ -135,7 +135,7 @@ El backend no guarda el modelo: lo calcula cada vez que se pide, con los terreno
 - Las ventanas, la puerta, el techo y los árboles no son datos: el visor los añade al dibujar para que el modelo se lea como una edificación.
 - Con esos mismos cuartos se generan las plantas con ejes y cotas, las cuatro fachadas y un corte. Los ejes de una planta salen de ordenar los bordes de los cuartos y quitar los repetidos: un recorrido y un ordenamiento de un array.
 
-Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `docs/12_BACKEND_Y_API.md`.
+Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
 
 ## 18. Por qué un cuarto, una columna, una viga y un muro son cajas
 
@@ -147,7 +147,7 @@ Porque una caja alineada con los ejes se describe con seis números (posición `
 
 El costo es que no hay muros en diagonal ni cuartos con forma de L, y que no hay cálculo estructural: los componentes se registran y se dibujan, nada más.
 
-En los datos un cuarto sigue siendo una caja. Solo al dibujarlo, `frontend/src/three/roomGeometry.ts` la convierte en cuatro muros con espesor, con un hueco por cada ventana o puerta, y dos losas. Es un recorrido de los vanos del cuarto, O(v).
+En los datos un cuarto sigue siendo una caja. Solo al dibujarlo, `FRONTEND-ARQUILA/src/three/roomGeometry.ts` la convierte en cuatro muros con espesor, con un hueco por cada ventana o puerta, y dos losas. Es un recorrido de los vanos del cuarto, O(v).
 
 ## 19. Cómo se evita que el visor 3D gaste memoria
 
@@ -156,17 +156,17 @@ Three.js reserva memoria en la tarjeta gráfica para cada geometría y cada mate
 - Cada vez que cambia el modelo, y al salir de la pestaña, se llama a `dispose` sobre geometrías, materiales, el mapa de sombras y el contexto WebGL, y se quitan los eventos del ratón y de la ventana.
 - Three.js se carga solo al abrir la pestaña Modelo 3D, así que no pesa en el resto de la aplicación.
 
-Mostrar `disposeObject` y `dispose` en `frontend/src/three/structureViewer.ts`. Para demostrarlo en vivo: abrir la pestaña, cambiar a otra y comprobar en las herramientas del navegador que ya no hay ningún lienzo (`canvas`) en la página.
+Mostrar `disposeObject` y `dispose` en `FRONTEND-ARQUILA/src/three/structureViewer.ts`. Para demostrarlo en vivo: abrir la pestaña, cambiar a otra y comprobar en las herramientas del navegador que ya no hay ningún lienzo (`canvas`) en la página.
 
 ## 20. Cómo se selecciona un cuarto con un clic
 
 Con un rayo (`Raycaster`): se traza una línea desde la cámara que pasa por el punto donde se hizo clic y se toma la primera caja que atraviesa. Si el puntero se movió más de 4 píxeles entre pulsar y soltar, se considera que el usuario estaba girando la cámara y no se selecciona nada.
 
-El elemento seleccionado se guarda en un solo lugar, el estado compartido `frontend/src/state/appState.ts`, y de ahí lo leen el modelo, la lista de niveles, el inspector y el asistente. Por eso todos muestran siempre lo mismo.
+El elemento seleccionado se guarda en un solo lugar, el estado compartido `FRONTEND-ARQUILA/src/state/appState.ts`, y de ahí lo leen el modelo, la lista de niveles, el inspector y el asistente. Por eso todos muestran siempre lo mismo.
 
 ## 21. Cómo se colorea el modelo por coste o por alertas
 
-El visor no calcula nada: recibe un diccionario de elemento a color y pinta. Los cálculos están en `frontend/src/utils/elementColors.ts`.
+El visor no calcula nada: recibe un diccionario de elemento a color y pinta. Los cálculos están en `FRONTEND-ARQUILA/src/utils/elementColors.ts`.
 
 - Coste: se suma el costo de los materiales del proyecto y se reparte entre los elementos según su volumen. Son dos recorridos, O(n + m) con n elementos y m materiales. Es una estimación, porque un material no guarda a qué elemento pertenece.
 - Alertas: por cada elemento se buscan las recomendaciones que lo nombran y se toma la prioridad más alta. Es un recorrido dentro de otro, O(n · r) con r recomendaciones; con los tamaños de un proyecto no se nota.
@@ -178,7 +178,7 @@ Los materiales, las recomendaciones, la selección y el modo de color viven en `
 
 Al seleccionar un elemento, el inspector muestra un selector «Material». Al elegir una opción se llama a `appState.setSurface`, que guarda la elección en un diccionario de elemento a material; el visor está suscrito, recibe el diccionario (`setSurfaces`) y cambia el color, la rugosidad, el brillo metálico y la opacidad del material de esa caja. No se reconstruye el modelo, por eso el cambio es inmediato. A la vez se envía al backend (`PATCH /projects/{id}/structure/{kind}/{element_id}/surface`), que lo guarda en la columna `surface` del cuarto, del componente o del plano; si falla, el visor vuelve al material anterior y muestra el error.
 
-- El catálogo está en `frontend/src/utils/surfaceMaterials.ts`. Buscar el material de un elemento es una consulta O(1) en el diccionario; repintar recorre los n elementos, O(n).
+- El catálogo está en `FRONTEND-ARQUILA/src/utils/surfaceMaterials.ts`. Buscar el material de un elemento es una consulta O(1) en el diccionario; repintar recorre los n elementos, O(n).
 - El elemento seleccionado se marca con un contorno cian y no con un tinte, para que el material se vea tal cual.
 - El tipo de cubierta (a dos aguas o plana) sigue el mismo camino, pero es un dato del proyecto y no de un elemento: `appState.setRoof`, `PATCH /projects/{id}/structure/roof` y la columna `roof` de `projects`.
 - Límite que conviene decir: es un dato visual, distinto de los Materiales del proyecto, que son partidas de presupuesto; no cambia el coste estimado.
@@ -193,7 +193,7 @@ Lo que se pierde: en Python no se ve la reserva y liberación manual de memoria.
 
 Porque el resultado se lee por posición: el asistente recibe los materiales en orden y el más caro es el índice 0, en O(1). Además no se sabe de antemano cuántos materiales tiene un proyecto, así que el array tiene que poder crecer.
 
-El costo: cada material se inserta en su posición desplazando los que siguen, O(n) por inserción y O(n²) en total. Se acepta porque un proyecto tiene pocos materiales. Mostrar `backend/app/services/material_ranking.py`.
+El costo: cada material se inserta en su posición desplazando los que siguen, O(n) por inserción y O(n²) en total. Se acepta porque un proyecto tiene pocos materiales. Mostrar `BACKEND-ARGUILA-/app/services/material_ranking.py`.
 
 ## 25. Por qué una lista simple en la ventana de mensajes y no una cola
 
@@ -202,13 +202,13 @@ El comportamiento sí es de cola: entra por el final y sale por el inicio. Pero 
 - No se puede recorrer sin vaciarla, y la ventana hay que recorrerla entera para enviar los mensajes a la IA.
 - Tiene capacidad fija y falla si se llena; la lista crece nodo a nodo.
 
-La lista simple da `push_back` y `pop_front` en O(1) y un recorrido hacia adelante. No hace falta la lista doble porque nunca se recorre hacia atrás ni se quita por el final. Mostrar `backend/app/services/conversation_context.py`.
+La lista simple da `push_back` y `pop_front` en O(1) y un recorrido hacia adelante. No hace falta la lista doble porque nunca se recorre hacia atrás ni se quita por el final. Mostrar `BACKEND-ARGUILA-/app/services/conversation_context.py`.
 
 ## 26. Por qué lista doble más pila en Deshacer y Rehacer, y no dos pilas
 
 Deshacer necesita tres operaciones: agregar al final, quitar del final y descartar la más antigua cuando hay más de 20. La tercera es quitar por el fondo, y una pila no lo permite. La lista doble hace las tres en O(1).
 
-Rehacer solo necesita apilar y desapilar, y nunca supera los 20 elementos, así que le basta una pila. Mostrar `record` y `record_restored` en `backend/app/services/undo_history.py`.
+Rehacer solo necesita apilar y desapilar, y nunca supera los 20 elementos, así que le basta una pila. Mostrar `record` y `record_restored` en `BACKEND-ARGUILA-/app/services/undo_history.py`.
 
 ## 27. Qué pasa con 1 millón de elementos
 

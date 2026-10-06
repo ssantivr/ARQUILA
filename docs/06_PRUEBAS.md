@@ -35,7 +35,7 @@ El proyecto utiliza pruebas sencillas porque el objetivo es validar los concepto
 
 ### Casos borde de las estructuras
 
-Los casos anteriores, y los de los arrays, están automatizados en `backend/tests/test_data_structures.py`. Además comprueban:
+Los casos anteriores, y los de los arrays, están automatizados en `BACKEND-ARGUILA-/tests/test_data_structures.py`. Además comprueban:
 
 - `pop`, `peek` y `dequeue` en una estructura vacía, y `push` y `enqueue` en una llena.
 - Que la cola mantiene el orden después de dar la vuelta al array.
@@ -45,11 +45,11 @@ Los casos anteriores, y los de los arrays, están automatizados en `backend/test
 - Que las estructuras guardan tipos distintos de `int` y que las búsquedas funcionan con textos.
 - Que el array dinámico crece, desplaza los elementos y rechaza los índices fuera de rango.
 
-`backend/tests/test_structure_usage.py` comprueba dos de sus usos en los servicios: la ventana de mensajes del asistente y el orden de los materiales por costo.
+`BACKEND-ARGUILA-/tests/test_structure_usage.py` comprueba dos de sus usos en los servicios: la ventana de mensajes del asistente y el orden de los materiales por costo.
 
 ### Backend
 
-Las pruebas automatizadas están en `backend/tests/` y se ejecutan con `pytest`. Por defecto usan una base SQLite en memoria, así que no necesitan PostgreSQL.
+Las pruebas automatizadas están en `BACKEND-ARGUILA-/tests/` y se ejecutan con `pytest`. Por defecto usan una base SQLite en memoria, así que no necesitan PostgreSQL.
 
 ### Ejecución contra PostgreSQL
 
@@ -60,7 +60,7 @@ set TEST_DATABASE_URL=postgresql+psycopg://usuario:clave@localhost:5432/arquila_
 pytest
 ```
 
-En ese modo las tablas se crean aplicando las migraciones de `database/migrations/`, de modo que también se comprueba que el esquema coincide con los modelos del backend.
+En ese modo las tablas se crean aplicando las migraciones de `BASE-DE-DATOS-ARQUILA/migrations/`, de modo que también se comprueba que el esquema coincide con los modelos del backend.
 
 Antes de cada prueba se vacían todas las tablas de esa base. Por seguridad, las pruebas se niegan a ejecutarse si el nombre de la base no termina en `test`. Nunca se debe apuntar a una base con datos reales.
 
@@ -73,7 +73,7 @@ Cubren:
 - Registro, inicio y cierre de sesión, y que cada endpoint exija sesión.
 - El resumen de las contraseñas (`test_security.py`): que se calcule con Argon2id, que solo verifique la contraseña correcta, que cambie en cada cálculo, que un valor guardado con otro formato nunca se dé por válido y que una contraseña antigua guardada con `scrypt` siga sirviendo y se actualice al iniciar sesión.
 - El registro de eventos (`test_logs.py`): una línea JSON por petición, los avisos de inicio de sesión fallido y bloqueado, y que no aparezcan contraseñas, correos ni parámetros de la dirección.
-- El comando de migraciones (`test_migrate.py`): que lea la conexión de `backend/.env`, cargue los datos de ejemplo y se detenga con un mensaje claro si falta `DATABASE_URL`.
+- El comando de migraciones (`test_migrate.py`): que lea la conexión de `BACKEND-ARGUILA-/.env`, cargue los datos de ejemplo y se detenga con un mensaje claro si falta `DATABASE_URL`.
 - Que un usuario no pueda ver ni modificar los datos de otro.
 - Crear, listar, actualizar y eliminar proyectos, terrenos, materiales, planos y elevaciones, con sus validaciones.
 - Subida de archivos: tipos admitidos, tamaño máximo y adjuntarlos a planos y elevaciones.
@@ -82,13 +82,13 @@ Cubren:
 - Componentes estructurales: crear, listar y filtrar por tipo, actualizar y eliminar, que el tipo sea columna, viga o muro, que las medidas sean mayores que cero, que el plano sea del mismo proyecto y que se eliminen con su plano o su proyecto.
 - El modelo 3D (`/projects/{id}/structure`): colocación de los terrenos, qué planos cuentan como nivel, cuartos frente a volumen del nivel, altura de cada nivel, y posición de los componentes, con las vigas colgadas del techo del nivel. También el material de superficie de cada elemento: que se guarde en un cuarto, en un componente y en el plano de un volumen, que se rechace un material o un tipo desconocido, que el elemento sea de ese tipo y de ese proyecto, y que otro usuario no pueda cambiarlo. Y el tipo de cubierta del proyecto: a dos aguas por defecto, que se guarde la plana, que se rechace otro valor y que otro usuario no pueda cambiarla.
 - Proyectos de ejemplo: la lista, la creación de un proyecto completo desde un ejemplo, los materiales del ejemplo que los trae, el nombre libre al repetirlo, los permisos, y que los cuartos de cada ejemplo caben en su lote sin solaparse.
-- CORS: que se admita el origen de la aplicación con credenciales, que se responda la petición previa y que se ignoren otros orígenes. También que todas las respuestas, incluidas las de error, lleven las cabeceras de seguridad (ver «Seguridad» en `12_BACKEND_Y_API.md`).
+- CORS: que se admita el origen de la aplicación con credenciales, que se responda la petición previa y que se ignoren otros orígenes. También que todas las respuestas, incluidas las de error, lleven las cabeceras de seguridad (ver «Seguridad» en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`).
 - Conversaciones con el asistente, usando un asistente simulado, y la respuesta por reglas cuando la IA falla o no está configurada.
 - Los adaptadores de correo y de IA (`test_adapters.py`), sustituyendo `smtplib` por un objeto simulado: qué adaptador de correo se elige según la configuración y las llamadas SMTP que hace. El adaptador del modelo local se prueba contra un servidor de Ollama simulado: qué modelo elige, qué envía, y qué hace si Ollama no responde, no tiene modelos o contesta algo inesperado.
 
 ### Frontend
 
-Las funciones de cálculo y de texto del frontend tienen pruebas en `frontend/src/utils/*.test.ts`, `frontend/src/state/*.test.ts`, `frontend/src/three/*.test.ts` y `frontend/src/services/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, curvas de nivel, cotas de cada lado, área edificable y lectura de los vértices de un lote, agrupación de cuartos por nivel e indicadores de ocupación (huella, área construida, COS y CUS), colocación de ventanas y puerta, forma del techo (a dos aguas o plano), fachadas y corte generados con cada cubierta, geometría de un cuarto en el modelo 3D (muros dentro de su medida, vidrio, hoja de puerta, líneas de cada vano y coordenadas de textura en metros), colores del modelo 3D (por tipo, por coste estimado y por alertas), materiales de superficie (el elegido o el predeterminado de cada tipo, y la lectura de los guardados), el estado compartido `appState` (avisos a los suscriptores, cambio de proyecto, material de superficie por elemento y recarga con peticiones simuladas), traducción de los mensajes de error y formato de números.
+Las funciones de cálculo y de texto del frontend tienen pruebas en `FRONTEND-ARQUILA/src/utils/*.test.ts`, `FRONTEND-ARQUILA/src/state/*.test.ts`, `FRONTEND-ARQUILA/src/three/*.test.ts` y `FRONTEND-ARQUILA/src/services/*.test.ts`, que se ejecutan con `npm test`: área, vista frontal, curvas de nivel, cotas de cada lado, área edificable y lectura de los vértices de un lote, agrupación de cuartos por nivel e indicadores de ocupación (huella, área construida, COS y CUS), colocación de ventanas y puerta, forma del techo (a dos aguas o plano), fachadas y corte generados con cada cubierta, geometría de un cuarto en el modelo 3D (muros dentro de su medida, vidrio, hoja de puerta, líneas de cada vano y coordenadas de textura en metros), colores del modelo 3D (por tipo, por coste estimado y por alertas), materiales de superficie (el elegido o el predeterminado de cada tipo, y la lectura de los guardados), el estado compartido `appState` (avisos a los suscriptores, cambio de proyecto, material de superficie por elemento y recarga con peticiones simuladas), traducción de los mensajes de error y formato de números.
 
 También están probados la colocación de puertas y ventanas y la forma del techo del modelo 3D (`openings.test.ts`), y el cliente HTTP (`http.test.ts`) con un `fetch` simulado: la dirección y el cuerpo de cada petición, los mensajes de error que devuelve el backend y el aviso de sesión terminada.
 
@@ -99,7 +99,7 @@ Los componentes principales tienen pruebas con Testing Library (`*.test.tsx`), q
 - `LoginPage.test.tsx`: las etiquetas de los campos, el inicio de sesión (también solo con teclado), el botón bloqueado mientras se envía, el error traducido, el registro y la recuperación de contraseña.
 - `ProjectsPage.test.tsx`: la carga y la lista de proyectos, abrir un proyecto, el error de carga con su reintento, y crear un proyecto con y sin error.
 
-`npm test` ejecuta estas pruebas junto con las de cálculo. Las demás pantallas se revisaron a mano en un navegador automatizado (diseño en pantallas pequeñas, etiquetas y contraste; ver «Frontend» en `12_BACKEND_Y_API.md`), pero no tienen pruebas automáticas guardadas en el repositorio.
+`npm test` ejecuta estas pruebas junto con las de cálculo. Las demás pantallas se revisaron a mano en un navegador automatizado (diseño en pantallas pequeñas, etiquetas y contraste; ver «Frontend» en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`), pero no tienen pruebas automáticas guardadas en el repositorio.
 
 ### Enlace de recuperación en el navegador
 
@@ -113,7 +113,7 @@ Comprobado a mano el 4 de octubre de 2026 con Chrome sin ventana, manejado por s
 
 En la versión compilada ninguna petición lleva el identificador del enlace en `Referer`. En modo desarrollo lo lleva una sola: la del script que Vite inyecta al principio de la página (`/@vite/client`), que va al propio servidor de desarrollo, el mismo que ya recibió el enlace completo. Ese script no existe en la versión compilada.
 
-No se guardó como prueba automática: el repositorio no incluye ninguna herramienta para manejar un navegador. Tampoco se comprobó en un despliegue real, con HTTPS y detrás de otro servidor, ni con el envío real del correo: el enlace se tomó de la consola del backend (ver «Seguridad» en `12_BACKEND_Y_API.md`).
+No se guardó como prueba automática: el repositorio no incluye ninguna herramienta para manejar un navegador. Tampoco se comprobó en un despliegue real, con HTTPS y detrás de otro servidor, ni con el envío real del correo: el enlace se tomó de la consola del backend (ver «Seguridad» en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`).
 
 ### Instalación desde cero
 
@@ -122,10 +122,10 @@ Comprobada el 4 de octubre de 2026 con un clon nuevo del repositorio, siguiendo 
 | Paso | Resultado |
 |---|---|
 | `python -m venv .venv` y `pip install -r requirements-dev.txt` | instala sin errores en una ruta corta |
-| `python -m app.migrate` y `python -m app.dev` sin `backend/.env` | terminan con el mensaje «DATABASE_URL is not set. Copy backend/.env.example to backend/.env and fill it in.» |
-| `python -m app.migrate` (con `backend/.env`, sin `DATABASE_URL` en la terminal) | aplica las 9 migraciones; quedan 0 usuarios y 0 proyectos |
+| `python -m app.migrate` y `python -m app.dev` sin `BACKEND-ARGUILA-/.env` | terminan con el mensaje «DATABASE_URL is not set. Copy BACKEND-ARGUILA-/.env.example to BACKEND-ARGUILA-/.env and fill it in.» |
+| `python -m app.migrate` (con `BACKEND-ARGUILA-/.env`, sin `DATABASE_URL` en la terminal) | aplica las 9 migraciones; quedan 0 usuarios y 0 proyectos |
 | `python -m app.migrate --seed` | carga 1 usuario y 3 proyectos; una segunda ejecución no duplica nada |
-| `python -m app.check` | lee `backend/.env`; el asistente respondió con Ollama |
+| `python -m app.check` | lee `BACKEND-ARGUILA-/.env`; el asistente respondió con Ollama |
 | `python -m app.dev` | `/health` responde `{"status":"ok"}` y `/docs` responde 200 |
 | `npm install` y `npm run dev` | la interfaz responde 200; el usuario de demostración inicia sesión a través de `/api` y ve sus 3 proyectos |
 
@@ -138,10 +138,10 @@ Ejecutados el 5 de octubre de 2026 en el equipo de desarrollo (Windows 11, Pytho
 | Comando | Resultado |
 |---|---|
 | `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
-| `pytest` (en `backend/`, con SQLite) | 286 pruebas pasan |
+| `pytest` (en `BACKEND-ARGUILA-/`, con SQLite) | 286 pruebas pasan |
 | `pytest` con PostgreSQL 16 (integración continua, commit `710ba88`) | pasa |
-| `npm test` (en `frontend/`) | 124 pruebas pasan en 17 archivos |
-| `npm run build` (en `frontend/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |
+| `npm test` (en `FRONTEND-ARQUILA/`) | 124 pruebas pasan en 17 archivos |
+| `npm run build` (en `FRONTEND-ARQUILA/`) | compila sin errores; Vite avisa de que un archivo generado supera los 500 kB |
 
 La integración continua de GitHub ejecutó el commit `87e13d8` en `main` ese mismo día y sus tres trabajos terminaron bien: formato y reglas, backend (`pytest` con SQLite y con PostgreSQL 16) y frontend. Se consultó el estado de cada trabajo, no sus registros, así que el número de pruebas que corrió allí no se confirmó.
 
@@ -149,7 +149,7 @@ No se repitieron las comprobaciones manuales con fecha de este documento (el enl
 
 ### Cobertura del backend
 
-Medida el 4 de octubre de 2026 con `coverage` y no repetida desde entonces: las pruebas ejecutaban el 98 % de las líneas de `backend/app/`, y el 100 % de `app/data_structures/`. Lo que quedaba sin ejecutar eran sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:
+Medida el 4 de octubre de 2026 con `coverage` y no repetida desde entonces: las pruebas ejecutaban el 98 % de las líneas de `BACKEND-ARGUILA-/app/`, y el 100 % de `app/data_structures/`. Lo que quedaba sin ejecutar eran sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:
 
 ```bash
 pip install coverage
@@ -159,14 +159,15 @@ coverage report -m
 
 ### Integración continua
 
-El archivo `.github/workflows/ci.yml` hace que GitHub ejecute las comprobaciones en cada subida a `main` y en cada pull request. Son tres trabajos independientes:
+Desde la separación del proyecto en tres repositorios (6 de octubre de 2026), cada repositorio con código tiene su propio `.github/workflows/ci.yml`, que GitHub ejecuta en cada subida a `main` y en cada pull request:
 
-- **Formato y reglas:** ejecuta `python scripts/quality.py` (Ruff, Prettier y ESLint) y falla si algún archivo no cumple.
-- **Backend:** instala `requirements-dev.txt` con Python 3.12 y ejecuta `pytest` dos veces, con SQLite y contra un PostgreSQL 16 que se levanta solo para esa ejecución.
-- **Frontend:** `npm ci`, `npm test` y `npm run build` con Node 24.
+- **`BACKEND-ARGUILA-`:** comprueba el formato y las reglas con Ruff, instala `requirements-dev.txt` con Python 3.12 y ejecuta `pytest` dos veces, con SQLite y contra un PostgreSQL 16 que se levanta solo para esa ejecución. Para ello clona también `BASE-DE-DATOS-ARQUILA`, de donde salen las migraciones.
+- **`FRONTEND-ARQUILA`:** `npm ci`, Prettier, ESLint, `npm test` y `npm run build` con Node 24.
 
-El resultado se ve en la pestaña «Actions» del repositorio en GitHub. No despliega nada: solo avisa si un cambio rompe algo.
+`BASE-DE-DATOS-ARQUILA` no tiene un flujo propio: sus migraciones se validan en el del backend. Este repositorio ya no contiene código de la aplicación, así que tampoco tiene flujo.
+
+El resultado se ve en la pestaña «Actions» de cada repositorio en GitHub. No despliega nada: solo avisa si un cambio rompe algo.
 
 ### Sin cobertura automática
 
-La llamada real al servicio de IA, el envío real de correo y la mayoría de las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `12_BACKEND_Y_API.md`).
+La llamada real al servicio de IA, el envío real de correo y la mayoría de las pantallas del frontend. Las dos primeras se comprueban a mano con `python -m app.check`, que necesita credenciales reales (ver `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`).

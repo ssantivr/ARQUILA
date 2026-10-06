@@ -11,11 +11,11 @@ El proyecto usa solo las estructuras trabajadas hasta este punto:
 
 No se implementaron árboles, grafos ni tablas hash.
 
-Todas están escritas a mano en Python, en `backend/app/data_structures/`, sin `collections.deque`, `queue` ni otra librería que las reemplace. Sus pruebas están en `backend/tests/test_data_structures.py`.
+Todas están escritas a mano en Python, en `BACKEND-ARGUILA-/app/data_structures/`, sin `collections.deque`, `queue` ni otra librería que las reemplace. Sus pruebas están en `BACKEND-ARGUILA-/tests/test_data_structures.py`.
 
 ## Dónde están y dónde se usan
 
-Las rutas de la segunda columna son relativas a `backend/app/data_structures/` y las de la tercera a `backend/app/services/`.
+Las rutas de la segunda columna son relativas a `BACKEND-ARGUILA-/app/data_structures/` y las de la tercera a `BACKEND-ARGUILA-/app/services/`.
 
 | Estructura | Archivo | Dónde se usa en la app |
 |---|---|---|
