@@ -25,7 +25,6 @@
 - [Inicio rápido](#inicio-rápido)
 - [Pruebas y calidad](#pruebas-y-calidad)
 - [Seguridad](#seguridad)
-- [Documentación](#documentación)
 - [Organización de este repositorio](#organización-de-este-repositorio)
 - [Licencia](#licencia)
 
@@ -201,38 +200,6 @@ En GitHub, cada repositorio de código ejecuta sus comprobaciones en cada pull r
 - Las credenciales viven en archivos `.env` que no se suben a ningún repositorio.
 
 Las decisiones y las limitaciones conocidas están en la sección «Seguridad» de `BACKEND-ARQUILA/docs/BACKEND_Y_API.md`.
-
-## Documentación
-
-Documentación general, en este repositorio:
-
-| Documento | Contenido |
-|---|---|
-| [`01_PLANTEAMIENTO_PROBLEMA.md`](docs/01_PLANTEAMIENTO_PROBLEMA.md) | Qué problema resuelve el proyecto. |
-| [`02_REQUERIMIENTOS.md`](docs/02_REQUERIMIENTOS.md) | Requerimientos y dónde se cumple cada uno. |
-| [`03_ARQUITECTURA.md`](docs/03_ARQUITECTURA.md) | Partes del sistema y cómo se comunican. |
-| [`04_ESTRUCTURAS_DATOS.md`](docs/04_ESTRUCTURAS_DATOS.md) | Las estructuras estudiadas y dónde están implementadas. |
-| [`05_COMPLEJIDAD.md`](docs/05_COMPLEJIDAD.md) | Complejidad de cada operación y mediciones de tiempo. |
-| [`06_PRUEBAS.md`](docs/06_PRUEBAS.md) | Qué cubren las pruebas y qué hace la integración continua. |
-| [`08_GIT_Y_TRABAJO_EN_EQUIPO.md`](docs/08_GIT_Y_TRABAJO_EN_EQUIPO.md) | Flujo de trabajo con Git, commits, hooks y pull requests. |
-| [`09_GUIA_DEFENSA.md`](docs/09_GUIA_DEFENSA.md) | Preguntas de la defensa con sus respuestas. |
-| [`10_CONCLUSIONES.md`](docs/10_CONCLUSIONES.md) | Conclusiones, limitaciones y trabajo futuro. |
-| [`11_PLAN_TRABAJO.md`](docs/11_PLAN_TRABAJO.md) | Fases del trabajo y su estado. |
-| [`13_EVOLUCION_POR_SEMANAS.md`](docs/13_EVOLUCION_POR_SEMANAS.md) | Evolución de la aplicación semana a semana. |
-| [`14_GUION_DEMO.md`](docs/14_GUION_DEMO.md) | Recorrido paso a paso para la demostración. |
-| [`15_ESTUDIO_PARA_LA_DEFENSA.md`](docs/15_ESTUDIO_PARA_LA_DEFENSA.md) | Resumen de cada estructura para estudiar. |
-| [`16_MEJORAS.md`](docs/16_MEJORAS.md) | Qué se puede mejorar, ordenado por urgencia. |
-| [`CHANGELOG.md`](CHANGELOG.md) | Cambios agrupados por semana. |
-
-Documentación de cada capa, en su repositorio (por eso aquí faltan los números 07 y 12):
-
-| Documento | Contenido |
-|---|---|
-| [`BACKEND-ARQUILA/docs/BACKEND_Y_API.md`](https://github.com/ssantivr/BACKEND-ARQUILA/blob/main/docs/BACKEND_Y_API.md) | Decisiones del backend: autenticación, seguridad, registro de eventos, archivos e IA. |
-| [`FRONTEND-ARQUILA/docs/FRONTEND.md`](https://github.com/ssantivr/FRONTEND-ARQUILA/blob/main/docs/FRONTEND.md) | Decisiones de la interfaz: esquemas del terreno, planos, modelo 3D y accesibilidad. |
-| [`BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md`](https://github.com/ssantivr/BASE-DE-DATOS-ARQUILA/blob/main/docs/BASE_DATOS.md) | Diagrama entidad-relación, migraciones y datos de ejemplo. |
-
-En la documentación, una ruta como `BACKEND-ARQUILA/app/main.py` nombra un archivo del repositorio `BACKEND-ARQUILA`.
 
 ## Organización de este repositorio
 
