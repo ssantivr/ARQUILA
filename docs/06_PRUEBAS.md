@@ -186,6 +186,23 @@ Sobre <https://arquila-frontend.vercel.app>, con peticiones HTTP y el usuario de
 
 Además se abrieron en Chrome sin ventana la pantalla de inicio, la visualización 3D y el recorrido interior de la versión publicada, sin errores en la consola. Los datos creados en estas pruebas se borraron al terminar.
 
+### Prueba de uso en el navegador
+
+Hecha el 6 de octubre de 2026 en local, con Chrome sin ventana manejado por un guion que hace clic y escribe en los formularios como lo haría una persona, con una cuenta temporal que se borró al terminar:
+
+| Paso | Resultado |
+|---|---|
+| Iniciar sesión desde el formulario | Aparece la página de inicio con el nombre del usuario. |
+| Crear un proyecto y abrirlo | El proyecto aparece en la lista y se abre su página. |
+| Agregar un material, editar su cantidad y borrarlo | La tabla refleja cada cambio y, al quedar vacía, lo dice. |
+| Deshacer el borrado del material | El botón dice «Deshacer: material «Cemento»» y el material vuelve con la cantidad editada. |
+| Borrar un cuarto en la pestaña Modelo 3D y deshacerlo | El botón dice «Deshacer: cuarto «Cocina»» y el cuarto vuelve; el modelo 3D se dibuja. |
+| Cerrar sesión | Vuelve el formulario de inicio de sesión. |
+
+Los catorce puntos comprobados pasaron, sin errores en la consola ni respuestas fallidas de la API. Es una prueba automatizada: no sustituye a que cada integrante recorra a mano `14_GUION_DEMO.md` antes de la defensa, pero cubre que los formularios y los botones funcionan de verdad.
+
+Los cinco diagramas Mermaid de la documentación (el del `README.md`, los de `03_ARQUITECTURA.md` y `04_ESTRUCTURAS_DATOS.md` y el entidad-relación) se dibujaron sin errores con la versión 11 de Mermaid. No se comprobó cómo los muestra GitHub, que usa su propia versión.
+
 ### Cobertura del backend
 
 Medida el 4 de octubre de 2026 con `coverage` y no repetida desde entonces: las pruebas ejecutaban el 98 % de las líneas de `BACKEND-ARQUILA/app/`, y el 100 % de `app/data_structures/`. Lo que quedaba sin ejecutar eran sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:

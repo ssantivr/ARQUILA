@@ -12,8 +12,8 @@ Son cambios pequeños que se notan a primera vista.
 |---|---|---|
 | Completar `[INTEGRANTES]` | `15_ESTUDIO_PARA_LA_DEFENSA.md` | La lista de archivos por integrante no sirve sin nombres. |
 | Declarar el uso de herramientas de IA | Donde lo pida la política del curso | El `README.md` ya no tiene una sección para ello. El uso de IA es visible en `prompts/`, en `.agents/` y en los commits; hay que declararlo como pida el docente. |
-| Abrir `README.md`, `04_ESTRUCTURAS_DATOS.md`, `03_ARQUITECTURA.md` y `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md` en GitHub | Diagramas Mermaid | Su sintaxis se revisó a mano, pero no se comprobó que GitHub los dibuje. |
-| Probar a mano el guion de `14_GUION_DEMO.md` | Aplicación en marcha | El 6 de octubre de 2026 se recorrieron todas las pantallas en Chrome sin ventana, sin errores, pero solo leyendo: falta crear, editar, borrar y deshacer con el ratón, como en la demostración. |
+| Abrir `README.md`, `04_ESTRUCTURAS_DATOS.md`, `03_ARQUITECTURA.md` y `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md` en GitHub | Diagramas Mermaid | El 6 de octubre de 2026 se dibujaron los cinco sin errores con Mermaid 11, pero falta verlos en GitHub, que usa su propia versión. |
+| Probar a mano el guion de `14_GUION_DEMO.md` | Aplicación en marcha | El 6 de octubre de 2026 un guion automático inició sesión, creó, editó, borró y deshizo desde el navegador sin errores (ver `06_PRUEBAS.md`). Falta que cada integrante lo recorra a mano para la demostración. |
 
 ## 2. Antes de la defensa
 
