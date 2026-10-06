@@ -25,7 +25,7 @@ Cambios posteriores a la etiqueta `v1.0.11`.
 - Módulo «Recorrido interior»: un loft de doble altura de muestra, con entrepiso, escalera, ciudad al atardecer y líneas de neón, que se recorre sin salir de sus paredes ni atravesar sus muebles (`696d30b`) ni su escalera (`ea59ada`).
 - El asistente usa solo el modelo local de Ollama, con las reglas fijas como respaldo: se retira el proveedor de IA en la nube y su dependencia (`be38614`).
 - Proyecto separado en tres repositorios: `BACKEND-ARQUILA`, `FRONTEND-ARQUILA` y `BASE-DE-DATOS-ARQUILA`, cada uno con el historial de su carpeta. Este repositorio conserva la documentación general; `docs/07_BASE_DATOS.md` y `docs/12_BACKEND_Y_API.md` pasan al repositorio de su capa.
-- Aplicación publicada en Vercel, con PostgreSQL de Neon: <https://arquila-frontend.vercel.app>. El backend acepta direcciones `postgresql://` y puede guardar los archivos subidos en la base (`FILE_STORAGE=database`, migración `010_file_contents.sql`).
+- Aplicación publicada en Vercel, con PostgreSQL de Neon: <https://arquila-frontend.vercel.app>. El backend acepta direcciones `postgresql://` y puede guardar los archivos subidos en la base (`FILE_STORAGE=database`, migración `010_file_contents.sql`), y el historial de «Deshacer» y los límites de intentos (`STATE_STORAGE=database`, migración `011_runtime_state.sql`).
 
 ## Semana 9 — Calidad, seguridad y rendimiento
 

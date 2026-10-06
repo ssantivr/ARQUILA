@@ -32,7 +32,7 @@ Es la parte que evalúa la asignatura, así que es donde más rinde el esfuerzo.
 - **Pila y cola de capacidad fija.** Hoy fallan cuando se llenan. Se puede hacer que crezcan como `DynamicArray`, o dejar la capacidad fija y explicar en la defensa por qué se eligió.
 - **Orden de materiales en O(n²).** El orden por inserción sirve para pocos materiales. Escribir a mano un `merge sort` y comparar los dos tiempos en `05_COMPLEJIDAD.md` muestra la diferencia con números.
 - **Mediciones más grandes.** Llegan a 100 000 elementos y no miden memoria. La respuesta sobre 1 millón de elementos de `09_GUIA_DEFENSA.md` es un razonamiento, no una medición: medirlo la vuelve un dato.
-- **Deshacer incompleto.** No cubre cuartos ni componentes estructurales, y el historial se pierde al reiniciar el servidor.
+- **Deshacer incompleto.** No cubre cuartos ni componentes estructurales, y el historial se pierde al reiniciar el servidor salvo que se active `STATE_STORAGE=database`, que lo guarda en la base.
 
 ## 4. Pruebas
 
