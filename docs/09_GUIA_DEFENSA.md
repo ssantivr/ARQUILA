@@ -15,16 +15,16 @@ Ver `docs/01_PLANTEAMIENTO_PROBLEMA.md`.
 Cada parte tiene una sola responsabilidad y se puede probar y cambiar sin tocar las otras:
 
 - `FRONTEND-ARQUILA/` muestra la información y envía peticiones; no guarda datos ni decide permisos.
-- `BACKEND-ARGUILA-/` valida, aplica las reglas y guarda en la base de datos.
-- `BACKEND-ARGUILA-/app/data_structures/` contiene las estructuras, escritas en Python. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos.
+- `BACKEND-ARQUILA/` valida, aplica las reglas y guarda en la base de datos.
+- `BACKEND-ARQUILA/app/data_structures/` contiene las estructuras, escritas en Python. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos.
 
-Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
+Dentro del backend se repite la misma idea por capas: `api` recibe la petición, `services` aplica la lógica y `repositories` consulta la base. Ver `docs/03_ARQUITECTURA.md` y `BACKEND-ARQUILA/docs/BACKEND_Y_API.md`.
 
 ## 3. Cómo funciona un array
 
 Guarda los elementos en posiciones consecutivas de memoria. Por eso llegar a una posición por su índice es inmediato, O(1), pero insertar o eliminar en medio obliga a desplazar los elementos que siguen, O(n).
 
-Mostrar `insert_at` y `remove_at` de `DynamicArray` en `BACKEND-ARGUILA-/app/data_structures/arrays.py`.
+Mostrar `insert_at` y `remove_at` de `DynamicArray` en `BACKEND-ARQUILA/app/data_structures/arrays.py`.
 
 ## 4. Qué significa memoria dinámica
 
@@ -38,25 +38,25 @@ En Python el programa no libera la memoria a mano: el intérprete la recupera cu
 
 Porque solo se trabaja por un extremo, la cima: el último elemento que entra es el primero que sale. `push` y `pop` solo mueven el contador `_size`, que indica la cima, por eso son O(1).
 
-Mostrar `BACKEND-ARGUILA-/app/data_structures/stack.py`. `pop` en una pila vacía produce `IndexError`, en lugar de devolver un valor especial como `None`, para que la pila pueda guardar cualquier valor.
+Mostrar `BACKEND-ARQUILA/app/data_structures/stack.py`. `pop` en una pila vacía produce `IndexError`, en lugar de devolver un valor especial como `None`, para que la pila pueda guardar cualquier valor.
 
 ## 6. Por qué Queue utiliza FIFO
 
 Porque se inserta por un extremo y se retira por el otro: el primero que entra es el primero que sale.
 
-La cola es circular: el índice avanza con el operador módulo y reutiliza las posiciones que quedan libres al retirar elementos. Sin eso, después de tantas inserciones como su capacidad la cola se reportaría llena aunque estuviera vacía. Mostrar `enqueue` y `dequeue` en `BACKEND-ARGUILA-/app/data_structures/queue.py`.
+La cola es circular: el índice avanza con el operador módulo y reutiliza las posiciones que quedan libres al retirar elementos. Sin eso, después de tantas inserciones como su capacidad la cola se reportaría llena aunque estuviera vacía. Mostrar `enqueue` y `dequeue` en `BACKEND-ARQUILA/app/data_structures/queue.py`.
 
 ## 7. Cómo funciona la referencia `next` de una lista simple
 
 Cada nodo guarda un dato y una referencia al nodo siguiente; en el último, `next` es `None`. Para recorrer la lista se empieza en `head` y se sigue `next` hasta llegar a `None`.
 
-Solo se puede avanzar. Para eliminar un nodo hay que estar parado en el anterior, porque es su `next` el que se debe cambiar. Mostrar `remove` en `BACKEND-ARGUILA-/app/data_structures/singly_linked_list.py`. El diagrama de nodos está en `docs/04_ESTRUCTURAS_DATOS.md`.
+Solo se puede avanzar. Para eliminar un nodo hay que estar parado en el anterior, porque es su `next` el que se debe cambiar. Mostrar `remove` en `BACKEND-ARQUILA/app/data_structures/singly_linked_list.py`. El diagrama de nodos está en `docs/04_ESTRUCTURAS_DATOS.md`.
 
 ## 8. Cómo funcionan `previous` y `next` en una lista doble
 
 Cada nodo conoce a su vecino anterior y al siguiente, así que la lista se puede recorrer en los dos sentidos y se puede retirar un nodo teniendo solo ese nodo.
 
-El costo es más memoria por nodo y más referencias que mantener en cada operación. Mostrar `__iter__` y `__reversed__` en `BACKEND-ARGUILA-/app/data_structures/doubly_linked_list.py`.
+El costo es más memoria por nodo y más referencias que mantener en cada operación. Mostrar `__iter__` y `__reversed__` en `BACKEND-ARQUILA/app/data_structures/doubly_linked_list.py`.
 
 ## 9. Qué ocurre cuando se elimina un nodo
 
@@ -78,17 +78,17 @@ La tabla completa está en `docs/05_COMPLEJIDAD.md`, junto con las mediciones de
 
 ## 11. Dónde se usa una estructura de datos dentro de la aplicación
 
-El botón «Deshacer» del proyecto usa una lista doblemente enlazada (`BACKEND-ARGUILA-/app/services/undo_history.py`). Cada eliminación se agrega al final; deshacer saca la última; y cuando hay más de 20 se descarta la más antigua por el inicio. Las tres operaciones son O(1).
+El botón «Deshacer» del proyecto usa una lista doblemente enlazada (`BACKEND-ARQUILA/app/services/undo_history.py`). Cada eliminación se agrega al final; deshacer saca la última; y cuando hay más de 20 se descarta la más antigua por el inicio. Las tres operaciones son O(1).
 
 Una pila no alcanzaría, porque no permite quitar el elemento más antiguo.
 
-El límite de intentos de inicio de sesión usa una cola (`BACKEND-ARGUILA-/app/services/login_limiter.py`). Cada intento fallido se encola con su hora; los que tienen más de un minuto se retiran por el frente, porque el más antiguo es siempre el primero en caducar (FIFO). Si la cola está llena, hay 5 fallos recientes y el inicio de sesión se bloquea.
+El límite de intentos de inicio de sesión usa una cola (`BACKEND-ARQUILA/app/services/login_limiter.py`). Cada intento fallido se encola con su hora; los que tienen más de un minuto se retiran por el frente, porque el más antiguo es siempre el primero en caducar (FIFO). Si la cola está llena, hay 5 fallos recientes y el inicio de sesión se bloquea.
 
 ## 12. Cómo se validó el backend
 
-Con pruebas automatizadas en `BACKEND-ARGUILA-/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.
+Con pruebas automatizadas en `BACKEND-ARQUILA/tests/`, que se ejecutan con `pytest`. Comprueban las estructuras de datos, el inicio de sesión, los permisos entre usuarios y cada operación de la API. Ver `docs/06_PRUEBAS.md`, que también indica lo que no está cubierto.
 
-Las pruebas de las estructuras están en `BACKEND-ARGUILA-/tests/test_data_structures.py` y cubren los casos borde: vacía, llena, un solo elemento, y eliminar la cabeza y la cola.
+Las pruebas de las estructuras están en `BACKEND-ARQUILA/tests/test_data_structures.py` y cubren los casos borde: vacía, llena, un solo elemento, y eliminar la cabeza y la cola.
 
 ## 13. Qué decisiones se tomaron para mantener el proyecto dentro del alcance de la asignatura
 
@@ -105,11 +105,11 @@ El patrón Adapter, en los servicios externos del backend. El asistente necesita
 
 `ConversationService` solo conoce la interfaz. Por eso se añadió el modelo local sin tocar ese servicio, y las pruebas usan un asistente simulado en lugar de uno real. El correo sigue la misma idea con `SmtpMailer` y `ConsoleMailer`.
 
-Mostrar `BACKEND-ARGUILA-/app/ai.py`. Ver la tabla de `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
+Mostrar `BACKEND-ARQUILA/app/ai.py`. Ver la tabla de `BACKEND-ARQUILA/docs/BACKEND_Y_API.md`.
 
 ## 15. Qué pasa si la IA no está disponible o se equivoca
 
-- Si no hay ningún proveedor, o la llamada falla, el asistente contesta con reglas fijas sobre los datos del proyecto (`BACKEND-ARGUILA-/app/services/assistant_rules.py`). Cada respuesta guarda su origen, `ai` o `rules`, y la pantalla lo indica.
+- Si no hay ningún proveedor, o la llamada falla, el asistente contesta con reglas fijas sobre los datos del proyecto (`BACKEND-ARQUILA/app/services/assistant_rules.py`). Cada respuesta guarda su origen, `ai` o `rules`, y la pantalla lo indica.
 - Un modelo pequeño se equivoca al hacer cuentas. Se comprobó: señaló como más caro un material que no lo era. La corrección fue no dejarle calcular: el backend le entrega los costos y el total ya calculados.
 
 Para demostrarlo en vivo: hacer una pregunta con Ollama encendido, cerrarlo, y repetir la pregunta; la segunda respuesta lleva la etiqueta «Respuesta por reglas».
@@ -126,7 +126,7 @@ Es un ejemplo de recorrido de array con acceso por índice, incluido el paso del
 
 ## 17. Cómo se arma el modelo 3D del proyecto
 
-El backend no guarda el modelo: lo calcula cada vez que se pide, con los terrenos, planos, cuartos y componentes del proyecto (`BACKEND-ARGUILA-/app/services/structure_service.py`). Devuelve una lista de cajas en metros y el frontend solo las dibuja.
+El backend no guarda el modelo: lo calcula cada vez que se pide, con los terrenos, planos, cuartos y componentes del proyecto (`BACKEND-ARQUILA/app/services/structure_service.py`). Devuelve una lista de cajas en metros y el frontend solo las dibuja.
 
 - Cada terreno es una losa. Como cada terreno guarda sus medidas desde su propio origen, se colocan uno al lado del otro.
 - Un plano es un nivel si tiene cuartos o componentes, o si su campo Nivel es un número. Así un plano de implantación no se apila como si fuera un piso.
@@ -135,7 +135,7 @@ El backend no guarda el modelo: lo calcula cada vez que se pide, con los terreno
 - Las ventanas, la puerta, el techo y los árboles no son datos: el visor los añade al dibujar para que el modelo se lea como una edificación.
 - Con esos mismos cuartos se generan las plantas con ejes y cotas, las cuatro fachadas y un corte. Los ejes de una planta salen de ordenar los bordes de los cuartos y quitar los repetidos: un recorrido y un ordenamiento de un array.
 
-Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
+Lo que no hace: no representa la pendiente del terreno ni comprueba que un cuarto quede dentro del lote. Ver «Modelo 3D» en `BACKEND-ARQUILA/docs/BACKEND_Y_API.md`.
 
 ## 18. Por qué un cuarto, una columna, una viga y un muro son cajas
 
@@ -193,7 +193,7 @@ Lo que se pierde: en Python no se ve la reserva y liberación manual de memoria.
 
 Porque el resultado se lee por posición: el asistente recibe los materiales en orden y el más caro es el índice 0, en O(1). Además no se sabe de antemano cuántos materiales tiene un proyecto, así que el array tiene que poder crecer.
 
-El costo: cada material se inserta en su posición desplazando los que siguen, O(n) por inserción y O(n²) en total. Se acepta porque un proyecto tiene pocos materiales. Mostrar `BACKEND-ARGUILA-/app/services/material_ranking.py`.
+El costo: cada material se inserta en su posición desplazando los que siguen, O(n) por inserción y O(n²) en total. Se acepta porque un proyecto tiene pocos materiales. Mostrar `BACKEND-ARQUILA/app/services/material_ranking.py`.
 
 ## 25. Por qué una lista simple en la ventana de mensajes y no una cola
 
@@ -202,13 +202,13 @@ El comportamiento sí es de cola: entra por el final y sale por el inicio. Pero 
 - No se puede recorrer sin vaciarla, y la ventana hay que recorrerla entera para enviar los mensajes a la IA.
 - Tiene capacidad fija y falla si se llena; la lista crece nodo a nodo.
 
-La lista simple da `push_back` y `pop_front` en O(1) y un recorrido hacia adelante. No hace falta la lista doble porque nunca se recorre hacia atrás ni se quita por el final. Mostrar `BACKEND-ARGUILA-/app/services/conversation_context.py`.
+La lista simple da `push_back` y `pop_front` en O(1) y un recorrido hacia adelante. No hace falta la lista doble porque nunca se recorre hacia atrás ni se quita por el final. Mostrar `BACKEND-ARQUILA/app/services/conversation_context.py`.
 
 ## 26. Por qué lista doble más pila en Deshacer y Rehacer, y no dos pilas
 
 Deshacer necesita tres operaciones: agregar al final, quitar del final y descartar la más antigua cuando hay más de 20. La tercera es quitar por el fondo, y una pila no lo permite. La lista doble hace las tres en O(1).
 
-Rehacer solo necesita apilar y desapilar, y nunca supera los 20 elementos, así que le basta una pila. Mostrar `record` y `record_restored` en `BACKEND-ARGUILA-/app/services/undo_history.py`.
+Rehacer solo necesita apilar y desapilar, y nunca supera los 20 elementos, así que le basta una pila. Mostrar `record` y `record_restored` en `BACKEND-ARQUILA/app/services/undo_history.py`.
 
 ## 27. Qué pasa con 1 millón de elementos
 

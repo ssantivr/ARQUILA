@@ -18,6 +18,6 @@ En la segunda ronda las estructuras también se compilaban y probaban en C++ con
 
 ## Pendiente
 
-- Configurar un servicio de correo para la recuperación de contraseña: escribir las variables `SMTP_*` en `BACKEND-ARGUILA-/.env` y ejecutar `python -m app.check correo@ejemplo.com`.
+- Configurar un servicio de correo para la recuperación de contraseña: escribir las variables `SMTP_*` en `BACKEND-ARQUILA/.env` y ejecutar `python -m app.check correo@ejemplo.com`.
 
-El comando está explicado en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`. El correo necesita credenciales que no se guardan en el repositorio; mientras no las haya, el enlace de recuperación se escribe en la consola del servidor. Mientras no haya un modelo disponible, el asistente responde con reglas fijas.
+El comando está explicado en `BACKEND-ARQUILA/docs/BACKEND_Y_API.md`. El correo necesita credenciales que no se guardan en el repositorio; mientras no las haya, el enlace de recuperación se escribe en la consola del servidor. Mientras no haya un modelo disponible, el asistente responde con reglas fijas.

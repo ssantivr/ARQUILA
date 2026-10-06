@@ -6,12 +6,12 @@ Recorrido paso a paso para mostrar la aplicación en unos diez minutos. Cada pas
 
 Hacerlo con tiempo, no delante del público:
 
-1. Cargar los datos de ejemplo: en `BACKEND-ARGUILA-/`, `python -m app.migrate --seed`.
-2. Arrancar el backend: en `BACKEND-ARGUILA-/`, `python -m app.dev`.
+1. Cargar los datos de ejemplo: en `BACKEND-ARQUILA/`, `python -m app.migrate --seed`.
+2. Arrancar el backend: en `BACKEND-ARQUILA/`, `python -m app.dev`.
 3. Arrancar el frontend: en `FRONTEND-ARQUILA/`, `npm run dev`.
 4. Abrir dos pestañas del navegador: `http://localhost:5173` (la aplicación) y `http://localhost:8000/docs` (la documentación de la API).
 5. Opcional: tener Ollama encendido con `llama3.2`, para que el asistente responda con IA. Si no, responde con reglas y el recorrido sirve igual.
-6. Dejar a mano una terminal en `BACKEND-ARGUILA-/` con el entorno virtual activado.
+6. Dejar a mano una terminal en `BACKEND-ARQUILA/` con el entorno virtual activado.
 
 Si algo falla durante la demostración, la terminal del backend muestra una línea por cada petición, con su código de respuesta.
 
@@ -23,7 +23,7 @@ Si algo falla durante la demostración, la terminal del backend muestra una lín
 |---|---|
 | **Qué hacer** | En la pantalla de inicio de sesión, escribir el correo `prueba@example.com` y una contraseña cualquiera. Pulsar «Entrar» seis veces seguidas. |
 | **Qué se ve** | Las cinco primeras veces aparece «Correo o contraseña incorrectos.». La sexta, «Demasiados intentos fallidos. Espera un minuto e inténtalo de nuevo.». |
-| **Estructura** | Cola (FIFO), en `BACKEND-ARGUILA-/app/services/login_limiter.py`. |
+| **Estructura** | Cola (FIFO), en `BACKEND-ARQUILA/app/services/login_limiter.py`. |
 | **Qué decir** | «Cada correo tiene una cola con la hora de sus intentos fallidos. La capacidad de la cola es el máximo permitido, cinco. Cuando la cola está llena, el correo queda bloqueado. Los intentos caducan en el mismo orden en que llegaron, así que el más antiguo siempre está al frente: por eso es una cola y no una pila. Encolar, desencolar y consultar el frente son O(1).» |
 
 Se usa un correo que no existe para no bloquear la cuenta de demostración: el límite se cuenta por correo.
@@ -43,7 +43,7 @@ Se usa un correo que no existe para no bloquear la cuenta de demostración: el l
 |---|---|
 | **Qué hacer** | En el menú, «Proyectos». Abrir «Casa Los Arrayanes». En la pestaña «Terreno», ir al formulario del final: Nombre `Lote esquinero`; en «Vértices del lote» escribir, uno por línea, `0 0`, `20 0`, `20 10`, `10 10`, `10 30`, `0 30`. |
 | **Qué se ve** | El campo «Área (m²)» sugiere 400, el área del polígono. Escribir `400` y pulsar «Agregar terreno»: el lote aparece dibujado con su forma en L. |
-| **Estructura** | Array unidimensional: los vértices, recorridos en orden. `BACKEND-ARGUILA-/app/services/geometry.py` y `FRONTEND-ARQUILA/src/utils/geometry.ts`. |
+| **Estructura** | Array unidimensional: los vértices, recorridos en orden. `BACKEND-ARQUILA/app/services/geometry.py` y `FRONTEND-ARQUILA/src/utils/geometry.ts`. |
 | **Qué decir** | «Los vértices son un array. El área se calcula con la fórmula de Gauss recorriendo el array una sola vez, es decir, en O(n). El backend hace la misma cuenta al recibir el lote y lo rechaza si los puntos no encierran un área.» |
 
 ### 4. Eliminar y deshacer — Lista doblemente enlazada
@@ -54,7 +54,7 @@ Se usa un correo que no existe para no bloquear la cuenta de demostración: el l
 | **Qué se ve** | Las dos filas desaparecen. En la cabecera del proyecto, el botón pasa de «Nada que deshacer» a «Deshacer: material «Bloque de 15 cm»». |
 | **Qué hacer** | Pulsar ese botón una vez. |
 | **Qué se ve** | Vuelve «Bloque de 15 cm» y el botón ofrece ahora deshacer «Cemento». No pulsarlo todavía: se usa en el paso siguiente. |
-| **Estructura** | Lista doblemente enlazada, en `BACKEND-ARGUILA-/app/services/undo_history.py`. |
+| **Estructura** | Lista doblemente enlazada, en `BACKEND-ARQUILA/app/services/undo_history.py`. |
 | **Qué decir** | «Cada proyecto guarda sus últimas veinte eliminaciones en una lista doblemente enlazada. Registrar una eliminación es insertar al final; deshacer es quitar del final; y cuando se supera el límite se descarta la más antigua, que está al inicio. Las tres operaciones son O(1) porque la lista tiene punteros a los dos extremos y cada nodo conoce al anterior. Una pila no serviría: no permite quitar el elemento más antiguo.» |
 
 ### 5. Rehacer — Stack
@@ -76,7 +76,7 @@ Para dejar el proyecto como estaba, volver a la aplicación y pulsar «Deshacer�
 |---|---|
 | **Qué hacer** | En la pestaña «Asistente IA», mirar la línea «Ahora responde» y pulsar la pregunta sugerida «¿Qué materiales pesan más en el costo?». Después escribir una segunda pregunta, por ejemplo «¿Y cuál es el más barato?». |
 | **Qué se ve** | La respuesta nombra los materiales más caros con sus cifras; en «Casa Los Arrayanes» el primero es «Hormigón 210 kg/cm²», con 10 856. Si no hay IA disponible, la respuesta lleva la etiqueta de respuesta por reglas. |
-| **Estructura** | Array dinámico, en `BACKEND-ARGUILA-/app/services/material_ranking.py`, y lista simplemente enlazada, en `BACKEND-ARGUILA-/app/services/conversation_context.py`. |
+| **Estructura** | Array dinámico, en `BACKEND-ARQUILA/app/services/material_ranking.py`, y lista simplemente enlazada, en `BACKEND-ARQUILA/app/services/conversation_context.py`. |
 | **Qué decir** | «Antes de preguntar a la IA, el backend ordena los materiales del más caro al más barato insertando cada uno en su posición dentro de un array dinámico, que duplica su capacidad cuando se llena. Así la IA recibe las cifras ya calculadas y no las inventa. Y el historial de la conversación que se le envía es una lista simplemente enlazada que funciona como ventana: se agrega al final y, al pasar de veinte mensajes, se quita el del inicio. Las dos operaciones son O(1) con punteros a la cabeza y a la cola.» |
 
 ### 7. El modelo 3D
@@ -92,7 +92,7 @@ Para dejar el proyecto como estaba, volver a la aplicación y pulsar «Deshacer�
 
 | | |
 |---|---|
-| **Qué hacer** | En la terminal de `BACKEND-ARGUILA-/`, ejecutar `pytest -q tests/test_data_structures.py` y después `python -m app.benchmark`. |
+| **Qué hacer** | En la terminal de `BACKEND-ARQUILA/`, ejecutar `pytest -q tests/test_data_structures.py` y después `python -m app.benchmark`. |
 | **Qué se ve** | Las pruebas de las estructuras en verde, y una tabla con los tiempos de cada operación para mil, diez mil y cien mil elementos. |
 | **Estructura** | Todas. |
 | **Qué decir** | «Las estructuras están escritas desde cero en Python, sin librerías que las reemplacen, y cada una tiene pruebas de sus casos borde: vacía, un solo elemento, llena. La tabla confirma la teoría: las operaciones O(1) tardan lo mismo con mil elementos que con cien mil, y las O(n) tardan unas cien veces más cuando hay cien veces más datos.» |

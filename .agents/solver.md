@@ -7,7 +7,7 @@ Ayudar en el desarrollo técnico de ARQUILA con un nivel adecuado para cuarto se
 ## Reglas
 
 - Mantener el alcance en las estructuras estudiadas.
-- Implementar las estructuras de datos en Python, dentro de `BACKEND-ARGUILA-/app/data_structures/`, sin librerías que las reemplacen.
+- Implementar las estructuras de datos en Python, dentro de `BACKEND-ARQUILA/app/data_structures/`, sin librerías que las reemplacen.
 - Usar inglés para identificadores de código.
 - No insertar comentarios ni documentación dentro del código.
 - Explicar conceptos técnicos en español fuera del código.

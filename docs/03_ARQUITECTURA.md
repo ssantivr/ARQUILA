@@ -18,6 +18,18 @@ Repositorios    Estructuras de datos (Python)
 PostgreSQL
 ```
 
+## Repositorios
+
+Desde el 6 de octubre de 2026 cada parte vive en su propio repositorio, con el historial de su carpeta original:
+
+| Repositorio | Parte | Depende de |
+|---|---|---|
+| `FRONTEND-ARQUILA` | Interfaz | La API del backend, cuya dirección recibe en `VITE_API_URL`. |
+| `BACKEND-ARQUILA` | API, servicios, repositorios y estructuras de datos | PostgreSQL (`DATABASE_URL`) y las migraciones de `BASE-DE-DATOS-ARQUILA` (`DATABASE_DIR`). |
+| `BASE-DE-DATOS-ARQUILA` | Migraciones y datos de ejemplo | Nada: el esquema se puede crear solo con `psql`. |
+
+Este repositorio, `ARQUILA`, guarda la documentación general y no contiene código de la aplicación. La separación no cambió las capas ni la forma en que se comunican, que es lo que describe el resto del documento.
+
 ## Diagrama
 
 El mismo esquema con más detalle. Las flechas continuas son llamadas que ocurren en cada petición; las punteadas, servicios externos que solo se usan si están configurados.
@@ -77,7 +89,7 @@ src/utils/        Cálculo, formato y traducción de mensajes
 
 ## Backend
 
-Está en `BACKEND-ARGUILA-/`, escrito en Python con FastAPI.
+Está en `BACKEND-ARQUILA/`, escrito en Python con FastAPI.
 
 ```text
 app/api/              Recibe la petición HTTP
@@ -88,11 +100,11 @@ app/models.py         Tablas
 app/data_structures/  Pila, cola, listas y array dinámico
 ```
 
-Las decisiones de cada parte están explicadas en `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md`.
+Las decisiones de cada parte están explicadas en `BACKEND-ARQUILA/docs/BACKEND_Y_API.md`.
 
 ## Estructuras de datos
 
-Las estructuras estudiadas están implementadas desde cero en Python, dentro de `BACKEND-ARGUILA-/app/data_structures/`, un archivo por estructura. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos. Por eso se pueden leer, probar y explicar por separado.
+Las estructuras estudiadas están implementadas desde cero en Python, dentro de `BACKEND-ARQUILA/app/data_structures/`, un archivo por estructura. No importan nada del resto del backend: los servicios las usan, pero ellas no conocen la API ni la base de datos. Por eso se pueden leer, probar y explicar por separado.
 
 Qué servicio usa cada una está en `04_ESTRUCTURAS_DATOS.md`.
 

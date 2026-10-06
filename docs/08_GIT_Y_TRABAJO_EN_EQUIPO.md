@@ -47,7 +47,7 @@ chore: ignore local SQLite databases
 
 El formato no se discute en la revisión: lo aplican las herramientas. `python scripts/quality.py` lo comprueba y `python scripts/quality.py --fix` lo corrige (ver «Calidad del código» en el `README.md`).
 
-El archivo `.pre-commit-config.yaml` de cada repositorio define hooks que formatean los archivos modificados antes de cada commit: Ruff para Python en `BACKEND-ARGUILA-` y Prettier para TypeScript en `FRONTEND-ARQUILA`. Se activan una vez por clon con `pre-commit install`. Si un hook cambia un archivo, el commit se detiene: basta con añadir el archivo corregido y repetirlo.
+El archivo `.pre-commit-config.yaml` de cada repositorio define hooks que formatean los archivos modificados antes de cada commit: Ruff para Python en `BACKEND-ARQUILA` y Prettier para TypeScript en `FRONTEND-ARQUILA`. Se activan una vez por clon con `pre-commit install`. Si un hook cambia un archivo, el commit se detiene: basta con añadir el archivo corregido y repetirlo.
 
 GitHub ejecuta la misma comprobación en cada subida a `main` y en cada pull request de esos dos repositorios, así que un cambio mal formateado no pasa inadvertido aunque no se hayan activado los hooks.
 
@@ -55,6 +55,8 @@ GitHub ejecuta la misma comprobación en cada subida a `main` y en cada pull req
 
 Al abrir un pull request, GitHub rellena la descripción con la plantilla de `.github/pull_request_template.md`: qué cambia, de qué tipo es, cómo se probó y una lista de comprobación con las reglas del proyecto. El título sigue la misma convención que los commits.
 
+En los tres repositorios de código el trabajo se sube a la rama `santiago` y llega a `main` con un pull request. Las comprobaciones de GitHub corren en el pull request, así que se sabe si el cambio pasa antes de fusionarlo y no después.
+
 ## Versiones de las dependencias
 
-Las dependencias tienen versión exacta en `BACKEND-ARGUILA-/requirements.txt`, `BACKEND-ARGUILA-/requirements-dev.txt` y `FRONTEND-ARQUILA/package.json`, y `FRONTEND-ARQUILA/package-lock.json` fija además las dependencias indirectas. Así una instalación nueva obtiene lo mismo que se probó. Para actualizar una, se cambia su versión, se ejecutan las pruebas y se sube el cambio en un commit `chore`.
+Las dependencias tienen versión exacta en `BACKEND-ARQUILA/requirements.txt`, `BACKEND-ARQUILA/requirements-dev.txt` y `FRONTEND-ARQUILA/package.json`, y `FRONTEND-ARQUILA/package-lock.json` fija además las dependencias indirectas. Así una instalación nueva obtiene lo mismo que se probó. Para actualizar una, se cambia su versión, se ejecutan las pruebas y se sube el cambio en un commit `chore`.

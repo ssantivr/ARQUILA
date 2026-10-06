@@ -20,4 +20,4 @@ Describe el cambio en una o dos frases y por qué se hace.
 
 - [ ] El título sigue Conventional Commits, por ejemplo `docs: update the defense guide`
 - [ ] La documentación de `docs/` y el `README.md` reflejan el estado de los tres repositorios
-- [ ] Los cambios de código van en `BACKEND-ARGUILA-`, `FRONTEND-ARQUILA` o `BASE-DE-DATOS-ARQUILA`, no aquí
+- [ ] Los cambios de código van en `BACKEND-ARQUILA`, `FRONTEND-ARQUILA` o `BASE-DE-DATOS-ARQUILA`, no aquí

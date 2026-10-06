@@ -1,6 +1,6 @@
 # COMPLEJIDAD BÁSICA
 
-Como el código no lleva comentarios, la complejidad de cada operación se documenta aquí. Las tablas describen las implementaciones de `BACKEND-ARGUILA-/app/data_structures/`.
+Como el código no lleva comentarios, la complejidad de cada operación se documenta aquí. Las tablas describen las implementaciones de `BACKEND-ARQUILA/app/data_structures/`.
 
 `n` es el número de elementos almacenados.
 
@@ -15,7 +15,7 @@ Como el código no lleva comentarios, la complejidad de cada operación se docum
 | Insertar en una posición | O(n) | Desplaza los elementos hacia la derecha. |
 | Eliminar en una posición | O(n) | Desplaza los elementos hacia la izquierda. |
 
-El área de un lote con forma libre se calcula recorriendo una vez el array de sus vértices (fórmula del área de Gauss), es decir, en O(n). Ver `BACKEND-ARGUILA-/app/services/geometry.py`.
+El área de un lote con forma libre se calcula recorriendo una vez el array de sus vértices (fórmula del área de Gauss), es decir, en O(n). Ver `BACKEND-ARQUILA/app/services/geometry.py`.
 
 ## Array dinámico
 
@@ -76,7 +76,7 @@ Mantiene puntero a la cabeza y a la cola.
 
 ## Uso dentro del backend
 
-El historial para deshacer eliminaciones (`BACKEND-ARGUILA-/app/services/undo_history.py`) usa una lista doblemente enlazada por proyecto. Necesita tres operaciones, y las tres son O(1) en esa estructura:
+El historial para deshacer eliminaciones (`BACKEND-ARQUILA/app/services/undo_history.py`) usa una lista doblemente enlazada por proyecto. Necesita tres operaciones, y las tres son O(1) en esa estructura:
 
 | Acción | Operación de la lista |
 |---|---|
@@ -86,7 +86,7 @@ El historial para deshacer eliminaciones (`BACKEND-ARGUILA-/app/services/undo_hi
 
 Una pila sola no serviría, porque no permite descartar el elemento más antiguo.
 
-El límite de intentos de inicio de sesión (`BACKEND-ARGUILA-/app/services/login_limiter.py`) usa una cola por correo que guarda la hora de cada intento fallido. La capacidad de la cola es el máximo de intentos permitidos.
+El límite de intentos de inicio de sesión (`BACKEND-ARQUILA/app/services/login_limiter.py`) usa una cola por correo que guarda la hora de cada intento fallido. La capacidad de la cola es el máximo de intentos permitidos.
 
 | Acción | Operación de la cola |
 |---|---|
@@ -96,20 +96,20 @@ El límite de intentos de inicio de sesión (`BACKEND-ARGUILA-/app/services/logi
 
 La cola sirve porque los intentos caducan en el mismo orden en que ocurrieron: el más antiguo siempre está al frente (FIFO). Cada operación es O(1); descartar caducados cuesta como máximo tantos pasos como la capacidad, que es fija.
 
-Rehacer (`BACKEND-ARGUILA-/app/services/undo_history.py`) usa una pila por proyecto. Cada vez que «Deshacer» restaura un elemento, se apila; rehacer saca el de la cima y lo vuelve a eliminar. Lo último que se deshizo es lo primero que se rehace (LIFO), y `push` y `pop` son O(1). Una eliminación nueva vacía la pila, porque lo deshecho antes ya no se puede rehacer. La pila nunca se llena: entre el historial y la pila no hay más de 20 elementos.
+Rehacer (`BACKEND-ARQUILA/app/services/undo_history.py`) usa una pila por proyecto. Cada vez que «Deshacer» restaura un elemento, se apila; rehacer saca el de la cima y lo vuelve a eliminar. Lo último que se deshizo es lo primero que se rehace (LIFO), y `push` y `pop` son O(1). Una eliminación nueva vacía la pila, porque lo deshecho antes ya no se puede rehacer. La pila nunca se llena: entre el historial y la pila no hay más de 20 elementos.
 
-El contexto que se envía a la IA (`BACKEND-ARGUILA-/app/services/conversation_context.py`) usa una lista simplemente enlazada como ventana de los últimos 20 mensajes: cada mensaje se inserta al final y, al superar el límite, se elimina el del inicio. Las dos operaciones son O(1) y la lista se recorre una sola vez hacia adelante, así que no hace falta el puntero al nodo anterior.
+El contexto que se envía a la IA (`BACKEND-ARQUILA/app/services/conversation_context.py`) usa una lista simplemente enlazada como ventana de los últimos 20 mensajes: cada mensaje se inserta al final y, al superar el límite, se elimina el del inicio. Las dos operaciones son O(1) y la lista se recorre una sola vez hacia adelante, así que no hace falta el puntero al nodo anterior.
 
-El orden de los materiales para el asistente (`BACKEND-ARGUILA-/app/services/material_ranking.py`) usa un array dinámico. Cada material se inserta en la posición que le corresponde por costo, lo que desplaza los siguientes: O(n) por inserción y O(n²) en total. Es aceptable porque un proyecto tiene pocos materiales, y a cambio el más caro se consulta por índice en O(1).
+El orden de los materiales para el asistente (`BACKEND-ARQUILA/app/services/material_ranking.py`) usa un array dinámico. Cada material se inserta en la posición que le corresponde por costo, lo que desplaza los siguientes: O(n) por inserción y O(n²) en total. Es aceptable porque un proyecto tiene pocos materiales, y a cambio el más caro se consulta por índice en O(1).
 
 La complejidad depende de la operación y de la implementación utilizada.
 
 ## Mediciones
 
-La tabla de arriba es teoría. Para comprobarla, `BACKEND-ARGUILA-/app/benchmark.py` mide esas implementaciones con tres tamaños de entrada. Se ejecuta con:
+La tabla de arriba es teoría. Para comprobarla, `BACKEND-ARQUILA/app/benchmark.py` mide esas implementaciones con tres tamaños de entrada. Se ejecuta con:
 
 ```bash
-cd BACKEND-ARGUILA-
+cd BACKEND-ARQUILA
 python -m app.benchmark
 ```
 

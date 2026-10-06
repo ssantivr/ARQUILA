@@ -21,14 +21,14 @@ El proyecto está dividido en tres repositorios independientes. Este repositorio
 ```text
 ARQUILA                     Documentación y coordinación (este repositorio)
 ├── FRONTEND-ARQUILA        Interfaz en TypeScript (React, Vite, Three.js)
-├── BACKEND-ARGUILA-        API en Python (FastAPI) y estructuras de datos
+├── BACKEND-ARQUILA         API en Python (FastAPI) y estructuras de datos
 └── BASE-DE-DATOS-ARQUILA   Migraciones y datos de ejemplo (PostgreSQL)
 ```
 
 | Repositorio | Contenido | Enlace |
 |---|---|---|
 | `FRONTEND-ARQUILA` | Pantallas, componentes, escenas 3D y cliente de la API. | <https://github.com/ssantivr/FRONTEND-ARQUILA> |
-| `BACKEND-ARGUILA-` | Rutas, servicios, modelos, autenticación y las estructuras de datos. | <https://github.com/ssantivr/BACKEND-ARGUILA-> |
+| `BACKEND-ARQUILA` | Rutas, servicios, modelos, autenticación y las estructuras de datos. | <https://github.com/ssantivr/BACKEND-ARQUILA> |
 | `BASE-DE-DATOS-ARQUILA` | Esquema en migraciones SQL numeradas, datos de ejemplo y script de creación. | <https://github.com/ssantivr/BASE-DE-DATOS-ARQUILA> |
 
 Cómo se relacionan:
@@ -37,7 +37,7 @@ Cómo se relacionan:
 - El **backend** se conecta a PostgreSQL con `DATABASE_URL` y crea las tablas con las migraciones del repositorio de **base de datos**, que busca en la carpeta hermana o en la que indique `DATABASE_DIR`.
 - La **base de datos** no depende de los otros dos: su esquema se puede crear solo con `psql`.
 
-El detalle está en `docs/03_ARQUITECTURA.md`. En la documentación, una ruta como `BACKEND-ARGUILA-/app/main.py` nombra un archivo del repositorio `BACKEND-ARGUILA-`.
+El detalle está en `docs/03_ARQUITECTURA.md`. En la documentación, una ruta como `BACKEND-ARQUILA/app/main.py` nombra un archivo del repositorio `BACKEND-ARQUILA`.
 
 ## Objetivo
 
@@ -45,23 +45,23 @@ Aplicar los conceptos de estructuras de datos vistos en clase dentro de un proye
 
 ## Alcance académico
 
-Las estructuras estudiadas están implementadas desde cero en Python, en `BACKEND-ARGUILA-/app/data_structures/`, sin librerías que las reemplacen.
+Las estructuras estudiadas están implementadas desde cero en Python, en `BACKEND-ARQUILA/app/data_structures/`, sin librerías que las reemplacen.
 
 | Estructura | Uso en la aplicación | Dónde está el uso |
 |---|---|---|
-| Array unidimensional | Cálculo del área de un lote recorriendo sus vértices. | `BACKEND-ARGUILA-/app/services/geometry.py` |
-| Array dinámico | Orden de los materiales por costo para el asistente. | `BACKEND-ARGUILA-/app/services/material_ranking.py` |
-| Stack (LIFO) | «Rehacer» una eliminación deshecha. | `BACKEND-ARGUILA-/app/services/undo_history.py` |
-| Queue (FIFO) | Límite de intentos fallidos de inicio de sesión. | `BACKEND-ARGUILA-/app/services/login_limiter.py` |
-| Lista simplemente enlazada | Ventana con los últimos 20 mensajes enviados a la IA. | `BACKEND-ARGUILA-/app/services/conversation_context.py` |
-| Lista doblemente enlazada | Historial de eliminaciones para «Deshacer». | `BACKEND-ARGUILA-/app/services/undo_history.py` |
+| Array unidimensional | Cálculo del área de un lote recorriendo sus vértices. | `BACKEND-ARQUILA/app/services/geometry.py` |
+| Array dinámico | Orden de los materiales por costo para el asistente. | `BACKEND-ARQUILA/app/services/material_ranking.py` |
+| Stack (LIFO) | «Rehacer» una eliminación deshecha. | `BACKEND-ARQUILA/app/services/undo_history.py` |
+| Queue (FIFO) | Límite de intentos fallidos de inicio de sesión. | `BACKEND-ARQUILA/app/services/login_limiter.py` |
+| Lista simplemente enlazada | Ventana con los últimos 20 mensajes enviados a la IA. | `BACKEND-ARQUILA/app/services/conversation_context.py` |
+| Lista doblemente enlazada | Historial de eliminaciones para «Deshacer». | `BACKEND-ARQUILA/app/services/undo_history.py` |
 
 El detalle está en `docs/04_ESTRUCTURAS_DATOS.md`, la complejidad de cada operación y las mediciones de tiempo en `docs/05_COMPLEJIDAD.md`, y el recorrido para mostrar cada estructura en la aplicación en `docs/14_GUION_DEMO.md`.
 
 ## Criterios de diseño
 
 - **Qué quedó fuera.** No se implementaron árboles, grafos ni tablas hash: no se vieron en clase. El proyecto se limita a las seis estructuras de la tabla anterior.
-- **Qué se hizo a mano.** Las seis estructuras y sus operaciones (`BACKEND-ARGUILA-/app/data_structures/`), la búsqueda lineal y la binaria, el orden de los materiales por inserción en un array dinámico y el cálculo del área de un lote. No se usa `collections.deque` ni otra librería que las reemplace.
+- **Qué se hizo a mano.** Las seis estructuras y sus operaciones (`BACKEND-ARQUILA/app/data_structures/`), la búsqueda lineal y la binaria, el orden de los materiales por inserción en un array dinámico y el cálculo del área de un lote. No se usa `collections.deque` ni otra librería que las reemplace.
 - **Qué viene de librerías.** El servidor web (FastAPI), el acceso a la base de datos (SQLAlchemy y psycopg), el hash de contraseñas (argon2-cffi), la interfaz (React), el modelo 3D (Three.js) y las herramientas de pruebas y de formato.
 
 ## Tecnologías
@@ -99,7 +99,7 @@ Requisitos: Python 3.12, Node 24 y PostgreSQL 16 o superior.
 
    ```bash
    git clone https://github.com/ssantivr/BASE-DE-DATOS-ARQUILA.git
-   git clone https://github.com/ssantivr/BACKEND-ARGUILA-.git
+   git clone https://github.com/ssantivr/BACKEND-ARQUILA.git
    git clone https://github.com/ssantivr/FRONTEND-ARQUILA.git
    ```
 
@@ -112,7 +112,7 @@ Requisitos: Python 3.12, Node 24 y PostgreSQL 16 o superior.
 3. Backend. Instalar, copiar `.env.example` a `.env`, poner la contraseña de PostgreSQL en `DATABASE_URL` y arrancar:
 
    ```bash
-   cd BACKEND-ARGUILA-
+   cd BACKEND-ARQUILA
    python -m venv .venv
    .venv\Scripts\activate
    pip install -r requirements-dev.txt
@@ -173,9 +173,10 @@ Durante el desarrollo se usó un asistente de IA. Las instrucciones que se le di
 | `CHANGELOG.md` | Cambios agrupados por semana y etiquetas de Git propuestas. |
 | `prompts/README.md` | Índice de los prompts usados con el asistente de IA. |
 
-Dos documentos se movieron al repositorio de su capa, por eso faltan los números 07 y 12:
+La documentación específica de cada capa está en su repositorio, por eso faltan los números 07 y 12:
 
 | Documento | Contenido |
 |---|---|
 | `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md` | Base de datos, diagrama entidad-relación, migraciones y datos de ejemplo. |
-| `BACKEND-ARGUILA-/docs/BACKEND_Y_API.md` | Decisiones del backend y del frontend: autenticación, seguridad, registro de eventos, archivos, terreno, IA y accesibilidad. |
+| `BACKEND-ARQUILA/docs/BACKEND_Y_API.md` | Decisiones del backend: autenticación, seguridad, registro de eventos, archivos e IA. |
+| `FRONTEND-ARQUILA/docs/FRONTEND.md` | Decisiones de la interfaz: esquemas del terreno, planos, modelo 3D, estados de carga y accesibilidad. |
