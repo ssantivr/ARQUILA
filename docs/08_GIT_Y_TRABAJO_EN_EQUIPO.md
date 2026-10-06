@@ -45,7 +45,7 @@ chore: ignore local SQLite databases
 
 ## Formato y hooks
 
-El formato no se discute en la revisión: lo aplican las herramientas. `python scripts/quality.py` lo comprueba y `python scripts/quality.py --fix` lo corrige (ver «Calidad del código» en el `README.md`).
+El formato no se discute en la revisión: lo aplican las herramientas. `python scripts/quality.py` lo comprueba y `python scripts/quality.py --fix` lo corrige (ver «Pruebas y calidad» en el `README.md`).
 
 El archivo `.pre-commit-config.yaml` de cada repositorio define hooks que formatean los archivos modificados antes de cada commit: Ruff para Python en `BACKEND-ARQUILA` y Prettier para TypeScript en `FRONTEND-ARQUILA`. Se activan una vez por clon con `pre-commit install`. Si un hook cambia un archivo, el commit se detiene: basta con añadir el archivo corregido y repetirlo.
 
