@@ -10,11 +10,10 @@ Son cambios pequeños que se notan a primera vista.
 
 | Qué | Dónde | Por qué |
 |---|---|---|
-| Completar `[UNIVERSIDAD]`, `[MATERIA]`, `[DOCENTE]`, `[INTEGRANTES]` y `[FECHA]` | Portada de `README.md` | Es lo primero que lee quien abre el repositorio. |
 | Completar `[INTEGRANTES]` | `15_ESTUDIO_PARA_LA_DEFENSA.md` | La lista de archivos por integrante no sirve sin nombres. |
-| Completar `[Completar según la política del curso]` | Sección «Uso de herramientas de IA» de `README.md` | El uso de IA es visible en `prompts/` y en los commits; hay que declararlo como pida el docente. |
-| Abrir `04_ESTRUCTURAS_DATOS.md`, `03_ARQUITECTURA.md` y `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md` en GitHub | Diagramas Mermaid | Su sintaxis se revisó a mano, pero no se comprobó que GitHub los dibuje. |
-| Recorrer todas las pantallas en el navegador siguiendo `14_GUION_DEMO.md` | Aplicación en marcha | En la comprobación final solo se vio la pantalla de inicio de sesión; el resto se probó con peticiones HTTP. |
+| Declarar el uso de herramientas de IA | Donde lo pida la política del curso | El `README.md` ya no tiene una sección para ello. El uso de IA es visible en `prompts/`, en `.agents/` y en los commits; hay que declararlo como pida el docente. |
+| Abrir `README.md`, `04_ESTRUCTURAS_DATOS.md`, `03_ARQUITECTURA.md` y `BASE-DE-DATOS-ARQUILA/docs/BASE_DATOS.md` en GitHub | Diagramas Mermaid | Su sintaxis se revisó a mano, pero no se comprobó que GitHub los dibuje. |
+| Probar a mano el guion de `14_GUION_DEMO.md` | Aplicación en marcha | El 6 de octubre de 2026 se recorrieron todas las pantallas en Chrome sin ventana, sin errores, pero solo leyendo: falta crear, editar, borrar y deshacer con el ratón, como en la demostración. |
 
 ## 2. Antes de la defensa
 
