@@ -179,7 +179,7 @@ Con los datos de ejemplo se puede entrar con `demo@example.com` y la contraseña
 
 Las variables de entorno y los comandos de cada parte están en el `README.md` de su repositorio.
 
-La aplicación también está publicada en Vercel, en <https://arquila-frontend.vercel.app>, con una base de datos vacía: hay que registrarse para entrar. En esa versión los archivos subidos no se conservan y el asistente responde con reglas fijas.
+La aplicación también está publicada en Vercel, en <https://arquila-frontend.vercel.app>, con los datos de ejemplo cargados: se puede entrar con el usuario de demostración o registrar una cuenta propia. En esa versión los archivos subidos no se conservan y el asistente responde con reglas fijas.
 
 ## Pruebas y calidad
 
