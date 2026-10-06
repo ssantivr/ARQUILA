@@ -5,7 +5,8 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-FRONTEND = ROOT / "frontend"
+BACKEND = ROOT.parent / "BACKEND-ARGUILA-"
+FRONTEND = ROOT.parent / "FRONTEND-ARQUILA"
 
 
 def find_tool(name: str) -> str:
@@ -17,31 +18,44 @@ def find_tool(name: str) -> str:
     return found
 
 
+def require_repositories() -> None:
+    missing = [path.name for path in (BACKEND, FRONTEND) if not path.is_dir()]
+
+    if missing:
+        sys.exit("Clone next to this repository: " + ", ".join(missing))
+
+
 def steps(fix: bool) -> list[tuple[str, list[str], Path]]:
     python = sys.executable
     npm = find_tool("npm")
 
     if fix:
         return [
-            ("Ruff format", [python, "-m", "ruff", "format", "backend", "scripts"], ROOT),
-            ("Ruff lint", [python, "-m", "ruff", "check", "--fix", "backend", "scripts"], ROOT),
+            ("Ruff format", [python, "-m", "ruff", "format", "app", "tests"], BACKEND),
+            ("Ruff lint", [python, "-m", "ruff", "check", "--fix", "app", "tests"], BACKEND),
+            ("Ruff format (scripts)", [python, "-m", "ruff", "format", "scripts"], ROOT),
+            ("Ruff lint (scripts)", [python, "-m", "ruff", "check", "--fix", "scripts"], ROOT),
             ("Prettier", [npm, "run", "format"], FRONTEND),
             ("ESLint", [npm, "run", "lint", "--", "--fix"], FRONTEND),
         ]
 
     return [
-        ("Ruff format", [python, "-m", "ruff", "format", "--check", "backend", "scripts"], ROOT),
-        ("Ruff lint", [python, "-m", "ruff", "check", "backend", "scripts"], ROOT),
+        ("Ruff format", [python, "-m", "ruff", "format", "--check", "app", "tests"], BACKEND),
+        ("Ruff lint", [python, "-m", "ruff", "check", "app", "tests"], BACKEND),
+        ("Ruff format (scripts)", [python, "-m", "ruff", "format", "--check", "scripts"], ROOT),
+        ("Ruff lint (scripts)", [python, "-m", "ruff", "check", "scripts"], ROOT),
         ("Prettier", [npm, "run", "format:check"], FRONTEND),
         ("ESLint", [npm, "run", "lint"], FRONTEND),
     ]
 
 
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Lint and format the whole repository.")
+    parser = argparse.ArgumentParser(description="Lint and format the three repositories.")
     parser.add_argument("--fix", action="store_true", help="rewrite files instead of checking")
     arguments = parser.parse_args()
     failed = []
+
+    require_repositories()
 
     for name, command, directory in steps(arguments.fix):
         print(f"== {name}", flush=True)

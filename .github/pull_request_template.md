@@ -13,14 +13,11 @@ Describe el cambio en una o dos frases y por qué se hace.
 
 ## Cómo se probó
 
-- [ ] `python scripts/quality.py` pasa
-- [ ] `pytest` pasa en `backend/`
-- [ ] `npm test` y `npm run build` pasan en `frontend/`
-- [ ] Probado a mano en el navegador (si cambia la interfaz)
+- [ ] `python scripts/quality.py` pasa (con los tres repositorios clonados juntos)
+- [ ] Los enlaces y las rutas citadas en la documentación existen
 
 ## Lista de comprobación
 
-- [ ] El título sigue Conventional Commits, por ejemplo `feat: add room filters`
-- [ ] Los identificadores están en inglés y el código no tiene comentarios
-- [ ] La documentación de `docs/` y el `README.md` reflejan el cambio
-- [ ] Si cambia el esquema, hay una migración nueva en `database/migrations/`
+- [ ] El título sigue Conventional Commits, por ejemplo `docs: update the defense guide`
+- [ ] La documentación de `docs/` y el `README.md` reflejan el estado de los tres repositorios
+- [ ] Los cambios de código van en `BACKEND-ARGUILA-`, `FRONTEND-ARQUILA` o `BASE-DE-DATOS-ARQUILA`, no aquí
