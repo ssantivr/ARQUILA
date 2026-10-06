@@ -53,7 +53,7 @@ Las seis estructuras estudiadas (array, array dinámico, pila, cola, lista simpl
 | **Materiales** | Llevar los materiales de cada proyecto con cantidad, costo unitario y costo total. |
 | **Análisis** | Generar recomendaciones automáticas por reglas, ordenadas por prioridad. |
 | **Asistente** | Conversar sobre los datos del proyecto con un modelo de IA local, o con respuestas por reglas si no hay modelo disponible. |
-| **Deshacer y rehacer** | Recuperar elementos eliminados y volver a aplicarlos. |
+| **Deshacer y rehacer** | Recuperar terrenos, planos, elevaciones, materiales, cuartos y componentes eliminados, y volver a aplicar la eliminación. |
 | **Cuentas** | Registro, inicio de sesión y recuperación de contraseña; cada usuario solo ve sus proyectos. |
 
 <p align="center">
@@ -179,14 +179,14 @@ Con los datos de ejemplo se puede entrar con `demo@example.com` y la contraseña
 
 Las variables de entorno y los comandos de cada parte están en el `README.md` de su repositorio.
 
-La aplicación también está publicada en Vercel, en <https://arquila-frontend.vercel.app>, con los datos de ejemplo cargados: se puede entrar con el usuario de demostración o registrar una cuenta propia. En esa versión el asistente responde con reglas fijas y los archivos subidos no pueden pasar de 4,5 MB.
+La aplicación también está publicada en Vercel, en <https://arquila-frontend.vercel.app>, con los datos de ejemplo cargados: se puede entrar con el usuario de demostración o registrar una cuenta propia. Los datos de ese usuario se restauran solos una vez al día. En esa versión el asistente responde con reglas fijas y los archivos subidos no pueden pasar de 4,5 MB.
 
 ## Pruebas y calidad
 
 | Repositorio | Comando | Qué comprueba |
 |---|---|---|
-| `BACKEND-ARQUILA` | `pytest` | 302 pruebas de la API, los servicios y las estructuras de datos. |
-| `FRONTEND-ARQUILA` | `npm test` y `npm run build` | 124 pruebas de lógica y componentes, tipos de TypeScript y compilación. |
+| `BACKEND-ARQUILA` | `pytest` | 304 pruebas de la API, los servicios y las estructuras de datos. |
+| `FRONTEND-ARQUILA` | `npm test` y `npm run build` | 135 pruebas de lógica y componentes, tipos de TypeScript y compilación. |
 | `BASE-DE-DATOS-ARQUILA` | `bash scripts/init.sh --seed` | Que el esquema se crea desde cero sobre una base vacía. |
 
 Con los tres repositorios clonados junto a este, un solo comando revisa el formato y las reglas de estilo del backend y del frontend:

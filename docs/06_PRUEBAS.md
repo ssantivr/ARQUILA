@@ -170,8 +170,9 @@ Ejecutados el 6 de octubre de 2026, al final del día, con el backend ya ampliad
 
 | Comando | Resultado |
 |---|---|
-| `pytest` (en `BACKEND-ARQUILA/`, con SQLite) | 302 pruebas pasan |
-| `pytest` con PostgreSQL 18.6 local | 302 pruebas pasan |
+| `pytest` (en `BACKEND-ARQUILA/`, con SQLite) | 304 pruebas pasan |
+| `pytest` con PostgreSQL 18.6 local | 304 pruebas pasan |
+| `npm test` (en `FRONTEND-ARQUILA/`) | 135 pruebas pasan en 19 archivos |
 | `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
 
 Sobre <https://arquila-frontend.vercel.app>, con peticiones HTTP y el usuario de demostración:
@@ -205,7 +206,7 @@ Desde la separación del proyecto en tres repositorios (6 de octubre de 2026), c
 
 Este repositorio ya no contiene código de la aplicación, así que no tiene flujo.
 
-`BASE-DE-DATOS-ARQUILA` tiene además `.github/workflows/deploy.yml`: al fusionar en `main` un cambio en `migrations/`, aplica las migraciones pendientes a la base de datos en línea. La rama `main` de los tres repositorios de código está protegida y solo acepta cambios cuyo flujo haya pasado.
+`BASE-DE-DATOS-ARQUILA` tiene además `.github/workflows/reset-demo.yml`, que una vez al día restaura los datos del usuario de demostración en la base en línea, y `.github/workflows/deploy.yml`: al fusionar en `main` un cambio en `migrations/`, aplica las migraciones pendientes a la base de datos en línea. La rama `main` de los tres repositorios de código está protegida y solo acepta cambios cuyo flujo haya pasado.
 
 El resultado se ve en la pestaña «Actions» de cada repositorio en GitHub. No despliega nada: solo avisa si un cambio rompe algo.
 

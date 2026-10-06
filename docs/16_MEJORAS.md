@@ -2,7 +2,7 @@
 
 Lista ordenada por urgencia. Cada punto dice qué falta, por qué importa y por dónde empezar. Lo que no se hizo está descrito en «Limitaciones y trabajo futuro» de `10_CONCLUSIONES.md`; aquí está lo que conviene hacer con eso.
 
-Estado al 6 de octubre de 2026, después de separar el proyecto en tres repositorios: `pytest` (302 pruebas), `npm test` (124 pruebas), `npm run build` y `python scripts/quality.py` pasan, la integración continua pasa en `main` de los tres repositorios de código y la aplicación está publicada en <https://arquila-frontend.vercel.app>.
+Estado al 6 de octubre de 2026, después de separar el proyecto en tres repositorios: `pytest` (304 pruebas), `npm test` (135 pruebas), `npm run build` y `python scripts/quality.py` pasan, la integración continua pasa en `main` de los tres repositorios de código y la aplicación está publicada en <https://arquila-frontend.vercel.app>.
 
 ## 1. Antes de la entrega
 
@@ -32,11 +32,11 @@ Es la parte que evalúa la asignatura, así que es donde más rinde el esfuerzo.
 - **Pila y cola de capacidad fija.** Hoy fallan cuando se llenan. Se puede hacer que crezcan como `DynamicArray`, o dejar la capacidad fija y explicar en la defensa por qué se eligió.
 - **Orden de materiales en O(n²).** El orden por inserción sirve para pocos materiales. Escribir a mano un `merge sort` y comparar los dos tiempos en `05_COMPLEJIDAD.md` muestra la diferencia con números.
 - **Mediciones más grandes.** Llegan a 100 000 elementos y no miden memoria. La respuesta sobre 1 millón de elementos de `09_GUIA_DEFENSA.md` es un razonamiento, no una medición: medirlo la vuelve un dato.
-- **Deshacer incompleto.** No cubre cuartos ni componentes estructurales, y el historial se pierde al reiniciar el servidor salvo que se active `STATE_STORAGE=database`, que lo guarda en la base.
+- **Deshacer incompleto.** No cubre proyectos ni archivos, y el historial se pierde al reiniciar el servidor salvo que se active `STATE_STORAGE=database`, que lo guarda en la base.
 
 ## 4. Pruebas
 
-- **Frontend.** Solo 4 componentes tienen pruebas (`AsyncStatus`, `Sidebar`, `LoginPage`, `ProjectsPage`), y de las 9 páginas solo 2. Las siguientes en importancia son `MaterialsPage` y `TerrainsPage`, porque son las que activan las estructuras.
+- **Frontend.** Solo 7 componentes tienen pruebas (`AsyncStatus`, `Sidebar`, `FloorPlansPanel`, `MaterialsPanel`, `FilesPanel`, `LoginPage` y `ProjectsPage`), y de las 9 páginas solo 2. Las siguientes en importancia son `MaterialsPage` y `TerrainsPage`, porque son las que activan las estructuras.
 - **Cobertura.** El 98 % que cita `06_PRUEBAS.md` se midió antes de la comprobación final y no se repitió. `coverage` no está en `requirements-dev.txt`: añadirlo y medirlo en la integración continua evita que el dato quede viejo.
 - **Navegador.** No hay ninguna prueba automática que abra la aplicación completa. El enlace de recuperación de contraseña se comprobó a mano una vez.
 - **Servicios reales.** No se probó el envío real de correo.
