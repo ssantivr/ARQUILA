@@ -2,12 +2,7 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+.ruff_cache/
 .env
 .vscode/
 .idea/
-dist/
-node_modules/
-.pytest_cache/
-*.db
-uploads/
-architecture-ai-platform/
