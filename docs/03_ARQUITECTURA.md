@@ -30,6 +30,20 @@ Desde el 6 de octubre de 2026 cada parte vive en su propio repositorio, con el h
 
 Este repositorio, `ARQUILA`, guarda la documentación general y no contiene código de la aplicación. La separación no cambió las capas ni la forma en que se comunican, que es lo que describe el resto del documento.
 
+## Despliegue
+
+La aplicación está publicada en <https://arquila-frontend.vercel.app>.
+
+| Parte | Dónde corre | Cómo se publica |
+|---|---|---|
+| Interfaz | Proyecto `arquila-frontend` de Vercel | Sola, al fusionar en `main` de `FRONTEND-ARQUILA`. |
+| API | Proyecto `arquila-backend` de Vercel, como función de FastAPI | Sola, al fusionar en `main` de `BACKEND-ARQUILA`. |
+| Base de datos | PostgreSQL de Neon | Las migraciones se aplican solas al fusionar en `main` de `BASE-DE-DATOS-ARQUILA`. |
+
+La interfaz reenvía `/api` a la API desde su propio dominio, así que para el navegador es un solo sitio y la cookie de sesión funciona igual que en local.
+
+En Vercel cada petición puede atenderla un proceso distinto y el disco no se conserva. Por eso allí el backend guarda en PostgreSQL lo que en local guarda en disco o en memoria: los archivos subidos (`FILE_STORAGE=database`) y el historial de «Deshacer» con los límites de intentos (`STATE_STORAGE=database`). Las estructuras de datos siguen haciendo el trabajo: su contenido se carga de la base al empezar la petición y se guarda al terminar. El asistente responde allí con las reglas fijas, porque no hay un Ollama al que conectarse.
+
 ## Diagrama
 
 El mismo esquema con más detalle. Las flechas continuas son llamadas que ocurren en cada petición; las punteadas, servicios externos que solo se usan si están configurados.

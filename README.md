@@ -185,7 +185,7 @@ La aplicación también está publicada en Vercel, en <https://arquila-frontend.
 
 | Repositorio | Comando | Qué comprueba |
 |---|---|---|
-| `BACKEND-ARQUILA` | `pytest` | 288 pruebas de la API, los servicios y las estructuras de datos. |
+| `BACKEND-ARQUILA` | `pytest` | 302 pruebas de la API, los servicios y las estructuras de datos. |
 | `FRONTEND-ARQUILA` | `npm test` y `npm run build` | 124 pruebas de lógica y componentes, tipos de TypeScript y compilación. |
 | `BASE-DE-DATOS-ARQUILA` | `bash scripts/init.sh --seed` | Que el esquema se crea desde cero sobre una base vacía. |
 
@@ -195,7 +195,7 @@ Con los tres repositorios clonados junto a este, un solo comando revisa el forma
 python scripts/quality.py
 ```
 
-En GitHub, cada repositorio de código ejecuta sus comprobaciones en cada pull request, y la rama `main` solo acepta cambios que las hayan pasado. Lo que cubren las pruebas y lo que no está en [`docs/06_PRUEBAS.md`](docs/06_PRUEBAS.md).
+En GitHub, cada repositorio de código ejecuta sus comprobaciones en cada pull request, y la rama `main` solo acepta cambios que las hayan pasado. Al fusionar, la interfaz y la API se publican solas en Vercel y las migraciones nuevas se aplican a la base de datos en línea. Lo que cubren las pruebas y lo que no está en [`docs/06_PRUEBAS.md`](docs/06_PRUEBAS.md).
 
 ## Seguridad
 

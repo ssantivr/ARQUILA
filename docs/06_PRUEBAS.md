@@ -164,6 +164,27 @@ Con el backend y el frontend arrancados desde sus repositorios, `/health`, el in
 
 Además se recorrió la interfaz en Chrome sin ventana (modo *headless*), con la sesión del usuario de demostración: las ocho secciones del menú y las ocho pestañas de «Casa Los Arrayanes», incluidos el modelo 3D, el recorrido interior y la vista de un archivo adjunto. Todas cargaron sin errores en la consola ni respuestas fallidas de la API. Fue un recorrido de lectura: no se crearon, editaron ni borraron datos, y no sustituye a probar a mano el guion de `docs/14_GUION_DEMO.md`.
 
+### Versión publicada en Vercel
+
+Ejecutados el 6 de octubre de 2026, al final del día, con el backend ya ampliado para guardar en la base los archivos subidos, el historial de «Deshacer» y los límites de intentos.
+
+| Comando | Resultado |
+|---|---|
+| `pytest` (en `BACKEND-ARQUILA/`, con SQLite) | 302 pruebas pasan |
+| `pytest` con PostgreSQL 18.6 local | 302 pruebas pasan |
+| `python scripts/quality.py` | Ruff, Prettier y ESLint pasan |
+
+Sobre <https://arquila-frontend.vercel.app>, con peticiones HTTP y el usuario de demostración:
+
+| Prueba | Resultado |
+|---|---|
+| Registro, inicio y cierre de sesión | La sesión se crea con cookie `HttpOnly` y deja de valer al cerrarla. |
+| Subir, descargar y borrar un archivo | El contenido descargado tres veces a lo largo de minuto y medio es idéntico al subido; después de borrarlo responde 404. |
+| Límite de intentos | Cinco inicios de sesión fallidos responden 401 y los dos siguientes 429. |
+| Deshacer y rehacer | Con esperas de 15 a 20 segundos entre peticiones, el historial lista lo borrado, lo restaura con sus valores exactos, lo rehace y lo vuelve a deshacer. |
+
+Además se abrieron en Chrome sin ventana la pantalla de inicio, la visualización 3D y el recorrido interior de la versión publicada, sin errores en la consola. Los datos creados en estas pruebas se borraron al terminar.
+
 ### Cobertura del backend
 
 Medida el 4 de octubre de 2026 con `coverage` y no repetida desde entonces: las pruebas ejecutaban el 98 % de las líneas de `BACKEND-ARQUILA/app/`, y el 100 % de `app/data_structures/`. Lo que quedaba sin ejecutar eran sobre todo los puntos de entrada de los comandos (`app.dev`, `app.migrate`, `app.check`) y la conexión real a la base. `coverage` no está entre las dependencias del proyecto; para repetir la medición:
@@ -183,6 +204,8 @@ Desde la separación del proyecto en tres repositorios (6 de octubre de 2026), c
 - **`BASE-DE-DATOS-ARQUILA`:** crea el esquema y carga los datos de ejemplo en un PostgreSQL 16 vacío con `scripts/init.sh --seed`, dos veces, y comprueba que quedan anotadas todas las migraciones.
 
 Este repositorio ya no contiene código de la aplicación, así que no tiene flujo.
+
+`BASE-DE-DATOS-ARQUILA` tiene además `.github/workflows/deploy.yml`: al fusionar en `main` un cambio en `migrations/`, aplica las migraciones pendientes a la base de datos en línea. La rama `main` de los tres repositorios de código está protegida y solo acepta cambios cuyo flujo haya pasado.
 
 El resultado se ve en la pestaña «Actions» de cada repositorio en GitHub. No despliega nada: solo avisa si un cambio rompe algo.
 
