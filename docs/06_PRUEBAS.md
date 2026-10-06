@@ -160,7 +160,9 @@ Ejecutados el 6 de octubre de 2026 en el mismo equipo, ya con cada parte en su r
 | `npm run build` (en `FRONTEND-ARQUILA/`) | compila sin errores, con el mismo aviso de Vite |
 | `python -m app.migrate --seed` y `bash scripts/init.sh --seed` sobre una base vacía | crean las 9 migraciones y los datos de ejemplo; las dos vías son compatibles |
 
-Con el backend y el frontend arrancados desde sus repositorios, `/health`, el inicio de sesión del usuario de demostración y el listado de proyectos responden a través de `/api`. Se comprobó con peticiones HTTP, no en un navegador.
+Con el backend y el frontend arrancados desde sus repositorios, `/health`, el inicio de sesión del usuario de demostración y el listado de proyectos responden a través de `/api`.
+
+Además se recorrió la interfaz en Chrome sin ventana (modo *headless*), con la sesión del usuario de demostración: las ocho secciones del menú y las ocho pestañas de «Casa Los Arrayanes», incluidos el modelo 3D, el recorrido interior y la vista de un archivo adjunto. Todas cargaron sin errores en la consola ni respuestas fallidas de la API. Fue un recorrido de lectura: no se crearon, editaron ni borraron datos, y no sustituye a probar a mano el guion de `docs/14_GUION_DEMO.md`.
 
 ### Cobertura del backend
 
